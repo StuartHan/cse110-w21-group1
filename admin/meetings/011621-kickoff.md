@@ -26,5 +26,6 @@
 > 2.2
 
 **Future Plan:**     
-> 3.1
-> 3.2
+> Assign Group Contract - everyone contribute one rule
+> Assign group video - everyone record a 15-sec video of introduction
+> Assign personal introduction on group wiki
