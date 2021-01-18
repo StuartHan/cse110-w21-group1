@@ -1,14 +1,28 @@
 <h1 style="text-align:center"> 1st Meeting Minutes - Kickoff - Jan/16/2020 </h1>
 
-**Team name:**       cse110-w21-group1
+**Team name:**       
 
-**Type of meeting:** Kickoff & Ice-breaking
+cse110-w21-group1
 
-**Attendance:**      Everyone was present
 
-**Time:**            PST: Jan/16/2020 7pm; CST: Jan/17/2020 11am
+**Type of meeting:** 
 
-**Location:**        Yolanda's personal zoom meeting room
+Kickoff & Ice-breaking
+
+
+**Attendance:**      
+
+Everyone was present
+
+
+**Time:**            
+
+PST: Jan/16/2020 7pm; CST: Jan/17/2020 11am
+
+
+**Location:**        
+
+Yolanda's personal zoom meeting room
 
 - - -
 
