@@ -10,6 +10,8 @@ Meeting Minutes
 
 **Location:**        Yolanda's personal zoom meeting room
 
+- - -
+
 **Agenda:**          
 
 **Decisions:**       
