@@ -1,4 +1,4 @@
-<h1 style="text-align:center">居中对齐 </h1>
+<h1 style="text-align:center"> 1st Meeting Minutes - Kickoff - Jan/16/2020 </h1>
 
 **Team name:**       cse110-w21-group1
 
