@@ -1,4 +1,4 @@
-Meeting Minutes
+<center>Meeting Minutes</center>
 
 **Team name:**       cse110-w21-group1
 
