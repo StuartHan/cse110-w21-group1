@@ -7,7 +7,7 @@
 > Kickoff & Ice-breaking
 
 **Attendance:**      
-> Everyone was present
+> Everyone was present (Bo, Ethan, Guo, Jiahang, Jiaming, Kevin, Yichen, Yolanda)
 
 **Time:**            
 > PST: Jan/16/2020 7pm; CST: Jan/17/2020 11am
