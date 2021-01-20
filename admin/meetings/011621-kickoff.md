@@ -27,10 +27,13 @@
 > 4. Go over possible positions and set up plans for next week.
 
 **Decisions:**       
-> Group positions (coordibator, planer, designer, developer, tester) are not fixed and will be rotated. (This decision might be changed after everyone knows his/her tech tree.)
-> Study throughly about the final project, preview online instructions of HTML and Agile, and everybody should summerize his/her tech tree.
+> 1. Group positions (coordibator, planer, designer, developer, tester) are not fixed and will be rotated. (This decision might be changed after everyone knows his/her tech tree.)
+
+> 2. Study throughly about the final project, preview online instructions of HTML and Agile, and everybody should summerize his/her tech tree.
 
 **Future Plan:**     
-> Assign Group Contract - everyone contribute one rule
-> Assign group video - everyone record a 15-sec video of introduction
-> Assign personal introduction on group wiki
+> 1. Assign Group Contract - everyone contribute one rule
+
+> 2. Assign group video - everyone record a 15-sec video of introduction
+
+> 3. Assign personal introduction on group wiki
