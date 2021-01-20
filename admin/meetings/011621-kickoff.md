@@ -18,12 +18,14 @@
 - - -
 
 **Agenda:**
-> Go over homework
-> Set up plans
+> Brief introductions and greetings from each group member, then take a creenshot for everyone.
+> Went over 4 assignments of group management: bouding, repo, page + vidio, and contract.
+> Created a GitHub repo for files and a Google Docs page for group contract then invite everyone in.
+> Set up future plans
 
 **Decisions:**       
-> 2.1
-> 2.2
+> Group positions (coordibator, planer, designer, developer, tester) are not fixed and will be rotated. (This decision might be changed after everyone knows his/her tech tree.)
+> Study throughly about the final project, preview online instructions of HTML and Agile, and everybody should summerize his/her tech tree.
 
 **Future Plan:**     
 > Assign Group Contract - everyone contribute one rule
