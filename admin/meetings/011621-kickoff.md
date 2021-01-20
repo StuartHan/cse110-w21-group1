@@ -18,10 +18,13 @@
 - - -
 
 **Agenda:**
-> Brief introductions and greetings from each group member, then take a creenshot for everyone.
-> Went over 4 assignments of group management: bouding, repo, page + vidio, and contract.
-> Created a GitHub repo for files and a Google Docs page for group contract then invite everyone in.
-> Set up future plans
+> 1. Brief introductions and greetings from each group member, then take a creenshot for everyone.
+
+> 2. Went over 4 assignments of group management: bouding, repo, page + vidio, and contract.
+
+> 3. Created a GitHub repo for files and a Google Docs page for group contract then invite everyone in.
+
+> 4. Go over possible positions and set up plans for next week.
 
 **Decisions:**       
 > Group positions (coordibator, planer, designer, developer, tester) are not fixed and will be rotated. (This decision might be changed after everyone knows his/her tech tree.)
