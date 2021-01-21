@@ -22,22 +22,15 @@ Team member info:
  |
 | Jiaming Li | jil002@ucsd.edu |
  |
- |
 | Jiahang Li | jil176@ucsd.edu | +86 139-3617-1757 |
  |
 | Guo Cheng | g5cheng@ucsd.edu |
  |
- |
 | Ethan Huang | ethuang@ucsd.edu |
- |
  |
 | Bo Yang | boy004@ucsd.edu | (858) 666-5858 |
  |
-|
- |
- |
- |
- |
+
 
 2) Primary Means of Communication and Expectations
 
