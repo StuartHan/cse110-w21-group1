@@ -12,24 +12,16 @@ Team Name – cse-w21-group1. Nick Name: N1
 
 Team member info:
 
-| NAME: | EMAIL: | PHONE: | OTHER: |
-| --- | --- | --- | --- |
+| NAME: | EMAIL: | PHONE:
+| --- | --- | --- |
 | Yuyao Yolanda Cheng | y6cheng@ucsd.edu | (415)7678798 |
- |
 | Yichen Han | y4han@ucsd.edu | +86 180-9423-9106 |
- |
 | Suk Chan Lee (Kevin) | Sukchan.kevin@gmail.com | (626) 393-8504 |
- |
 | Jiaming Li | jil002@ucsd.edu |
- |
 | Jiahang Li | jil176@ucsd.edu | +86 139-3617-1757 |
- |
 | Guo Cheng | g5cheng@ucsd.edu |
- |
 | Ethan Huang | ethuang@ucsd.edu |
- |
 | Bo Yang | boy004@ucsd.edu | (858) 666-5858 |
- |
 
 
 2) Primary Means of Communication and Expectations
