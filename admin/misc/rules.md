@@ -50,6 +50,6 @@ Team member info:
 
 - If a problem is reported to the staff, our team will work with faculties to address it and be responsible for submitting a completed assignment.
 - Faculties also need to remind meetings/tasks as early as possible to avoid delay due to time zones or packed schedules.
--
 
-7) Team Signatures
+
+7) Signature
