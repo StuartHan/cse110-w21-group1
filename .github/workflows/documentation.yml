@@ -1,0 +1,30 @@
+
+name: documentation
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:      
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Node.JS Setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install JSDocs
+        run: npm install -g jsdoc
+      - name: run JSDoc
+        run: jsdoc ./timer/index.js -d ./source
+      - name: add all files
+        run: git add .
+      - name: Commit all files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "Add changes" -a
+          git push
