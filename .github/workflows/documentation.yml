@@ -3,7 +3,7 @@ name: documentation
 on:
   pull_request:
     branches:
-      - main
+      - feat
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -19,7 +19,7 @@ jobs:
       - name: Install JSDocs
         run: npm install -g jsdoc
       - name: run JSDoc
-        run: jsdoc ./timer/index.js -d ./source
+        run: jsdoc ./source/Back-end/sum2.js -d ./generatedDocs
       - name: add all files
         run: git add .
       - name: Commit all files
@@ -28,3 +28,4 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git commit -m "Add changes" -a
           git push
+

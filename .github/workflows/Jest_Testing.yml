@@ -1,0 +1,19 @@
+name: Jest_Testing
+on:
+  push:
+    branches:
+      - feat
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:      
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Jest Install
+        run: npm install --save-dev jest
+      - name: Run Jest
+        run: npm test
