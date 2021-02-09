@@ -3,7 +3,7 @@ name: documentation
 on:
   pull_request:
     branches:
-      - feat
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
