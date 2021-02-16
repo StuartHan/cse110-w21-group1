@@ -1,8 +1,8 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Feb 15 -- Yichen Han
- * Curr  Version: 1.0
+ * Last  Revised: Feb 15 -- Suk Chan Lee
+ * Curr  Version: 1.1
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
  *                In current version: [NOTE!!! TIME HTML MUST CORRESPOND TO worSec]
@@ -12,15 +12,15 @@
  * Next Feature : 
  *****************************************************************************/
 
-var workSec = 3; // total seconds in work mode 
-var sBrkSec = 1; // total seconds in short break mode
-var lBrkSec = 2; // total seconds in long break mode
+var workSec = 1500; // total seconds in work mode 
+var sBrkSec = 300; // total seconds in short break mode
+var lBrkSec = 900; // total seconds in long break mode
 
 var currMode = "w"; // current mode. Default is working mode
 var counts = 0; // # of working periods. counts = 4 -> long break
 
 var totalSec = workSec; // default starting mode is working mode
-
+document.getElementById("time").innerHTML = secToTime(workSec);//On load
 
 
 /* ============================================================================
@@ -44,6 +44,7 @@ function runCounter() {
     if(currMode == "w") {
         counts++;
     }
+    drainColor();
     countDown();
 }
 
@@ -74,6 +75,7 @@ function changeMode() {
         document.getElementById("time").innerHTML = secToTime(workSec); // time
         totalSec = workSec; // seconds
         currMode = "w"; // mode
+        drainColor();
     }
     // Short break mode.
     else if(radioMode[1].checked) {
@@ -215,3 +217,35 @@ function timeToSec(currTime) {
 
     return (minInt * 60 + secInt);
 }
+
+/* ============================================================================
+ * Name         : drainColor()
+ * First Created: Feb 15 -- Suk Chan Lee
+ * Last  Revised: Feb 15 -- Suk Chan Lee
+ * Revised Times: 0
+ * 
+ * Description  : Take the color out of the page
+ * Type         : Helper Function.
+ =========================================================================== */
+ function drainColor(){
+    document.getElementById("header").style.backgroundColor = "grey";
+    document.getElementById("header").style.color = "black";
+    document.getElementById("footer").style.backgroundColor = "grey";
+    document.getElementById("gear").src = "../css/assets/gearblack.png";
+ }
+
+ /* ============================================================================
+ * Name         : fillColor()
+ * First Created: Feb 15 -- Suk Chan Lee
+ * Last  Revised: Feb 15 -- Suk Chan Lee
+ * Revised Times: 0
+ * 
+ * Description  : Put the color back in the page.
+ * Type         : Helper Function.
+ =========================================================================== */
+ function fillColor(){
+    document.getElementById("header").style.backgroundColor = "lightgreen";
+    document.getElementById("header").style.color = "white";
+    document.getElementById("footer").style.backgroundColor = "lightgreen";
+    document.getElementById("gear").src = "../css/assets/Geartransparent.png";
+ }

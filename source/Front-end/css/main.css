@@ -30,7 +30,7 @@ fieldset {
     border: none;
 }
 
-header{
+#header{
     grid-row     : 1;
     grid-column  : 1 / span 3;
     display: grid;
