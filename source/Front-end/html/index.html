@@ -11,28 +11,35 @@
  * Next Feature : 
  ***************************************************************************-->
 
-<!DOCTYPE html>
-<html lang="en">
-
+ <!DOCTYPE html>
+ <html lang="en">
+ 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pomodoro Timer</title>
-    <link rel="stylesheet" href="assets/styles/main.css">
+    <title>PomoTime</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@600&display=swap" rel="stylesheet">
 </head>
-
-
-
+ 
 <body>
     <div id="container">
         <header>
-            <h1>Pomodoro Timer</h1>
+            <h1>PomoTime</h1>
+            <h2 id="welcome">Welcome Guest!</h2>
+            <div id="options">
+                <!--<h2>Options</h2> -->
+                <!--<h2 id="stats">Stats</h2> To be implemented later.-->
+                <img src="../css/assets/Geartransparent.png">
+            </div>
         </header>
-
-
+ 
         <main>
-            <header><h1><div id="time">00:03</div></h1></header>
-
+            <div id="clock">
+                <h1 id="time">00:03</h1>
+            </div>
+ 
             <fieldset id="mode-selection">
                 <div id="radio-working-mode-container">
                     <input type="radio" id="radio-working-mode" name="radio-mode" checked>
@@ -52,9 +59,13 @@
                 <button id="start-btn" type="button">START</button>
             </div>
         </main>
+
+        <footer>
+
+        </footer>
     </div>
 
-    <script src="assets/scripts/main.js"></script>
+    <script src="../javascript/main.js"></script>
 </body>
 
 </html>
