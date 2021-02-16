@@ -1,0 +1,60 @@
+<!--***************************************************************************
+ * File Name    : index.html
+ * First Created: Feb 14
+ * Last  Revised: Feb 14 -- Yichen Han
+ * Curr  Version: 1.0
+ * 
+ * Description  : [NOTE!!! TIME HTML MUST CORRESPOND TO worSec]
+ * Variables    : 
+ * Functions    : 
+ * 
+ * Next Feature : 
+ ***************************************************************************-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="assets/styles/main.css">
+</head>
+
+
+
+<body>
+    <div id="container">
+        <header>
+            <h1>Pomodoro Timer</h1>
+        </header>
+
+
+        <main>
+            <header><h1><div id="time">00:03</div></h1></header>
+
+            <fieldset id="mode-selection">
+                <div id="radio-working-mode-container">
+                    <input type="radio" id="radio-working-mode" name="radio-mode" checked>
+                    <label for="radio-working-mode">Work</label>
+                </div>
+                <div id="radio-shortBreak-mode-container">
+                    <input type="radio" id="radio-shortBreak-mode" name="radio-mode">
+                    <label for="radio-shortBreak-mode">Short Break</label>
+                </div>
+                <div id="radio-longBreak-mode-container">
+                    <input type="radio" id="radio-longBreak-mode" name="radio-mode">
+                    <label for="radio-longBreak-mode">Long Break</label>
+                </div>
+            </fieldset>
+
+            <div id="start-btn-container">
+                <button id="start-btn" type="button">START</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/scripts/main.js"></script>
+</body>
+
+</html>
