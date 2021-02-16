@@ -251,6 +251,7 @@ function timeToSec(currTime) {
  function drainColor(){
     document.getElementById("header").style.backgroundColor = "grey";
     document.getElementById("header").style.color = "black";
+    document.getElementById("header").style.textShadow = "0px 0px black";
     document.getElementById("footer").style.backgroundColor = "grey";
     document.getElementById("gear").src = "./source/Front-end/css/assets/gearblack.png";
  }
@@ -267,6 +268,7 @@ function timeToSec(currTime) {
  function fillColor(){
     document.getElementById("header").style.backgroundColor = "lightgreen";
     document.getElementById("header").style.color = "white";
+    document.getElementById("header").style.textShadow = "2px 2px black";
     document.getElementById("footer").style.backgroundColor = "lightgreen";
     document.getElementById("gear").src = "./source/Front-end/css/assets/Geartransparent.png";
  }

@@ -191,8 +191,20 @@ main {
 
 #volume-slider{
     grid-column: 2;
-    justify-self: stretch;
+    opacity:0.7;
+    transition: opacity .3s;
+    background-color: black;
+    width:80%;
+    justify-self: center;
 }
+
+#volume-slider:hover{
+    opacity:1;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    cursor: pointer;
+  }
 
 /* ============================================================================
  * Footer
