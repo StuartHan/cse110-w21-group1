@@ -12,9 +12,9 @@
  * Next Feature : 
  *****************************************************************************/
 
-var workSec = 1500; // total seconds in work mode 
-var sBrkSec = 300; // total seconds in short break mode
-var lBrkSec = 900; // total seconds in long break mode
+var workSec = 2; // total seconds in work mode, 1500 for Pomodoro 
+var sBrkSec = 2; // total seconds in short break mode, 300 for Pomodoro 
+var lBrkSec = 2; // total seconds in long break mode, 900 for Pomodoro 
 
 var currMode = "w"; // current mode. Default is working mode
 var counts = 0; // # of working periods. counts = 4 -> long break
@@ -22,6 +22,26 @@ var counts = 0; // # of working periods. counts = 4 -> long break
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec);//On load
 
+document.getElementById("gear").addEventListener("click", function (){ //On click, show settings
+    document.getElementById("settingsMenu").style.visibility = "visible";
+});
+
+document.getElementById("exitSettings").addEventListener("click", function (){//On click, hide settings
+    document.getElementById("settingsMenu").style.visibility = "hidden";
+});
+
+document.getElementById("volume-slider").addEventListener("click", function(){//Alter volume
+    let volume = document.getElementById("volume-slider").value;
+    document.getElementById("sound-effect").volume = volume/100;
+    if (volume == 0)
+        document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-0.svg";
+    else if (volume > 0 && volume < 33)
+        document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-1.svg";
+    else if (volume > 33 && volume < 66)
+        document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-2.svg";
+    else
+        document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-3.svg";
+});
 
 /* ============================================================================
  * Name         : runCounter()
@@ -43,8 +63,8 @@ function runCounter() {
     // If now's working mode, increase counts by 1.
     if(currMode == "w") {
         counts++;
+        drainColor();
     }
-    drainColor();
     countDown();
 }
 
@@ -75,7 +95,6 @@ function changeMode() {
         document.getElementById("time").innerHTML = secToTime(workSec); // time
         totalSec = workSec; // seconds
         currMode = "w"; // mode
-        drainColor();
     }
     // Short break mode.
     else if(radioMode[1].checked) {
@@ -89,6 +108,7 @@ function changeMode() {
         totalSec = lBrkSec; // seconds
         currMode = "l"; // mode
     }
+    fillColor();
 }
 
 
@@ -113,6 +133,7 @@ function countDown() {
     let timer = setInterval (function() {
         if (currSec == 0) { // time ends
             startBtn.disabled = false; // enable start button
+            document.getElementById("sound-effect").play();//Play alarm
             clearInterval(timer);
             autoSwitchMode(); // curr sections ends, enter next mode
         }

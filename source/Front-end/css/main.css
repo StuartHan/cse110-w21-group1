@@ -30,6 +30,9 @@ fieldset {
     border: none;
 }
 
+/* ============================================================================
+ * Header/Navigation Bar
+ =========================================================================== */
 #header{
     grid-row     : 1;
     grid-column  : 1 / span 3;
@@ -61,7 +64,7 @@ header > h1 {
     justify-self: right;
 }
 
-#options > img {
+#gear {
     height: 4vh;
     width: 4vh;
     grid-column: 2;
@@ -70,11 +73,19 @@ header > h1 {
     margin-left: 2%;
 }
 
+#gear:hover {
+    opacity:0.3;
+}
+
 #welcome{
     grid-column: 1 / span 2;
     grid-row: 1;
     justify-self: center;
 }
+
+/* ============================================================================
+ * Timer
+ =========================================================================== */
 
 main {
     display      : grid;
@@ -87,15 +98,6 @@ main {
     grid-column  : 2;
 }
 
-footer {
-    grid-column: 1 / span 3;
-    grid-row: 3;
-    background-color:lightgreen;
-}
-
-/* ============================================================================
- * Radios
- =========================================================================== */
 #mode-selection {
     align-items        : center;
     display            : grid;
@@ -108,10 +110,6 @@ footer {
 }
 
 
-
-/* ============================================================================
- * Start Button: start countdown timer
- =========================================================================== */
 #start-btn {
     background-color: #ddd;
     border: none;
@@ -136,4 +134,72 @@ footer {
 
 #time{
     font-size: 12vh;
+}
+
+/* ============================================================================
+ * Settings Menu
+ =========================================================================== */
+
+#settingsMenu{
+    visibility: hidden;
+    grid-column: 2;
+    grid-row: 2;
+    background-color:lightgreen;
+    border-radius: 8px;
+    margin: 2% 5% 5% 2%;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    grid-template-rows: 8% 10% 82%;
+}
+
+#exitSettings{
+    grid-row: 1;
+    grid-column: 3;
+    align-self: center;
+    justify-self:center;
+    font-size: 4vh;
+}
+
+#exitSettings:hover{
+    opacity:0.3;
+}
+
+#settingsTitle{
+    grid-row:1;
+    grid-column: 2;
+    align-self: center;
+    justify-self:center;
+    font-size: 4vh;
+}
+
+#volume-controls{
+    grid-row: 2;
+    grid-column: 2;
+    display: grid;
+    grid-auto-columns: 20% 80%;
+}
+
+#volume-pic{
+    height:90%;
+    width:90%;
+    grid-column: 1;
+    align-self: center;
+}
+
+#volume-slider{
+    grid-column: 2;
+    justify-self: stretch;
+}
+
+/* ============================================================================
+ * Footer
+ =========================================================================== */
+
+footer {
+    grid-column: 1 / span 3;
+    grid-row: 3;
+    background-color:lightgreen;
 }
