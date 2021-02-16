@@ -231,7 +231,7 @@ function timeToSec(currTime) {
     document.getElementById("header").style.backgroundColor = "grey";
     document.getElementById("header").style.color = "black";
     document.getElementById("footer").style.backgroundColor = "grey";
-    document.getElementById("gear").src = "../css/assets/gearblack.png";
+    document.getElementById("gear").src = "./source/Front-end/css/assets/gearblack.png";
  }
 
  /* ============================================================================
@@ -247,5 +247,5 @@ function timeToSec(currTime) {
     document.getElementById("header").style.backgroundColor = "lightgreen";
     document.getElementById("header").style.color = "white";
     document.getElementById("footer").style.backgroundColor = "lightgreen";
-    document.getElementById("gear").src = "../css/assets/Geartransparent.png";
+    document.getElementById("gear").src = "./source/Front-end/css/assets/Geartransparent.png";
  }
