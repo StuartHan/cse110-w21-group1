@@ -12,9 +12,9 @@
  * Next Feature : 
  *****************************************************************************/
 
-var workSec = 2; // total seconds in work mode, 1500 for Pomodoro 
-var sBrkSec = 2; // total seconds in short break mode, 300 for Pomodoro 
-var lBrkSec = 2; // total seconds in long break mode, 900 for Pomodoro 
+var workSec = 1; // total seconds in work mode, 1500 for Pomodoro 
+var sBrkSec = 1; // total seconds in short break mode, 300 for Pomodoro 
+var lBrkSec = 1; // total seconds in long break mode, 900 for Pomodoro 
 
 var currMode = "w"; // current mode. Default is working mode
 var counts = 0; // # of working periods. counts = 4 -> long break
@@ -61,6 +61,7 @@ startBtn.addEventListener("click", runCounter); // listen & call runCounter
 
 function runCounter() {
     // If now's working mode, increase counts by 1.
+    updateTable();
     if(currMode == "w") {
         counts++;
         drainColor();
@@ -108,6 +109,7 @@ function changeMode() {
         totalSec = lBrkSec; // seconds
         currMode = "l"; // mode
     }
+    updateTable();
     fillColor();
 }
 
@@ -174,7 +176,7 @@ function autoSwitchMode() {
         }
         // count == 4. Next: long break mode
         else {
-            count = 0;
+            counts = 0;
             document.getElementById("radio-longBreak-mode").checked = true;
         }
     }
@@ -271,4 +273,24 @@ function timeToSec(currTime) {
     document.getElementById("header").style.textShadow = "2px 2px black";
     document.getElementById("footer").style.backgroundColor = "lightgreen";
     document.getElementById("gear").src = "./source/Front-end/css/assets/Geartransparent.png";
+ }
+
+ function updateTable(){
+    document.getElementById("counter").style.opacity = 0.4;
+     if (currMode == "w"){
+        document.getElementById("workPhase").style.opacity = 1;
+        document.getElementById("longBreak").style.opacity = 0.4;
+        document.getElementById("shortBreak").style.opacity = 0.4;
+     }
+     else if (counts < 4 && currMode == "s"){
+        document.getElementById("workPhase").style.opacity = 0.4;
+        document.getElementById("longBreak").style.opacity = 0.4;
+        document.getElementById("shortBreak").style.opacity = 1;
+     }
+     else if (counts == 0 && currMode == "l"){
+        document.getElementById("workPhase").style.opacity = 0.4;
+        document.getElementById("longBreak").style.opacity = 1;
+        document.getElementById("shortBreak").style.opacity = 0.4;
+     }
+     document.getElementById("counter").innerHTML = (4 - counts).toString() + "x";
  }
