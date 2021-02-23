@@ -24,22 +24,38 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
 
 document.getElementById("gear").addEventListener("click", function() { //On click, show settings
     document.getElementById("settingsMenu").style.visibility = "visible";
+    document.getElementById("main").style.visibility = "hidden";
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
 });
 
 document.getElementById("exitSettings").addEventListener("click", function() { //On click, hide settings
     document.getElementById("settingsMenu").style.visibility = "hidden";
+    document.getElementById("main").style.visibility = "visible";
     saveTimeSettings();
 });
 
 document.getElementById("dogecoin").addEventListener("click", function() { //On click, show Doge Store
     document.getElementById("dogeCoinMenu").style.visibility = "visible";
     document.getElementById("settingsMenu").style.visibility = "hidden";
+    document.getElementById("main").style.visibility = "hidden";
     saveTimeSettings();
 });
 
 document.getElementById("exitDoge").addEventListener("click", function() { //On click, hide Doge Store
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
+    document.getElementById("main").style.visibility = "visible";
+});
+
+document.getElementById("wildjungle").addEventListener("click", function() { //On click, switch to Jungle Theme
+    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/wildjungle.jpg")';
+    document.getElementById("header").style.backgroundColor = "rgba(3,165,89,0.6)";
+    document.getElementById("footer").style.backgroundColor = "rgba(3,165,89,0.6)";
+});
+
+document.getElementById("sanfrancisco").addEventListener("click", function() { //On click, switch to San Francisco Theme
+    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
+    document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
+    document.getElementById("footer").style.backgroundColor = "rgba(256,256,256,0.4)";
 });
 
 window.addEventListener('DOMContentLoaded', () => { //Initialize Doge Coins
