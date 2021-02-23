@@ -354,7 +354,7 @@ header>h1 {
     justify-items: center;
     display: grid;
     grid-template-columns: 15% 70% 15%;
-    grid-template-rows: 8% 8% 10% 10% 50%;
+    grid-template-rows: 8% 8% 10% 10% 10% 40%;
     z-index: 2;
     width: 80%;
     justify-self: center;
@@ -409,8 +409,12 @@ header>h1 {
     grid-row: 3;
 }
 
-#sanfrancisco{
+#aquatic{
     grid-row: 4;
+}
+
+#sanfrancisco{
+    grid-row: 5;
 }
 /* ============================================================================
  * Footer

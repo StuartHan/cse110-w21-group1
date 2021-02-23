@@ -52,6 +52,12 @@ document.getElementById("wildjungle").addEventListener("click", function() { //O
     document.getElementById("footer").style.backgroundColor = "rgba(3,165,89,0.6)";
 });
 
+document.getElementById("aquatic").addEventListener("click", function() { //On click, switch to Aquatic Theme
+    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
+    document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
+    document.getElementById("footer").style.backgroundColor = "rgba(256,256,256,0.4)";
+});
+
 document.getElementById("sanfrancisco").addEventListener("click", function() { //On click, switch to San Francisco Theme
     document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
     document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
