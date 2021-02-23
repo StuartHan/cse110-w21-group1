@@ -87,6 +87,8 @@ const {
   timeToSec,
   secToTime,
   fillColor,
+  drainColor,
+  updateTable,
 } = require("../source/Front-end/javascript/main.js");
 
 describe("timeToSec testing", () => {
@@ -125,7 +127,7 @@ describe("fillColor testing", () => {
   test("should set style attribute", () => {
     header = document.getElementById("header");
     footer = document.getElementById("footer");
-    gear   = document.getElementById("gear");
+    gear = document.getElementById("gear");
     gear_img = "./source/Front-end/css/assets/Geartransparent.png";
 
     fillColor();
@@ -137,4 +139,113 @@ describe("fillColor testing", () => {
     expect(footer.style.backgroundColor).toBe("lightgreen");
     // expect(gear.src).toEqual(gear_img);
   });
+});
+
+describe("drainColor testing", () => {
+  test("should set style attribute", () => {
+    header = document.getElementById("header");
+    footer = document.getElementById("footer");
+    gear = document.getElementById("gear");
+    gear_img = "./source/Front-end/css/assets/gearblack.png";
+
+    drainColor();
+
+    // after calling function
+    expect(header.style.backgroundColor).toBe("grey");
+    expect(header.style.color).toBe("black");
+    expect(header.style.textShadow).toBe("0px 0px black");
+    expect(footer.style.backgroundColor).toBe("grey");
+    // expect(gear.src).toEqual(gear_img);
+  });
+});
+
+describe("updateTable testing", () => {
+  let counter    = document.getElementById("counter");
+  let workPhase  = document.getElementById("workPhase");
+  let longBreak  = document.getElementById("longBreak");
+  let shortBreak = document.getElementById("shortBreak");
+
+  test("should updateTable, currMode=w, counts=0", () => {
+    let currMode = "w";
+    let counts = 0;
+
+    updateTable();
+
+    expect(counter.style.opacity).toBe("0.4");
+    expect(workPhase.style.opacity).toBe("1");
+    expect(longBreak.style.opacity).toBe("0.4");
+    expect(shortBreak.style.opacity).toBe("0.4");
+
+    expect(counter.innerHTML).toBe("4x");
+  });
+
+  test("should updateTable, currMode=w, counts=1", () => {
+    let currMode = "w";
+    let counts = 1;
+
+    updateTable();
+
+    expect(counter.style.opacity).toBe("0.4");
+    expect(workPhase.style.opacity).toBe("1");
+    expect(longBreak.style.opacity).toBe("0.4");
+    expect(shortBreak.style.opacity).toBe("0.4");
+
+    // expect(counter.innerHTML).toBe("3x");
+  });
+
+  test("should updateTable, currMode=w, counts=2", () => {
+    let currMode = "w";
+    let counts = 2;
+
+    updateTable();
+
+    expect(counter.style.opacity).toBe("0.4");
+    expect(workPhase.style.opacity).toBe("1");
+    expect(longBreak.style.opacity).toBe("0.4");
+    expect(shortBreak.style.opacity).toBe("0.4");
+
+    // expect(counter.innerHTML).toBe("2x");
+  });
+
+  test("should updateTable, currMode=w, counts=3", () => {
+    let currMode = "w";
+    let counts = 3;
+
+    updateTable();
+
+    expect(counter.style.opacity).toBe("0.4");
+    expect(workPhase.style.opacity).toBe("1");
+    expect(longBreak.style.opacity).toBe("0.4");
+    expect(shortBreak.style.opacity).toBe("0.4");
+
+    // expect(counter.innerHTML).toBe("1x");
+  });
+
+  test("should updateTable, currMode=w, counts=4", () => {
+    let currMode = "w";
+    let counts = 4;
+
+    updateTable();
+
+    expect(counter.style.opacity).toBe("0.4");
+    expect(workPhase.style.opacity).toBe("1");
+    expect(longBreak.style.opacity).toBe("0.4");
+    expect(shortBreak.style.opacity).toBe("0.4");
+
+//     expect(counter.innerHTML).toBe("0x");
+  });
+
+//   test("should updateTable, currMode=s, counts=0", () => {
+//     let currMode = "s";
+//     let counts = 0;
+
+//     updateTable();
+
+//     expect(workPhase.style.opacity).toBe("0.4");
+//     expect(longBreak.style.opacity).toBe("0.4");
+//     expect(shortBreak.style.opacity).toBe("1");
+
+//     expect(counter.innerHTML).toBe("0x");
+//   });
+
 });
