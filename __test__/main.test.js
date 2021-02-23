@@ -80,53 +80,61 @@ document.body.innerHTML = `
 
         </footer>
     </div>
-`
+`;
 
 const { getByText, getByTestId, fireEvent } = require("@testing-library/dom");
-const { timeToSec, secToTime, fillColor } = require("../source/Front-end/javascript/main.js");
+const {
+  timeToSec,
+  secToTime,
+  fillColor,
+} = require("../source/Front-end/javascript/main.js");
 
 describe("timeToSec testing", () => {
+  test("should turn 02:00 into 120", () => {
+    expect(timeToSec("02:00")).toBe(120);
+  });
 
-    test("should turn 02:00 into 120", () => {
-        expect(timeToSec("02:00")).toBe(120);
-    });
+  test("should turn 00:00 into 0", () => {
+    expect(timeToSec("00:00")).toBe(0);
+  });
 
-    test("should turn 00:00 into 0", () => {
-        expect(timeToSec("00:00")).toBe(0);
-    });
+  test("should turn 05:22 into 322", () => {
+    expect(timeToSec("05:22")).toBe(322);
+  });
 
-    test("should turn 05:22 into 322", () => {
-        expect(timeToSec("05:22")).toBe(322);
-    });
-
-    //   test("should set max of input", () => {
-    //     expect(timeToSec("99:99")).toBe(23*60+59);
-    //   });
-
+  //   test("should set max of input", () => {
+  //     expect(timeToSec("99:99")).toBe(23*60+59);
+  //   });
 });
 
 describe("setToTime testing", () => {
+  test("should turn 120 into 02:00", () => {
+    expect(secToTime(120)).toBe("02:00");
+  });
 
-    test("should turn 120 into 02:00", () => {
-        expect(secToTime(120)).toBe("02:00");
-    });
+  test("should turn 0 into 00:00", () => {
+    expect(secToTime(0)).toBe("00:00");
+  });
 
-    test("should turn 0 into 00:00", () => {
-        expect(secToTime(0)).toBe("00:00");
-    });
-
-    test("should turn 322 into 05:22", () => {
-        expect(secToTime(322)).toBe("05:22");
-    });
-
+  test("should turn 322 into 05:22", () => {
+    expect(secToTime(322)).toBe("05:22");
+  });
 });
 
 describe("fillColor testing", () => {
-    test("should render style", () => {
-        fillColor();
-        expect(document.getElementById("header")).toHaveStyle(`
-            backgroundColor = "lightgreen",
-            color = "white"
-        `);
-    });
+  test("should set style attribute", () => {
+    header = document.getElementById("header");
+    footer = document.getElementById("footer");
+    gear   = document.getElementById("gear");
+    gear_img = "./source/Front-end/css/assets/Geartransparent.png";
+
+    fillColor();
+
+    // after calling function
+    expect(header.style.backgroundColor).toBe("lightgreen");
+    expect(header.style.color).toBe("white");
+    expect(header.style.textShadow).toBe("2px 2px black");
+    expect(footer.style.backgroundColor).toBe("lightgreen");
+    // expect(gear.src).toEqual(gear_img);
+  });
 });
