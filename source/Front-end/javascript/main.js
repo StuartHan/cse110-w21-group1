@@ -14,7 +14,7 @@
 
 var workSec = 1; // total seconds in work mode, 1500 for Pomodoro 
 var sBrkSec = 1; // total seconds in short break mode, 300 for Pomodoro 
-var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
+var lBrkSec = 1; // total seconds in long break mode, 900 for Pomodoro 
 
 var currMode = "w"; // current mode. Default is working mode
 var counts = 0; // # of working periods. counts = 4 -> long break
@@ -24,11 +24,32 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
 
 document.getElementById("gear").addEventListener("click", function() { //On click, show settings
     document.getElementById("settingsMenu").style.visibility = "visible";
+    document.getElementById("dogeCoinMenu").style.visibility = "hidden";
 });
 
 document.getElementById("exitSettings").addEventListener("click", function() { //On click, hide settings
     document.getElementById("settingsMenu").style.visibility = "hidden";
     saveTimeSettings();
+});
+
+document.getElementById("dogecoin").addEventListener("click", function() { //On click, show Doge Store
+    document.getElementById("dogeCoinMenu").style.visibility = "visible";
+    document.getElementById("settingsMenu").style.visibility = "hidden";
+    saveTimeSettings();
+});
+
+document.getElementById("exitDoge").addEventListener("click", function() { //On click, hide Doge Store
+    document.getElementById("dogeCoinMenu").style.visibility = "hidden";
+});
+
+window.addEventListener('DOMContentLoaded', () => { //Initialize Doge Coins
+    if (localStorage.getItem('coin') == null){
+        window.localStorage.setItem('coin', "0");
+        document.getElementById("cointext").innerHTML = "0";
+    }
+    else{
+        document.getElementById("cointext").innerHTML = window.localStorage.getItem('coin');
+    }
 });
 
 document.getElementById("volume-slider").addEventListener("click", function() { //Alter volume
@@ -173,11 +194,13 @@ function autoSwitchMode() {
         // count != 4. Next: short break mode
         if (counts != 4) {
             document.getElementById("radio-shortBreak-mode").checked = true;
+            incrementCoin(5); //5 coin reward
         }
         // count == 4. Next: long break mode
         else {
             counts = 0;
             document.getElementById("radio-longBreak-mode").checked = true;
+            incrementCoin(15); //15 coin reward
         }
     }
     // Now: short/long break mode. Next: working mode
@@ -307,6 +330,10 @@ function saveTimeSettings() {
     sBrkSec = shortBreaknumber * 60;
     lBrkSec = longBreaknumber * 60;
     document.getElementById("time").innerHTML = secToTime(workSec);
+}
 
-
+function incrementCoin(amount){
+    let newNum = (parseInt(localStorage.getItem("coin"))+amount).toString();
+    localStorage.setItem("coin",newNum);
+    document.getElementById("cointext").innerHTML = newNum;
 }
