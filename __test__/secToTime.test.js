@@ -2,11 +2,7 @@
  * @jest-environment jsdom
  */
 
-const { getByText, getByTestId, fireEvent } = require("@testing-library/dom");
-
-describe("timeToSec", () => {
-
-  document.body.innerHTML = `
+document.body.innerHTML = `
     <div id="container">
         <header id="header">
             <h1>PomoTime</h1>
@@ -83,23 +79,26 @@ describe("timeToSec", () => {
     </div>
   `;
 
-//   load timeToSec from main.js
-  const modules = require("../source/Front-end/javascript/main.js");
-  const timeToSec = modules.timeToSec;
+const { getByText, getByTestId, fireEvent } = require("@testing-library/dom");
 
-  test("should turn 02:00 into 120", () => {
-    expect(timeToSec("02:00")).toBe(120);
-  });
+const { secToTime } = require("../source/Front-end/javascript/main.js");
 
-  test("should turn 00:00 into 0", () => {
-    expect(timeToSec("00:00")).toBe(0);
-  });
+describe("setToTime", () => {
 
-  test("should turn 05:22 into 322", () => {
-    expect(timeToSec("05:22")).toBe(322);
-  });
+    //   load timeToSec from main.js
+    // const modules = require("../source/Front-end/javascript/main.js");
+    // const secToTime = modules.secToTime;
 
-//   test("should set max of input", () => {
-//     expect(timeToSec("99:99")).toBe(23*60+59);
-//   });
+    test("should turn 120 into 02:00", () => {
+        expect(secToTime(120)).toBe("02:00");
+    });
+
+    test("should turn 0 into 00:00", () => {
+        expect(secToTime(0)).toBe("00:00");
+    });
+
+    test("should turn 322 into 05:22", () => {
+        expect(secToTime(322)).toBe("05:22");
+    });
+
 });

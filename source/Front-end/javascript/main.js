@@ -295,13 +295,15 @@ function timeToSec(currTime) {
      document.getElementById("counter").innerHTML = (4 - counts).toString() + "x";
  }
 
-module.exports = runCounter;
-module.exports = changeMode;
-module.exports = countDown;
-module.exports = autoSwitchMode;
-module.exports = secToTime;
-module.exports = drainColor;
-module.exports = fillColor;
-module.exports = updateTable;
-
-module.exports = timeToSec;
+// export all functions
+module.exports = {
+    runCounter: runCounter,
+    changeMode: changeMode,
+    countDown: countDown,
+    autoSwitchMode: autoSwitchMode,
+    secToTime: secToTime,
+    timeToSec: timeToSec,
+    drainColor: drainColor,
+    fillColor: fillColor,
+    updateTable: updateTable
+}
