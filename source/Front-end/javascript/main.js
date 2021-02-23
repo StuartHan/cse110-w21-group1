@@ -268,10 +268,10 @@ function drainColor() {
 * Type         : Helper Function.
 =========================================================================== */
 function fillColor() {
-    document.getElementById("header").style.backgroundColor = "lightgreen";
+    document.getElementById("header").style.backgroundColor = "rgba(3,165,89,0.6)";
     document.getElementById("header").style.color = "white";
     document.getElementById("header").style.textShadow = "2px 2px black";
-    document.getElementById("footer").style.backgroundColor = "lightgreen";
+    document.getElementById("footer").style.backgroundColor = "rgba(3,165,89,0.6)";
     document.getElementById("gear").src = "./source/Front-end/css/assets/Geartransparent.png";
 }
 
