@@ -18,6 +18,7 @@ var lBrkSec = 1; // total seconds in long break mode, 900 for Pomodoro
 
 var currMode = "w"; // current mode. Default is working mode
 var counts = 0; // # of working periods. counts = 4 -> long break
+var color = "rgba(3,165,89,0.6)";
 
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
@@ -50,18 +51,21 @@ document.getElementById("wildjungle").addEventListener("click", function() { //O
     document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/wildjungle.jpg")';
     document.getElementById("header").style.backgroundColor = "rgba(3,165,89,0.6)";
     document.getElementById("footer").style.backgroundColor = "rgba(3,165,89,0.6)";
+    color = "rgba(3,165,89,0.6)";
 });
 
 document.getElementById("aquatic").addEventListener("click", function() { //On click, switch to Aquatic Theme
     document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
     document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById("footer").style.backgroundColor = "rgba(256,256,256,0.4)";
+    color = "rgba(256,256,256,0.4)";
 });
 
 document.getElementById("sanfrancisco").addEventListener("click", function() { //On click, switch to San Francisco Theme
     document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
     document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById("footer").style.backgroundColor = "rgba(256,256,256,0.4)";
+    color = "rgba(256,256,256,0.4)";
 });
 
 window.addEventListener('DOMContentLoaded', () => { //Initialize Doge Coins
@@ -313,10 +317,10 @@ function drainColor() {
 * Type         : Helper Function.
 =========================================================================== */
 function fillColor() {
-    document.getElementById("header").style.backgroundColor = "rgba(3,165,89,0.6)";
+    document.getElementById("header").style.backgroundColor = color;
     document.getElementById("header").style.color = "white";
     document.getElementById("header").style.textShadow = "2px 2px black";
-    document.getElementById("footer").style.backgroundColor = "rgba(3,165,89,0.6)";
+    document.getElementById("footer").style.backgroundColor = color;
     document.getElementById("gear").src = "./source/Front-end/css/assets/Geartransparent.png";
 }
 
