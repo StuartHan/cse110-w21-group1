@@ -66,6 +66,7 @@ function runCounter() {
     if (currMode == "w") {
         counts++;
         drainColor();
+        chooseBgMusic();
         document.getElementById("bg-music").play();
     }
     countDown();
@@ -312,6 +313,16 @@ function saveTimeSettings() {
 
 
 }
-function playBgmusic() {
+
+function chooseBgMusic(){
+    if(document.getElementById("default-1").checked == true){
+        document.getElementById("bg-music").src = "./source/Front-end/css/assets/default-1.mp3";
+    }
+    else if(document.getElementById("default-2").checked == true){
+        document.getElementById("bg-music").src = "./source/Front-end/css/assets/default-2.mp3";
+    }
+    else{
+        document.getElementById("bg-music").src = "./source/Front-end/css/assets/default-3.mp3";
+    }
     
 }
