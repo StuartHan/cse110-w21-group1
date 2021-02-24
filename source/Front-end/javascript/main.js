@@ -1,18 +1,18 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Feb 15 -- Suk Chan Lee
- * Curr  Version: 1.1
+ * Last  Revised: Feb 24 -- Yichen Han
+ * Curr  Version: 1.2
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
- *                In current version: [NOTE!!! TIME HTML MUST CORRESPOND TO worSec]
+ *                A concern on logic: does var "totalSec" decrease lines or make logic more complex? --Stuart
  * Variables    : 
  * Functions    : 
  * 
  * Next Feature : 
  *****************************************************************************/
 
-var workSec = 1; // total seconds in work mode, 1500 for Pomodoro 
+var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
 var sBrkSec = 1; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
 
@@ -43,6 +43,8 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
     else
         document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-3.svg";
 });
+
+
 
 /* ============================================================================
  * Name         : runCounter()
@@ -145,7 +147,7 @@ function countDown() {
             console.log(currTime); // TEST CODE
             document.getElementById("time").innerHTML = currTime; // reset HTML
         }
-    }, 1000); // decrease 1 per sec
+    }, 1000); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
 }
 
 
@@ -241,6 +243,8 @@ function timeToSec(currTime) {
     return (minInt * 60 + secInt);
 }
 
+
+
 /* ============================================================================
  * Name         : drainColor()
  * First Created: Feb 15 -- Suk Chan Lee
@@ -257,6 +261,8 @@ function drainColor() {
     document.getElementById("footer").style.backgroundColor = "grey";
     document.getElementById("gear").src = "./source/Front-end/css/assets/gearblack.png";
 }
+
+
 
 /* ============================================================================
 * Name         : fillColor()
@@ -275,6 +281,16 @@ function fillColor() {
     document.getElementById("gear").src = "./source/Front-end/css/assets/Geartransparent.png";
 }
 
+
+/* ============================================================================
+ * Name         : updateTable()
+ * First Created: [TODO]
+ * Last  Revised: [TODO]
+ * Revised Times: [TODO]
+ * 
+ * Description  : [who made this? Jiaming or Kevin?]
+ * Type         : Helper Function.
+ =========================================================================== */
 function updateTable() {
     document.getElementById("counter").style.opacity = 0.4;
     if (currMode == "w") {
@@ -295,18 +311,42 @@ function updateTable() {
 
 
 
-
+/* ============================================================================
+ * Name         : saveTimeSettings()
+ * First Created: Feb 23 -- Jiaming Li
+ * Last  Revised: Feb 24 -- Yichen Han
+ * Revised Times: 2
+ * 
+ * Description  : Update seconds, totalSec, and HTML according to Settings
+ * Type         : Major Function.
+ =========================================================================== */
 function saveTimeSettings() {
-    let worknumber = document.getElementById("work-time-number").value;
-    let longBreaknumber = document.getElementById("long-break-number").value;
+    // get values
+    let worknumber       = document.getElementById("work-time-number"  ).value;
+    let longBreaknumber  = document.getElementById("long-break-number" ).value;
     let shortBreaknumber = document.getElementById("short-break-number").value;
-    document.getElementById("workTime").innerHTML = worknumber + "m";
+
+    // update HTMLs
+    document.getElementById("workTime"      ).innerHTML = worknumber       + "m";
     document.getElementById("shortBreakTime").innerHTML = shortBreaknumber + "m";
-    document.getElementById("longBreakTime").innerHTML = longBreaknumber + "m";
+    document.getElementById("longBreakTime" ).innerHTML = longBreaknumber  + "m";
+
+    // update modes' seconds
     workSec = parseInt(worknumber * 60);
-    sBrkSec = shortBreaknumber * 60;
-    lBrkSec = longBreaknumber * 60;
-    document.getElementById("time").innerHTML = secToTime(workSec);
+    sBrkSec = shortBreaknumber    * 60;
+    lBrkSec = longBreaknumber     * 60;
 
-
+    // update totalSec
+    if(currMode == "w") {
+        totalSec = parseInt(worknumber * 60);
+    }
+    else if(currMode == "s") {
+        totalSec = shortBreaknumber * 60;
+    }
+    else {
+        totalSec = longBreaknumber * 60;
+    }
+    
+    // update timer's HTML
+    document.getElementById("time").innerHTML = secToTime(totalSec);
 }
