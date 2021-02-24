@@ -306,7 +306,6 @@ function saveTimeSettings() {
     workSec = parseInt(worknumber * 60);
     sBrkSec = shortBreaknumber * 60;
     lBrkSec = longBreaknumber * 60;
-    document.getElementById("time").innerHTML = secToTime(workSec);
 
 
 }
