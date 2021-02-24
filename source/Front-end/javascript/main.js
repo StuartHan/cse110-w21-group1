@@ -66,6 +66,7 @@ function runCounter() {
     if (currMode == "w") {
         counts++;
         drainColor();
+        document.getElementById("bg-music").play();
     }
     countDown();
 }
@@ -137,6 +138,7 @@ function countDown() {
         if (currSec == 0) { // time ends
             startBtn.disabled = false; // enable start button
             document.getElementById("sound-effect").play(); //Play alarm
+            document.getElementById("bg-music").pause();//Pause backgroud music
             clearInterval(timer);
             autoSwitchMode(); // curr sections ends, enter next mode
         } else {
@@ -309,4 +311,7 @@ function saveTimeSettings() {
     document.getElementById("time").innerHTML = secToTime(workSec);
 
 
+}
+function playBgmusic() {
+    
 }
