@@ -14,10 +14,11 @@ Ethan is absent
 - Everyone needs to contrubute to the GitHub Workflow except Yolanda
 
 ### Plans:
-- Stuart needs to finish codessy stuff
+- Stuart needs to finish codacy stuff
 - Meet tmr after meeting with Deepak
 - New Features:
 	<br>Setting time for users (default, create your own): Jiahang, Jiaming
 	<br>Custom sounds: Bo
 	<br> Chinese version of the website: Guo will do the translation in JS
+	<br> Kevin makes UI more intuitive and colorful, increase "fun" factor
 - Make our site more chic

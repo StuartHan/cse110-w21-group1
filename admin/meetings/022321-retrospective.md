@@ -15,6 +15,7 @@ Full attendance
 	- Ability to customize times for phases
 	- Chinese translation for code and UI
 - Showcase of every new feature implemented by the programming team
+- Discuss who is responsible for what features moving forward
 
 ### Plans:
 - Moving onto more advanced features of the app that increase usability and the "fun" factor
