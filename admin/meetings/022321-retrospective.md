@@ -9,8 +9,11 @@ Full attendance
 - Present the pomo to the whole group
 
 ### Accomplishments:
-- Use Retrium to perform the group retro which everyone contributed
+- Use Retrium to perform the group retro which everyone contributed (retro1.png)
 - Present/discuss new features of the pomo
+	- Updated UI
+	- Ability to customize times for phases
+	- Chinese translation for code and UI
 - Showcase of every new feature implemented by the programming team
 
 ### Plans:
