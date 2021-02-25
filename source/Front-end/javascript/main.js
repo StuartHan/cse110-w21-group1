@@ -1,7 +1,7 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Feb 24 -- Yichen Han
+ * Last  Revised: Feb 25 -- Yichen Han
  * Curr  Version: 1.2
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
@@ -13,11 +13,12 @@
  *****************************************************************************/
 
 var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
-var sBrkSec = 1; // total seconds in short break mode, 300 for Pomodoro 
+var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
 
 var currMode = "w"; // current mode. Default is working mode
-var counts = 0; // # of working periods. counts = 4 -> long break
+var counts = 0; // # of working periods. counts >= countsThres -> long break
+var countsThres = 4; // = Long break interval
 
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
@@ -147,7 +148,7 @@ function countDown() {
             console.log(currTime); // TEST CODE
             document.getElementById("time").innerHTML = currTime; // reset HTML
         }
-    }, 1000); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
+    }, 10); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
 }
 
 
@@ -158,9 +159,9 @@ function countDown() {
  * Last  Revised: Feb 15 -- Yichen Han
  * Revised Times: 1
  * 
- * Description  : If   current mode is working & counts != 4, 
+ * Description  : If   current mode is working & counts < countsThres, 
  *                Then enter short break mode.
- *                If   current mode is working & count == 4,
+ *                If   current mode is working & count >= countsThres,
  *                Then enter long break mode   & clear count.
  *                If   current mode is short break / long break,
  *                Then enter working mode.
@@ -172,11 +173,11 @@ function countDown() {
 function autoSwitchMode() {
     // Now: working mode
     if (currMode == "w") {
-        // count != 4. Next: short break mode
-        if (counts != 4) {
+        // count < countsThres. Next: short break mode
+        if (counts < countsThres) {
             document.getElementById("radio-shortBreak-mode").checked = true;
         }
-        // count == 4. Next: long break mode
+        // count >= countsThres. Next: long break mode
         else {
             counts = 0;
             document.getElementById("radio-longBreak-mode").checked = true;
@@ -284,11 +285,11 @@ function fillColor() {
 
 /* ============================================================================
  * Name         : updateTable()
- * First Created: [TODO]
- * Last  Revised: [TODO]
- * Revised Times: [TODO]
+ * First Created: Feb 15 -- Suk Chan Lee
+ * Last  Revised: Feb 25 -- Yichen Han, update counter
+ * Revised Times: 2
  * 
- * Description  : [who made this? Jiaming or Kevin?]
+ * Description  : Set the table below the clock when timer tuns
  * Type         : Helper Function.
  =========================================================================== */
 function updateTable() {
@@ -306,7 +307,8 @@ function updateTable() {
         document.getElementById("longBreak").style.opacity = 1;
         document.getElementById("shortBreak").style.opacity = 0.4;
     }
-    document.getElementById("counter").innerHTML = (4 - counts).toString() + "x";
+    document.getElementById("counter").innerHTML 
+    = ((countsThres - counts) > 0 ? (countsThres - counts) : 0) + "x";
 }
 
 
@@ -314,13 +316,16 @@ function updateTable() {
 /* ============================================================================
  * Name         : saveTimeSettings()
  * First Created: Feb 23 -- Jiaming Li
- * Last  Revised: Feb 24 -- Yichen Han
- * Revised Times: 2
+ * Last  Revised: Feb 25 -- Yichen Han
+ * Revised Times: 3
  * 
- * Description  : Update seconds, totalSec, and HTML according to Settings
+ * Description  : Update vars and HTMLs according to Settings
  * Type         : Major Function.
  =========================================================================== */
 function saveTimeSettings() {
+    /* ------------------------------------------------------------------------
+     * Work & Braks time
+     ----------------------------------------------------------------------- */
     // get values
     let worknumber       = document.getElementById("work-time-number"  ).value;
     let longBreaknumber  = document.getElementById("long-break-number" ).value;
@@ -349,4 +354,11 @@ function saveTimeSettings() {
     
     // update timer's HTML
     document.getElementById("time").innerHTML = secToTime(totalSec);
+
+
+    /* ------------------------------------------------------------------------
+     * Long break interval
+     ----------------------------------------------------------------------- */
+    countsThres = document.getElementById("long-break-interval").value;
+    document.getElementById("counter").innerHTML = countsThres + "x"
 }

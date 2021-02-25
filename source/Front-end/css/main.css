@@ -1,8 +1,8 @@
 /******************************************************************************
  * File Name    : main.css
- * First Created: Feb 14 -- Yichen Han
- * Last  Revised: Feb 15 -- Suk Chan Lee
- * Curr  Version: 1,1
+ * First Created: Feb 14
+ * Last  Revised: Feb 25 -- Yichen Han
+ * Curr  Version: 1.2
  * 
  * Description  : 
  * Variables    : 
@@ -288,6 +288,22 @@ tr {
 
 #long-break-number {
     grid-row: 5;
+    grid-column: 3;
+    font-size: 1vw;
+    width: 40%;
+    min-width: 60px;
+    height: 1vw;
+}
+
+/* Settings: Long break interval. NEED REVISED */
+#LongBreakInterval {
+    grid-row: 6;
+    grid-column: 2;
+    font-size: 1.5vw;
+}
+
+#long-break-interval {
+    grid-row: 6;
     grid-column: 3;
     font-size: 1vw;
     width: 40%;
