@@ -1,7 +1,7 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Feb 25 -- Yichen Han
+ * Last  Revised: Feb 26 -- Yichen Han
  * Curr  Version: 1.2
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
@@ -44,6 +44,7 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
     else
         document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-3.svg";
 });
+
 
 
 
@@ -286,8 +287,8 @@ function fillColor() {
 /* ============================================================================
  * Name         : updateTable()
  * First Created: Feb 15 -- Suk Chan Lee
- * Last  Revised: Feb 25 -- Yichen Han, update counter
- * Revised Times: 2
+ * Last  Revised: Feb 26 -- Yichen Han, update counter logic again
+ * Revised Times: 3
  * 
  * Description  : Set the table below the clock when timer tuns
  * Type         : Helper Function.
@@ -307,8 +308,9 @@ function updateTable() {
         document.getElementById("longBreak").style.opacity = 1;
         document.getElementById("shortBreak").style.opacity = 0.4;
     }
+
     document.getElementById("counter").innerHTML 
-    = ((countsThres - counts) > 0 ? (countsThres - counts) : 0) + "x";
+    = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
 }
 
 
@@ -316,20 +318,56 @@ function updateTable() {
 /* ============================================================================
  * Name         : saveTimeSettings()
  * First Created: Feb 23 -- Jiaming Li
- * Last  Revised: Feb 25 -- Yichen Han
+ * Last  Revised: Feb 26 -- Yichen Han
  * Revised Times: 3
  * 
  * Description  : Update vars and HTMLs according to Settings
  * Type         : Major Function.
  =========================================================================== */
+/* --------------------------------------------------------------------------
+ * Check the range of input values
+ --------------------------------------------------------------------------- */
+// Work phase (min)
+document.getElementById("work-time-number").addEventListener("input", function() {
+    let worknumber = document.getElementById("work-time-number").value;
+    if(!(worknumber >= 0 && worknumber <= 120)) {
+        alert("Please enter a value between 0 and 120");
+        document.getElementById("work-time-number").value = workSec / 60;
+    }
+});
+// Short break (min)
+document.getElementById("short-break-number").addEventListener("input", function() {
+    let shortBreaknumber = document.getElementById("short-break-number").value;
+    if(!(shortBreaknumber >= 0 && shortBreaknumber <= 120)) {
+        alert("Please enter a value between 0 and 120");
+        document.getElementById("short-break-number").value = sBrkSec / 60;
+    }
+});
+// Long break (min)
+document.getElementById("long-break-number").addEventListener("input", function() {
+    let longBreaknumber = document.getElementById("long-break-number").value;
+    if(!(longBreaknumber >= 0 && longBreaknumber <= 120)) {
+        alert("Please enter a value between 0 and 120");
+        document.getElementById("long-break-number").value = lBrkSec / 60;
+    }
+});
+// Long break interval
+document.getElementById("long-break-interval").addEventListener("input", function() {
+    let longBreakinterval = document.getElementById("long-break-interval").value;
+    if(!(longBreakinterval >= 0 && longBreakinterval <= 10)) {
+        alert("Please enter a value between 1 and 10");
+        document.getElementById("long-break-interval").value = countsThres;
+    }
+});
+
 function saveTimeSettings() {
     /* ------------------------------------------------------------------------
      * Work & Braks time
      ----------------------------------------------------------------------- */
     // get values
     let worknumber       = document.getElementById("work-time-number"  ).value;
-    let longBreaknumber  = document.getElementById("long-break-number" ).value;
     let shortBreaknumber = document.getElementById("short-break-number").value;
+    let longBreaknumber  = document.getElementById("long-break-number" ).value;
 
     // update HTMLs
     document.getElementById("workTime"      ).innerHTML = worknumber       + "m";
