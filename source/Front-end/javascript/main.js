@@ -1,23 +1,24 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Feb 15 -- Suk Chan Lee
- * Curr  Version: 1.1
+ * Last  Revised: Feb 26 -- Yichen Han
+ * Curr  Version: 1.2
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
- *                In current version: [NOTE!!! TIME HTML MUST CORRESPOND TO worSec]
+ *                A concern on logic: does var "totalSec" decrease lines or make logic more complex? --Stuart
  * Variables    : 
  * Functions    : 
  * 
  * Next Feature : 
  *****************************************************************************/
 
-var workSec = 1; // total seconds in work mode, 1500 for Pomodoro 
-var sBrkSec = 1; // total seconds in short break mode, 300 for Pomodoro 
+var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
+var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
 
 var currMode = "w"; // current mode. Default is working mode
-var counts = 0; // # of working periods. counts = 4 -> long break
+var counts = 0; // # of working periods. counts >= countsThres -> long break
+var countsThres = 4; // = Long break interval
 
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
@@ -29,6 +30,11 @@ document.getElementById("gear").addEventListener("click", function() { //On clic
 document.getElementById("exitSettings").addEventListener("click", function() { //On click, hide settings
     document.getElementById("settingsMenu").style.visibility = "hidden";
     saveTimeSettings();
+    if (document.getElementById("chinese-selection").checked) {
+        SwitchToChinese();
+    } else if (document.getElementById("english-selection").checked) {
+        SwitchToEnglish();
+    }
 });
 
 document.getElementById("volume-slider").addEventListener("click", function() { //Alter volume
@@ -43,6 +49,9 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
     else
         document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-3.svg";
 });
+
+
+
 
 /* ============================================================================
  * Name         : runCounter()
@@ -145,7 +154,7 @@ function countDown() {
             console.log(currTime); // TEST CODE
             document.getElementById("time").innerHTML = currTime; // reset HTML
         }
-    }, 1000); // decrease 1 per sec
+    }, 10); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
 }
 
 
@@ -156,9 +165,9 @@ function countDown() {
  * Last  Revised: Feb 15 -- Yichen Han
  * Revised Times: 1
  * 
- * Description  : If   current mode is working & counts != 4, 
+ * Description  : If   current mode is working & counts < countsThres, 
  *                Then enter short break mode.
- *                If   current mode is working & count == 4,
+ *                If   current mode is working & count >= countsThres,
  *                Then enter long break mode   & clear count.
  *                If   current mode is short break / long break,
  *                Then enter working mode.
@@ -170,11 +179,11 @@ function countDown() {
 function autoSwitchMode() {
     // Now: working mode
     if (currMode == "w") {
-        // count != 4. Next: short break mode
-        if (counts != 4) {
+        // count < countsThres. Next: short break mode
+        if (counts < countsThres) {
             document.getElementById("radio-shortBreak-mode").checked = true;
         }
-        // count == 4. Next: long break mode
+        // count >= countsThres. Next: long break mode
         else {
             counts = 0;
             document.getElementById("radio-longBreak-mode").checked = true;
@@ -241,6 +250,8 @@ function timeToSec(currTime) {
     return (minInt * 60 + secInt);
 }
 
+
+
 /* ============================================================================
  * Name         : drainColor()
  * First Created: Feb 15 -- Suk Chan Lee
@@ -257,6 +268,8 @@ function drainColor() {
     document.getElementById("footer").style.backgroundColor = "grey";
     document.getElementById("gear").src = "./source/Front-end/css/assets/gearblack.png";
 }
+
+
 
 /* ============================================================================
 * Name         : fillColor()
@@ -275,6 +288,16 @@ function fillColor() {
     document.getElementById("gear").src = "./source/Front-end/css/assets/Geartransparent.png";
 }
 
+
+/* ============================================================================
+ * Name         : updateTable()
+ * First Created: Feb 15 -- Suk Chan Lee
+ * Last  Revised: Feb 26 -- Yichen Han, update counter logic again
+ * Revised Times: 3
+ * 
+ * Description  : Set the table below the clock when timer tuns
+ * Type         : Helper Function.
+ =========================================================================== */
 function updateTable() {
     document.getElementById("counter").style.opacity = 0.4;
     if (currMode == "w") {
@@ -290,22 +313,127 @@ function updateTable() {
         document.getElementById("longBreak").style.opacity = 1;
         document.getElementById("shortBreak").style.opacity = 0.4;
     }
-    document.getElementById("counter").innerHTML = (4 - counts).toString() + "x";
+
+    document.getElementById("counter").innerHTML = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
 }
 
 
 
+/* ============================================================================
+ * Name         : saveTimeSettings()
+ * First Created: Feb 23 -- Jiaming Li
+ * Last  Revised: Feb 26 -- Yichen Han
+ * Revised Times: 3
+ * 
+ * Description  : Update vars and HTMLs according to Settings
+ * Type         : Major Function.
+ =========================================================================== */
+/* --------------------------------------------------------------------------
+ * Check the range of input values
+ --------------------------------------------------------------------------- */
+// Work phase (min)
+document.getElementById("work-time-number").addEventListener("input", function() {
+    let worknumber = document.getElementById("work-time-number").value;
+    if (!(worknumber >= 0 && worknumber <= 120)) {
+        alert("Please enter a value between 0 and 120");
+        document.getElementById("work-time-number").value = workSec / 60;
+    }
+});
+// Short break (min)
+document.getElementById("short-break-number").addEventListener("input", function() {
+    let shortBreaknumber = document.getElementById("short-break-number").value;
+    if (!(shortBreaknumber >= 0 && shortBreaknumber <= 120)) {
+        alert("Please enter a value between 0 and 120");
+        document.getElementById("short-break-number").value = sBrkSec / 60;
+    }
+});
+// Long break (min)
+document.getElementById("long-break-number").addEventListener("input", function() {
+    let longBreaknumber = document.getElementById("long-break-number").value;
+    if (!(longBreaknumber >= 0 && longBreaknumber <= 120)) {
+        alert("Please enter a value between 0 and 120");
+        document.getElementById("long-break-number").value = lBrkSec / 60;
+    }
+});
+// Long break interval
+document.getElementById("long-break-interval").addEventListener("input", function() {
+    let longBreakinterval = document.getElementById("long-break-interval").value;
+    if (!(longBreakinterval >= 0 && longBreakinterval <= 10)) {
+        alert("Please enter a value between 1 and 10");
+        document.getElementById("long-break-interval").value = countsThres;
+    }
+});
 
 function saveTimeSettings() {
+    /* ------------------------------------------------------------------------
+     * Work & Braks time
+     ----------------------------------------------------------------------- */
+    // get values
     let worknumber = document.getElementById("work-time-number").value;
-    let longBreaknumber = document.getElementById("long-break-number").value;
     let shortBreaknumber = document.getElementById("short-break-number").value;
+    let longBreaknumber = document.getElementById("long-break-number").value;
+
+    // update HTMLs
     document.getElementById("workTime").innerHTML = worknumber + "m";
     document.getElementById("shortBreakTime").innerHTML = shortBreaknumber + "m";
     document.getElementById("longBreakTime").innerHTML = longBreaknumber + "m";
+
+    // update modes' seconds
     workSec = parseInt(worknumber * 60);
     sBrkSec = shortBreaknumber * 60;
     lBrkSec = longBreaknumber * 60;
 
+    // update totalSec
+    if (currMode == "w") {
+        totalSec = parseInt(worknumber * 60);
+    } else if (currMode == "s") {
+        totalSec = shortBreaknumber * 60;
+    } else {
+        totalSec = longBreaknumber * 60;
+    }
 
+    // update timer's HTML
+    document.getElementById("time").innerHTML = secToTime(totalSec);
+
+
+    /* ------------------------------------------------------------------------
+     * Long break interval
+     ----------------------------------------------------------------------- */
+    countsThres = document.getElementById("long-break-interval").value;
+    document.getElementById("counter").innerHTML = countsThres + "x"
+}
+
+
+function SwitchToChinese() {
+    document.getElementById("welcome").innerHTML = "欢迎使用";
+    document.getElementById("workText").innerHTML = "工作时段";
+    document.getElementById("ShortBreakText").innerHTML = "较短休息时段";
+    document.getElementById("LongBreakText").innerHTML = "较长休息时段";
+    document.getElementById("start-btn").innerHTML = "开始计时";
+    document.getElementById("settingsTitle").innerHTML = "设置";
+    document.getElementById("WorkTimeTitle").innerHTML = "工作时段时间(分钟) :";
+    document.getElementById("ShortBreakTitle").innerHTML = "较短休息时段(分钟）:";
+    document.getElementById("LongBreakTitle").innerHTML = "较长休息时段(分钟）:";
+    document.getElementById("languageTitle").innerHTML = "语言选择 :";
+    document.getElementById("LongBreakInterval").innerHTML = "较长休息时段区间 :"
+    document.getElementById("statistics").innerHTML = "统计数据";
+
+
+
+
+}
+
+function SwitchToEnglish() {
+    document.getElementById("welcome").innerHTML = "Welcome Guest!";
+    document.getElementById("workText").innerHTML = "Work Phase";
+    document.getElementById("ShortBreakText").innerHTML = "Short Break";
+    document.getElementById("LongBreakText").innerHTML = "Long Break";
+    document.getElementById("start-btn").innerHTML = "START";
+    document.getElementById("settingsTitle").innerHTML = "Settings";
+    document.getElementById("WorkTimeTitle").innerHTML = "Work Phase (min):";
+    document.getElementById("ShortBreakTitle").innerHTML = "Short Break (min):";
+    document.getElementById("LongBreakTitle").innerHTML = "Long Break (min):";
+    document.getElementById("languageTitle").innerHTML = "Language:";
+    document.getElementById("LongBreakInterval").innerHTML = "Long Break Interval:"
+    document.getElementById("statistics").innerHTML = "Statistics";
 }
