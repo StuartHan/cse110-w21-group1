@@ -1,8 +1,8 @@
 /******************************************************************************
  * File Name    : main.css
- * First Created: Feb 14 -- Yichen Han
- * Last  Revised: Feb 15 -- Suk Chan Lee
- * Curr  Version: 1,1
+ * First Created: Feb 14
+ * Last  Revised: Feb 25 -- Yichen Han
+ * Curr  Version: 1.2
  * 
  * Description  : 
  * Variables    : 
@@ -238,11 +238,11 @@ tr {
 
 #statistics {
     grid-row: 7;
-    grid-column: 2 / span 2;
+    grid-column: 4 / span 2;
     width: 30%;
     height: 60%;
     border-radius: 8px;
-    font-size: 3vh;
+    font-size: 2vh;
     font-family: 'Kanit', sans-serif;
 }
 
@@ -290,6 +290,39 @@ tr {
     grid-row: 5;
     grid-column: 3;
     font-size: 1vw;
+    width: 40%;
+    min-width: 60px;
+    height: 1vw;
+}
+
+
+/* Settings: Long break interval. NEED REVISED */
+
+#LongBreakInterval {
+    grid-row: 7;
+    grid-column: 2;
+    font-size: 1.5vw;
+}
+
+#long-break-interval {
+    grid-row: 7;
+    grid-column: 3;
+    font-size: 1vw;
+    width: 40%;
+    min-width: 60px;
+    height: 1vw;
+}
+
+#languageTitle {
+    grid-row: 6;
+    grid-column: 2;
+    font-size: 1.5vw;
+}
+
+#language-form {
+    grid-row: 6;
+    grid-column: 3;
+    font-size: 0.5vw;
     width: 40%;
     min-width: 60px;
     height: 1vw;
