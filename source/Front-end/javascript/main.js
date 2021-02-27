@@ -403,6 +403,16 @@ function saveTimeSettings() {
     document.getElementById("counter").innerHTML = countsThres + "x"
 }
 
+/* ============================================================================
+ * Name         : SwitchToLanguage
+ * First Created: Feb 27 -- Jiaming Li
+ * Last  Revised: Feb 27 -- Jiaming Li, first created
+ * Revised Times: 1
+ * 
+ * Description  : Switch the language of content based on the option selected
+ * Type         : Helper Function.
+ =========================================================================== */
+
 
 function SwitchToChinese() {
     document.getElementById("welcome").innerHTML = "欢迎使用";
