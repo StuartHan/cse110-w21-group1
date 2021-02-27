@@ -84,11 +84,20 @@ document.body.innerHTML = `
 
 const { getByText, getByTestId, fireEvent } = require("@testing-library/dom");
 const {
+  // methods
   timeToSec,
   secToTime,
   fillColor,
   drainColor,
   updateTable,
+  countDown,
+  autoSwitchMode,
+  changeMode,
+
+  // vars
+  workSec,
+  totalSec,
+  currMode,
 } = require("../source/Front-end/javascript/main.js");
 
 describe("timeToSec testing", () => {
@@ -160,9 +169,9 @@ describe("drainColor testing", () => {
 });
 
 describe("updateTable testing", () => {
-  let counter    = document.getElementById("counter");
-  let workPhase  = document.getElementById("workPhase");
-  let longBreak  = document.getElementById("longBreak");
+  let counter = document.getElementById("counter");
+  let workPhase = document.getElementById("workPhase");
+  let longBreak = document.getElementById("longBreak");
   let shortBreak = document.getElementById("shortBreak");
 
   test("should updateTable, currMode=w, counts=0", () => {
@@ -232,20 +241,35 @@ describe("updateTable testing", () => {
     expect(longBreak.style.opacity).toBe("0.4");
     expect(shortBreak.style.opacity).toBe("0.4");
 
-//     expect(counter.innerHTML).toBe("0x");
+    //     expect(counter.innerHTML).toBe("0x");
+  });
+});
+
+  describe("countDown testing", () => {
+
+    test("totalSec = 0, should switch mode", () => {
+      let totalSec = 0;
+      countDown();
+
+      // TODO
+      expect(document.getElementById("sound-effect").played.length).toBe(0);
+
+    })
+
   });
 
-//   test("should updateTable, currMode=s, counts=0", () => {
-//     let currMode = "s";
-//     let counts = 0;
+  describe("autoSwitchMode testing", () => {
+    // TODO
+    test("test", () => {
+      expect(1).toBe(1);
+    })
+  })
 
-//     updateTable();
-
-//     expect(workPhase.style.opacity).toBe("0.4");
-//     expect(longBreak.style.opacity).toBe("0.4");
-//     expect(shortBreak.style.opacity).toBe("1");
-
-//     expect(counter.innerHTML).toBe("0x");
-//   });
-
-});
+  describe("changeMode testing", () => {
+    // TODO
+    var radioMode  = document.getElementsByName("radio-mode"); // radios
+    changeMode();
+    test("if current mode is w, set currMode to w", () => {
+      expect(document.getElementById("time").innerHTML).toBe(secToTime(workSec));
+    })
+  })

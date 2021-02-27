@@ -305,5 +305,8 @@ module.exports = {
     timeToSec: timeToSec,
     drainColor: drainColor,
     fillColor: fillColor,
-    updateTable: updateTable
+    updateTable: updateTable,
+
+    workSec: workSec,
+    totalSec: totalSec
 }
