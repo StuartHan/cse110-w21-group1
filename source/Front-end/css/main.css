@@ -282,14 +282,36 @@ header>h1 {
     cursor: pointer;
 }
 
-#statistics {
+#settingsButtons{
     grid-row: 7;
     grid-column: 2 / span 2;
-    width: 30%;
-    height: 60%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+}
+
+#saveSettings{
+    grid-row: 1;
+    grid-column: 2;
     border-radius: 8px;
-    font-size: 3vh;
+    font-size: 2vw;
     font-family: 'Kanit', sans-serif;
+    background-color: rgba(256,256,256,0.4);
+    margin-left: 5%;
+}
+
+#saveSettings:hover {
+    opacity: 0.3;
+}
+
+#statistics {
+    margin-right: 5%;
+    grid-row: 1;
+    grid-column: 1;
+    border-radius: 8px;
+    font-size: 2vw;
+    font-family: 'Kanit', sans-serif;
+    background-color: rgba(256,256,256,0.4);
 }
 
 #statistics:hover {
@@ -354,7 +376,7 @@ header>h1 {
     justify-items: center;
     display: grid;
     grid-template-columns: 15% 70% 15%;
-    grid-template-rows: 8% 8% 10% 10% 10% 40%;
+    grid-template-rows: 8% 8% 10% 10% 10% 10% 10% 20% 10%;
     z-index: 2;
     width: 80%;
     justify-self: center;
@@ -366,17 +388,6 @@ header>h1 {
     align-self: center;
     justify-self: center;
     font-size: 4vh;
-}
-
-#exitDoge {
-    grid-row: 1;
-    grid-column:  3;
-    font-size: 4vh;
-    align-self: center;
-}
-
-#exitDoge:hover {
-    opacity: 0.3;
 }
 
 #themeTitle{
@@ -409,12 +420,37 @@ header>h1 {
     grid-row: 3;
 }
 
-#aquatic{
+#night{
     grid-row: 4;
 }
 
-#sanfrancisco{
+#aquatic{
     grid-row: 5;
+}
+
+#sanfrancisco{
+    grid-row: 6;
+}
+
+#dogeland{
+    grid-row: 7;
+}
+
+#dogeSave{
+    grid-row:9;
+    font-size: 2vw;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    font-family: 'Kanit', sans-serif;
+    margin: 2% 5% 2% 5%;
+    background-color: rgba(256,256,256,0.4);
+    grid-column: 2;
+}
+
+#dogeSave:hover {
+    opacity: 0.3;
 }
 /* ============================================================================
  * Footer

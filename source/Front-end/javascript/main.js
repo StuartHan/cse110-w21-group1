@@ -29,7 +29,7 @@ document.getElementById("gear").addEventListener("click", function() { //On clic
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
 });
 
-document.getElementById("exitSettings").addEventListener("click", function() { //On click, hide settings
+document.getElementById("saveSettings").addEventListener("click", function() { //On click, hide settings
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
     saveTimeSettings();
@@ -42,40 +42,100 @@ document.getElementById("dogecoin").addEventListener("click", function() { //On 
     saveTimeSettings();
 });
 
-document.getElementById("exitDoge").addEventListener("click", function() { //On click, hide Doge Store
+document.getElementById("dogeSave").addEventListener("click", function() { //On click, hide Doge Store
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
 });
 
 document.getElementById("wildjungle").addEventListener("click", function() { //On click, switch to Jungle Theme
+    setActive(0);
     document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/wildjungle.jpg")';
-    document.getElementById("header").style.backgroundColor = "rgba(3,165,89,0.6)";
-    document.getElementById("footer").style.backgroundColor = "rgba(3,165,89,0.6)";
-    color = "rgba(3,165,89,0.6)";
+    turnLight();
 });
 
-document.getElementById("aquatic").addEventListener("click", function() { //On click, switch to Aquatic Theme
-    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
-    document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
-    document.getElementById("footer").style.backgroundColor = "rgba(256,256,256,0.4)";
-    color = "rgba(256,256,256,0.4)";
+document.getElementById("night").addEventListener("click", function() { //On click, switch to night Theme
+    setActive(1);
+    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/night.jpg")';
+    turnDark();
 });
 
-document.getElementById("sanfrancisco").addEventListener("click", function() { //On click, switch to San Francisco Theme
-    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
-    document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
-    document.getElementById("footer").style.backgroundColor = "rgba(256,256,256,0.4)";
-    color = "rgba(256,256,256,0.4)";
+document.getElementById("aquatic").addEventListener("click", function() { //On click, switch to Aquatic Theme if enough coins
+    if (window.localStorage.getItem('shopitems')[1] == '1'){
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
+        turnLight();
+        setActive(2);
+    }
+    else if (parseInt(window.localStorage.getItem('coin')) >= 50){
+        document.getElementById("cointext").innerHTML = (parseInt(window.localStorage.getItem('coin')) - 50).toString();
+        window.localStorage.setItem('coin',(parseInt(window.localStorage.getItem('coin')) - 50).toString());
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
+        window.localStorage.getItem('shopitems')[1] = '1';
+        turnLight();
+        setActive(2);
+    }
 });
 
-window.addEventListener('DOMContentLoaded', () => { //Initialize Doge Coins
-    if (localStorage.getItem('coin') == null){
+document.getElementById("sanfrancisco").addEventListener("click", function() { //On click, switch to San Francisco Theme if enough coins
+    if (window.localStorage.getItem('shopitems')[1] == '1'){
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
+        turnLight();
+        setActive(3);
+    }
+    else if (parseInt(window.localStorage.getItem('coin')) >= 100){
+        document.getElementById("cointext").innerHTML = (parseInt(window.localStorage.getItem('coin')) - 100).toString();
+        window.localStorage.setItem('coin',(parseInt(window.localStorage.getItem('coin')) - 100).toString());
+        window.localStorage.getItem('shopitems')[1] = '1';
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
+        turnLight();
+        setActive(3);
+    }
+});
+
+document.getElementById("dogeland").addEventListener("click", function() { //On click, switch to San Francisco Theme if enough coins
+    if (window.localStorage.getItem('shopitems')[2] == '1'){
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/god.jpg")';
+        turnLight();
+        setActive(4);
+    }
+    else{
+        window.localStorage.setItem("coin","0");//Take away everything they own. Everything.
+        document.getElementById("cointext").innerHTML = "0";
+        window.localStorage.getItem('shopitems')[2] = '1';
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/god.jpg")';
+        turnLight();
+        setActive(4);
+    }
+});
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('coin') == null){ //Initialize Doge Coins
         window.localStorage.setItem('coin', "0");
+        window.localStorage.setItem('shopitems', "000"); //Bit based indexing
+        window.localStorage.setItem('active', "10000");
         document.getElementById("cointext").innerHTML = "0";
     }
     else{
         document.getElementById("cointext").innerHTML = window.localStorage.getItem('coin');
     }
+    let items = window.localStorage.getItem('shopitems');
+    if (items[0] == 1)
+        document.getElementById('aquaticcost').innerHTML = "Owned";
+    if (items[1] == 1)
+        document.getElementById('sanfranciscocost').innerHTML = "Owned";
+    if (items[2] == 1)
+        document.getElementById('dogecost').innerHTML = "Owned";
+    let active = window.localStorage.getItem('active');
+    if (active[0] == 1)
+        document.getElementById('wildjungle').click();
+    else if (active[1] == 1)
+        document.getElementById('night').click();
+    else if (active[2] == 1)
+        document.getElementById('aquatic').click();
+    else if (active[3] == 1)
+        document.getElementById('sanfrancisco').click();
+    else if (active[4] == 1)
+        document.getElementById('dogeland').click();
 });
 
 document.getElementById("volume-slider").addEventListener("click", function() { //Alter volume
@@ -90,6 +150,31 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
     else
         document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-3.svg";
 });
+
+function turnLight(){
+    document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
+    document.getElementById("main").style.backgroundColor = "rgba(256,256,256,0.4)";
+    document.getElementById("footer").style.backgroundColor = "rgba(256,256,256,0.4)";
+    color = "rgba(256,256,256,0.4)";
+}
+
+function turnDark(){
+    document.getElementById("header").style.backgroundColor = "rgba(102,102,102,0.4)";
+    document.getElementById("main").style.backgroundColor = "rgba(102,102,102,0.4)";
+    document.getElementById("footer").style.backgroundColor = "rgba(102,102,102,0.4)";
+    color = "rgba(102,102,102,0.4)";
+}
+
+function setActive(index){
+    let string = ""
+    for (let int = 0; int < 5; int++){
+        if (int == index)
+            string += "1";
+        else
+            string += "0";
+    }
+    localStorage.setItem('active',string);
+}
 
 /* ============================================================================
  * Name         : runCounter()

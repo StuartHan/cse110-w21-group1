@@ -89,7 +89,6 @@
         </main>
 
         <span id="settingsMenu">
-            <h2 id="exitSettings">X</h2>
             <h2 id="settingsTitle">Settings</h2>
             <div id="volume-controls">
                 <img id="volume-pic" src="source/Front-end/css/assets/volume-level-3.svg">
@@ -101,25 +100,36 @@
             <input id="short-break-number" name="short-break-number" type="number" min="0" max="120" value="5">
             <h3 id="LongBreakTitle">Long Break (min):</h3>
             <input id="long-break-number" name="long-break-number" type="number" min="0" max="120" value="15">
-            <button id="statistics">Statistics</button>
+            <div id="settingsButtons">
+                <button id="statistics">Stats</button>
+                <button id="saveSettings">Save</button>
+            </div>
         </span>
 
         <span id="dogeCoinMenu">
-            <h2 id="exitDoge">X</h2>
             <h2 id="dogeTitle">Doge Shop</h2>
             <h3 id="themeTitle">Themes</h3>
             <div id="wildjungle" class="theme">
                 <h3>Wild Jungle</h3>
-                <p>Current</p>
+                <p id="junglecost">Current</p>
+            </div>
+            <div id="night" class="theme">
+                <h3>Night Mode</h3>
+                <p id="nightcost">Free</p>
             </div>
             <div id="aquatic" class="theme">
                 <h3>Aquatic</h3>
-                <p>50 Coins</p>
+                <p id="aquaticcost">50 Coins</p>
             </div>
             <div id="sanfrancisco" class="theme">
                 <h3>San Francisco</h3>
-                <p>100 Coins</p>
+                <p id="sanfranciscocost">100 Coins</p>
             </div>
+            <div id="dogeland" class="theme">
+                <h3>Doge Land</h3>
+                <p id="dogecost">Everything</p>
+            </div>
+            <button id="dogeSave">Save</button>
         </span>
 
         <footer id="footer">
