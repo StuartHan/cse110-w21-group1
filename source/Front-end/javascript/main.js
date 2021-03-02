@@ -520,8 +520,8 @@ function saveTimeSettings() {
 /* ============================================================================
  * Name         : SwitchToLanguage
  * First Created: Feb 27 -- Jiaming Li
- * Last  Revised: Feb 27 -- Jiaming Li, first created
- * Revised Times: 1
+ * Last  Revised: Mar 2  -- Yichen Han
+ * Revised Times: 2
  * 
  * Description  : Switch the language of content based on the option selected
  * Type         : Helper Function.
