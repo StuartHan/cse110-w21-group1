@@ -59,6 +59,34 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
 });
 
 
+// Statistics vars
+var totalWorkMins  = 0;
+var totalBreakMins = 0;
+var totalWorkCount = 0;
+var totalSBrkCount = 0;
+var totalLBrkCount = 0;
+
+
+// Local storage
+var storage = window.localStorage;
+if (storage["workSec"] != 0) {
+    workSec = storage["workSec"];
+    document.getElementById("work-time-number").value = (workSec / 60);
+}
+if (storage["sBrkSec"] != 0) {
+    sBrkSec = storage["sBrkSec"];
+    document.getElementById("short-break-number").value = (sBrkSec / 60);
+}
+if (storage["lBrkSec"] != 0) {
+    lBrkSec = storage["lBrkSec"];
+    document.getElementById("long-break-number").value = (lBrkSec / 60);
+}
+if (storage["lBrkItv"] != 0) {
+    countsThres = storage["lBrkItv"];
+    document.getElementById("long-break-interval").value = countsThres;
+}
+saveTimeSettings();
+
 
 
 /* ============================================================================
@@ -170,8 +198,8 @@ function countDown() {
 /* ============================================================================
  * Name         : autoSwitchMode()
  * First Created: Feb 15 -- Yichen Han
- * Last  Revised: Feb 15 -- Yichen Han
- * Revised Times: 1
+ * Last  Revised: Mar 2  -- Yichen Han, add statistics
+ * Revised Times: 2
  * 
  * Description  : If   current mode is working & counts < countsThres, 
  *                Then enter short break mode.
@@ -187,6 +215,8 @@ function countDown() {
 function autoSwitchMode() {
     // Now: working mode
     if (currMode == "w") {
+        totalWorkMins += (workSec / 60); // Statistics
+        totalWorkCount ++;               // Statistics
         // count < countsThres. Next: short break mode
         if (counts < countsThres) {
             document.getElementById("radio-shortBreak-mode").checked = true;
@@ -199,6 +229,15 @@ function autoSwitchMode() {
     }
     // Now: short/long break mode. Next: working mode
     else {
+        // Statistics
+        if (currMode == "s") {
+            totalBreakMins += sBrkSec / 60;
+            totalSBrkCount ++;
+        }
+        else {
+            totalBreakMins += lBrkSec / 60;
+            totalLBrkCount ++;
+        }
         document.getElementById("radio-working-mode").checked = true;
     }
     changeMode(); // deligate changeMode() to change totalSec & HTML
@@ -322,7 +361,8 @@ function updateTable() {
         document.getElementById("shortBreak").style.opacity = 0.4;
     }
 
-    document.getElementById("counter").innerHTML = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
+    document.getElementById("counter").innerHTML 
+    = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
 }
 
 
@@ -330,8 +370,8 @@ function updateTable() {
 /* ============================================================================
  * Name         : saveTimeSettings()
  * First Created: Feb 23 -- Jiaming Li
- * Last  Revised: Feb 26 -- Yichen Han
- * Revised Times: 3
+ * Last  Revised: Mar 2  -- Yichen Han add local storage & updates input check: edge case = 0
+ * Revised Times: 4
  * 
  * Description  : Update vars and HTMLs according to Settings
  * Type         : Major Function.
@@ -339,39 +379,55 @@ function updateTable() {
 /* --------------------------------------------------------------------------
  * Check the range of input values
  --------------------------------------------------------------------------- */
+var regex=/^[0-9]+$/; // RegEx
+// Alerts
+var alertTime = "Please enter an integer between 1 and 120.";
+var alertIntv = "Please enter an integer between 1 and 10."
+
 // Work phase (min)
 document.getElementById("work-time-number").addEventListener("input", function() {
     let worknumber = document.getElementById("work-time-number").value;
-    if (!(worknumber >= 0 && worknumber <= 120)) {
-        alert("Please enter a value between 0 and 120");
+    if ((worknumber != "" && !worknumber.match(regex)) // RegEx: "" or int
+    ||  !(worknumber >= 0 && worknumber <= 120)) {     // Range: 0~120
+        alert(alertTime);
         document.getElementById("work-time-number").value = workSec / 60;
     }
 });
+
 // Short break (min)
 document.getElementById("short-break-number").addEventListener("input", function() {
     let shortBreaknumber = document.getElementById("short-break-number").value;
-    if (!(shortBreaknumber >= 0 && shortBreaknumber <= 120)) {
-        alert("Please enter a value between 0 and 120");
+    if ((shortBreaknumber != "" && !shortBreaknumber.match(regex)) // RegEx: "" or int
+    ||  !(shortBreaknumber >= 0 && shortBreaknumber <= 120)) {     // Range: 0~120
+        alert(alertTime);
         document.getElementById("short-break-number").value = sBrkSec / 60;
     }
 });
+
 // Long break (min)
 document.getElementById("long-break-number").addEventListener("input", function() {
     let longBreaknumber = document.getElementById("long-break-number").value;
-    if (!(longBreaknumber >= 0 && longBreaknumber <= 120)) {
-        alert("Please enter a value between 0 and 120");
+    if ((longBreaknumber != "" && !longBreaknumber.match(regex)) // RegEx: "" or int
+    ||  !(longBreaknumber >= 0 && longBreaknumber <= 120)) {     // Range: 0~120
+        alert(alertTime);
         document.getElementById("long-break-number").value = lBrkSec / 60;
     }
 });
+
 // Long break interval
 document.getElementById("long-break-interval").addEventListener("input", function() {
     let longBreakinterval = document.getElementById("long-break-interval").value;
-    if (!(longBreakinterval >= 0 && longBreakinterval <= 10)) {
-        alert("Please enter a value between 1 and 10");
+    if ((longBreakinterval != "" && !longBreakinterval.match(regex)) // RegEx: "" or int
+    ||  !(longBreakinterval >= 0 && longBreakinterval <= 10)) {      // Range: 0~10
+        alert(alertIntv);
         document.getElementById("long-break-interval").value = countsThres;
     }
 });
 
+
+/* --------------------------------------------------------------------------
+ * Read & update Settings
+ --------------------------------------------------------------------------- */
 function saveTimeSettings() {
     /* ------------------------------------------------------------------------
      * Work & Braks time
@@ -381,13 +437,27 @@ function saveTimeSettings() {
     let shortBreaknumber = document.getElementById("short-break-number").value;
     let longBreaknumber = document.getElementById("long-break-number").value;
 
+    // edge cases = 0
+    if (worknumber == 0) {
+        worknumber = 1;
+        document.getElementById("work-time-number").value = 1;
+    }
+    if (shortBreaknumber == 0) {
+        shortBreaknumber = 1;
+        document.getElementById("short-break-number").value = 1;
+    }
+    if (longBreaknumber == 0) {
+        longBreaknumber = 1;
+        document.getElementById("long-break-number").value = 1;
+    }
+
     // update HTMLs
     document.getElementById("workTime").innerHTML = worknumber + "m";
     document.getElementById("shortBreakTime").innerHTML = shortBreaknumber + "m";
     document.getElementById("longBreakTime").innerHTML = longBreaknumber + "m";
 
     // update modes' seconds
-    workSec = parseInt(worknumber * 60);
+    workSec = worknumber * 60;
     sBrkSec = shortBreaknumber * 60;
     lBrkSec = longBreaknumber * 60;
 
@@ -408,8 +478,25 @@ function saveTimeSettings() {
      * Long break interval
      ----------------------------------------------------------------------- */
     countsThres = document.getElementById("long-break-interval").value;
-    document.getElementById("counter").innerHTML = countsThres + "x"
+    // edge case 0 -> 1
+    if (countsThres == 0) {
+        countsThres = 1;
+        document.getElementById("long-break-interval").value = 1;
+    }
+    document.getElementById("counter").innerHTML 
+    = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
+
+
+    /* ------------------------------------------------------------------------
+     * Local Storage
+     ----------------------------------------------------------------------- */
+    storage["workSec"] = workSec;
+    storage["sBrkSec"] = sBrkSec;
+    storage["lBrkSec"] = lBrkSec;
+    storage["lBrkItv"] = countsThres;
 }
+
+
 
 /* ============================================================================
  * Name         : SwitchToLanguage
@@ -420,8 +507,6 @@ function saveTimeSettings() {
  * Description  : Switch the language of content based on the option selected
  * Type         : Helper Function.
  =========================================================================== */
-
-
 function SwitchToChinese() {
     document.getElementById("welcome").innerHTML = "欢迎使用";
     document.getElementById("workText").innerHTML = "工作时段";
@@ -436,10 +521,8 @@ function SwitchToChinese() {
     document.getElementById("LongBreakInterval").innerHTML = "较长休息时段区间 :"
     document.getElementById("statistics").innerHTML = "统计数据";
     document.getElementById("statisticsTitle").innerHTML = "统计数据";
-
-
-
-
+    alertTime = "请输入1到120的整数。"
+    alertIntv = "请输入1到10的整数"
 }
 
 function SwitchToEnglish() {
@@ -456,4 +539,6 @@ function SwitchToEnglish() {
     document.getElementById("LongBreakInterval").innerHTML = "Long Break Interval:"
     document.getElementById("statistics").innerHTML = "Statistics";
     document.getElementById("statisticsTitle").innerHTML = "Statistics";
+    alertTime = "Please enter an integer between 1 and 120.";
+    alertIntv = "Please enter an integer between 1 and 10."
 }
