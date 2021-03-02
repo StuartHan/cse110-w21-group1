@@ -43,24 +43,50 @@ document.getElementById("dogecoin").addEventListener("click", function() { //On 
 });
 
 document.getElementById("dogeSave").addEventListener("click", function() { //On click, hide Doge Store
+    document.getElementById("insufficientText").style.visibility = "hidden";
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
+    loadActive();
+    darkenChosen();
 });
 
-document.getElementById("wildjungle").addEventListener("click", function() { //On click, switch to Jungle Theme
-    setActive(0);
+document.getElementById("wildjungle").addEventListener("click", function() { //On click, preview the Jungle Theme
+    document.getElementById("insufficientText").style.visibility = "hidden";
     document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/wildjungle.jpg")';
     turnLight();
 });
 
-document.getElementById("night").addEventListener("click", function() { //On click, switch to night Theme
+document.getElementById("wildjunglebuy").addEventListener("click", function() { //On click, switch to Jungle Theme
+    document.getElementById("insufficientText").style.visibility = "hidden";
+    setActive(0);
+    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/wildjungle.jpg")';
+    turnLight();
+    darkenChosen();
+});
+
+document.getElementById("night").addEventListener("click", function() { //On click, preview night Theme
+    document.getElementById("insufficientText").style.visibility = "hidden";
+    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/night.jpg")';
+    turnLight();
+});
+
+document.getElementById("nightbuy").addEventListener("click", function() { //On click, switch to night Theme
+    document.getElementById("insufficientText").style.visibility = "hidden";
     setActive(1);
     document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/night.jpg")';
     turnDark();
+    darkenChosen();
 });
 
-document.getElementById("aquatic").addEventListener("click", function() { //On click, switch to Aquatic Theme if enough coins
-    if (window.localStorage.getItem('shopitems')[1] == '1'){
+document.getElementById("aquatic").addEventListener("click", function() {//On click, preview Aquatic Theme
+    document.getElementById("insufficientText").style.visibility = "hidden";
+    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
+    turnLight();
+});
+
+document.getElementById("aquaticbuy").addEventListener("click", function() { //On click, switch to Aquatic Theme if enough coins
+    document.getElementById("insufficientText").style.visibility = "hidden";
+    if (window.localStorage.getItem('shopitems')[0] == '1'){
         document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
         turnLight();
         setActive(2);
@@ -69,13 +95,23 @@ document.getElementById("aquatic").addEventListener("click", function() { //On c
         document.getElementById("cointext").innerHTML = (parseInt(window.localStorage.getItem('coin')) - 50).toString();
         window.localStorage.setItem('coin',(parseInt(window.localStorage.getItem('coin')) - 50).toString());
         document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
-        window.localStorage.getItem('shopitems')[1] = '1';
+        setShopItems(0);
         turnLight();
         setActive(2);
     }
+    else
+        document.getElementById("insufficientText").style.visibility = "visible";
+    darkenChosen();
 });
 
-document.getElementById("sanfrancisco").addEventListener("click", function() { //On click, switch to San Francisco Theme if enough coins
+document.getElementById("sanfrancisco").addEventListener("click", function() { //On click, preview San Francisco Theme
+    document.getElementById("insufficientText").style.visibility = "hidden";
+    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
+    turnLight();
+});
+
+document.getElementById("sanfranciscobuy").addEventListener("click", function() { //On click, switch to San Francisco Theme if enough coins
+    document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[1] == '1'){
         document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
         turnLight();
@@ -84,14 +120,24 @@ document.getElementById("sanfrancisco").addEventListener("click", function() { /
     else if (parseInt(window.localStorage.getItem('coin')) >= 100){
         document.getElementById("cointext").innerHTML = (parseInt(window.localStorage.getItem('coin')) - 100).toString();
         window.localStorage.setItem('coin',(parseInt(window.localStorage.getItem('coin')) - 100).toString());
-        window.localStorage.getItem('shopitems')[1] = '1';
+        setShopItems(1);
         document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
         turnLight();
         setActive(3);
     }
+    else
+        document.getElementById("insufficientText").style.visibility = "visible";
+    darkenChosen();
 });
 
-document.getElementById("dogeland").addEventListener("click", function() { //On click, switch to San Francisco Theme if enough coins
+document.getElementById("dogeland").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("insufficientText").style.visibility = "hidden";
+    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/god.jpg")';
+    turnLight();
+});
+
+document.getElementById("dogebuy").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[2] == '1'){
         document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/god.jpg")';
         turnLight();
@@ -100,16 +146,43 @@ document.getElementById("dogeland").addEventListener("click", function() { //On 
     else{
         window.localStorage.setItem("coin","0");//Take away everything they own. Everything.
         document.getElementById("cointext").innerHTML = "0";
-        window.localStorage.getItem('shopitems')[2] = '1';
+        setShopItems(2);
         document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/god.jpg")';
         turnLight();
         setActive(4);
     }
+    darkenChosen();
 });
 
+/* ============================================================================
+ * Name         : incrementCoin(amount)
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : Volume Slider controls. Change image and sound accordingly.
+ * Parameter    : amount, the amount to increase coin inventory by.
+ * Return       : N/A
+ =========================================================================== */
+function incrementCoin(amount){
+    let newNum = (parseInt(localStorage.getItem("coin"))+amount).toString();
+    localStorage.setItem("coin",newNum);
+    document.getElementById("cointext").innerHTML = newNum;
+}
 
+/* ============================================================================
+ * Name         : DOMContentLoaded
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : When the DOM Content is loaded, if it is a user's first time visiting
+ *                the website, load in the coin, shopitems, and active localStorage items.
+ *                Otherwise, load the most recently used background and coins.
+ =========================================================================== */
 window.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('coin') == null){ //Initialize Doge Coins
+    localStorage.setItem('coin',"900");
+    if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null){ //Initialize Doge Coins
         window.localStorage.setItem('coin', "0");
         window.localStorage.setItem('shopitems', "000"); //Bit based indexing
         window.localStorage.setItem('active', "10000");
@@ -125,19 +198,125 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('sanfranciscocost').innerHTML = "Owned";
     if (items[2] == 1)
         document.getElementById('dogecost').innerHTML = "Owned";
-    let active = window.localStorage.getItem('active');
-    if (active[0] == 1)
-        document.getElementById('wildjungle').click();
-    else if (active[1] == 1)
-        document.getElementById('night').click();
-    else if (active[2] == 1)
-        document.getElementById('aquatic').click();
-    else if (active[3] == 1)
-        document.getElementById('sanfrancisco').click();
-    else if (active[4] == 1)
-        document.getElementById('dogeland').click();
+    loadActive();
+    darkenChosen();
 });
 
+/* ============================================================================
+ * Name         : loadActive()
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : Load the last selected theme
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
+function loadActive(){
+    let active = window.localStorage.getItem('active');
+    if (active[0] == 1){
+        document.getElementById('wildjunglebuy').click();
+    }
+    else if (active[1] == 1){
+        document.getElementById('nightbuy').click();
+    }
+    else if (active[2] == 1){
+        document.getElementById('aquaticbuy').click();
+    }
+    else if (active[3] == 1){
+        document.getElementById('sanfranciscobuy').click();
+    }
+    else if (active[4] == 1){
+        document.getElementById('dogebuy').click();
+    }
+}
+
+/* ============================================================================
+ * Name         : darkenChosen()
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : Darken the last selected theme's button
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
+function darkenChosen(){
+    let active = window.localStorage.getItem('active');
+    let shopitems = window.localStorage.getItem('shopitems');
+    document.getElementById('wildjunglebuy').style.backgroundColor = "rgba(256,256,256,0.4)";
+    document.getElementById('nightbuy').style.backgroundColor = "rgba(256,256,256,0.4)";
+    document.getElementById('aquaticbuy').style.backgroundColor = "rgba(256,256,256,0.4)";
+    document.getElementById('sanfranciscobuy').style.backgroundColor = "rgba(256,256,256,0.4)";
+    document.getElementById('dogebuy').style.backgroundColor = "rgba(256,256,256,0.4)";
+    document.getElementById('wildjunglebuy').innerHTML = "Owned";
+    document.getElementById('nightbuy').innerHTML = "Owned";
+    if (shopitems[0] == 1)
+        document.getElementById('aquaticbuy').innerHTML = "Owned";
+    else
+        document.getElementById('aquaticbuy').innerHTML = "Buy";
+    if (shopitems[1] == 1)
+        document.getElementById('sanfranciscobuy').innerHTML = "Owned";
+    else
+        document.getElementById('sanfranciscobuy').innerHTML = "Buy";
+    if (shopitems[2] == 1)
+        document.getElementById('dogebuy').innerHTML = "Owned";
+    else
+        document.getElementById('dogebuy').innerHTML = "Buy";
+    if (active[0] == 1){
+        document.getElementById('wildjunglebuy').style.backgroundColor = "rgba(256,256,256,0.1)";
+        document.getElementById('wildjunglebuy').innerHTML = "Selected";
+    }
+    else if (active[1] == 1){
+        document.getElementById('nightbuy').style.backgroundColor = "rgba(256,256,256,0.1)";
+        document.getElementById('nightbuy').innerHTML = "Selected";
+    }
+    else if (active[2] == 1){
+        document.getElementById('aquaticbuy').style.backgroundColor = "rgba(256,256,256,0.1)";
+        document.getElementById('aquaticbuy').innerHTML = "Selected";
+    }
+    else if (active[3] == 1){
+        document.getElementById('sanfranciscobuy').style.backgroundColor = "rgba(256,256,256,0.1)";
+        document.getElementById('sanfranciscobuy').innerHTML = "Selected";
+    }
+    else if (active[4] == 1){
+        document.getElementById('dogebuy').style.backgroundColor = "rgba(256,256,256,0.1)";
+        document.getElementById('dogebuy').innerHTML = "Selected";
+    }
+}
+
+/* ============================================================================
+ * Name         : setShopItems(index)
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : Set the index to 1 in shopitems in localStorage
+ * Parameter    : index, index to turn to 1
+ * Return       : N/A
+ =========================================================================== */
+function setShopItems(index){
+    let shopitems = window.localStorage.getItem('shopitems');
+    let temp = "";
+    for (let i = 0; i < shopitems.length; i++){
+        if (i == index)
+            temp += "1"
+        else
+            temp += shopitems[i]
+    }
+    window.localStorage.setItem('shopitems',temp);
+}
+
+/* ============================================================================
+ * Name         : Volume Slider
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : Volume Slider controls. Change image and sound accordingly.
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
 document.getElementById("volume-slider").addEventListener("click", function() { //Alter volume
     let volume = document.getElementById("volume-slider").value;
     document.getElementById("sound-effect").volume = volume / 100;
@@ -151,6 +330,16 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
         document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-3.svg";
 });
 
+/* ============================================================================
+ * Name         : turnLight()
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : Set header + main + footer to white and opaque settings.
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
 function turnLight(){
     document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById("main").style.backgroundColor = "rgba(256,256,256,0.4)";
@@ -158,6 +347,16 @@ function turnLight(){
     color = "rgba(256,256,256,0.4)";
 }
 
+/* ============================================================================
+ * Name         : turnDark()
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : Set header + main + footer to grey and opaque settings.
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
 function turnDark(){
     document.getElementById("header").style.backgroundColor = "rgba(102,102,102,0.4)";
     document.getElementById("main").style.backgroundColor = "rgba(102,102,102,0.4)";
@@ -165,6 +364,16 @@ function turnDark(){
     color = "rgba(102,102,102,0.4)";
 }
 
+/* ============================================================================
+ * Name         : setActive(index)
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : Set active index to 1 and all else to 0
+ * Parameter    : index, indice to turn to 1
+ * Return       : N/A
+ =========================================================================== */
 function setActive(index){
     let string = ""
     for (let int = 0; int < 5; int++){
@@ -409,6 +618,16 @@ function fillColor() {
     document.getElementById("gear").src = "./source/Front-end/css/assets/Geartransparent.png";
 }
 
+/* ============================================================================
+ * Name         : updateTable()
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : Update table according to current 
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
 function updateTable() {
     document.getElementById("counter").style.opacity = 0.4;
     if (currMode == "w") {
@@ -428,8 +647,6 @@ function updateTable() {
 }
 
 
-
-
 function saveTimeSettings() {
     let worknumber = document.getElementById("work-time-number").value;
     let longBreaknumber = document.getElementById("long-break-number").value;
@@ -441,10 +658,4 @@ function saveTimeSettings() {
     sBrkSec = shortBreaknumber * 60;
     lBrkSec = longBreaknumber * 60;
     document.getElementById("time").innerHTML = secToTime(workSec);
-}
-
-function incrementCoin(amount){
-    let newNum = (parseInt(localStorage.getItem("coin"))+amount).toString();
-    localStorage.setItem("coin",newNum);
-    document.getElementById("cointext").innerHTML = newNum;
 }
