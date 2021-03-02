@@ -1,11 +1,10 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Mar 2 -- Jiaming Li
- * Curr  Version: 1.2
+ * Last  Revised: Mar 2
+ * Curr  Version: 2.1
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
- *                A concern on logic: does var "totalSec" decrease lines or make logic more complex? --Stuart
  * Variables    : 
  * Functions    : 
  * 
@@ -59,7 +58,16 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
 });
 
 
-// Statistics vars
+
+/* ============================================================================
+ * First Created: Mar 2  -- Yichen Han
+ * Last  Revised: Mar 2  -- Yichen Han
+ * Revised Times: 1
+ * 
+ * Description  : Variables shown in Statistics.
+ * Discrip in CN: 统计窗口中展示的变量。
+ * Type         : Global Variables.
+ =========================================================================== */
 var totalWorkMins  = 0;
 var totalBreakMins = 0;
 var totalWorkCount = 0;
@@ -67,7 +75,19 @@ var totalSBrkCount = 0;
 var totalLBrkCount = 0;
 
 
-// Local storage
+
+/* ============================================================================
+ * First Created: Mar 2  -- Yichen Han
+ * Last  Revised: Mar 2  -- Yichen Han
+ * Revised Times: 1
+ * 
+ * Description  : Fetch workSec, sBrkSec, lBrkSec, and countsTres (which are
+ *                time of working, short/long break, and long break interval)
+ *                if local storage have them.
+ * Discrip in CN: 如果本地储存包含 workSec, sBrkSec, lBrkSec, 和 countsTres（即
+ *                工作时长，长短休息时常，和长休息间隔），获取它们。
+ * Type         : Global Variables.
+ =========================================================================== */
 var storage = window.localStorage;
 if (storage["workSec"]) {
     workSec = storage["workSec"];
@@ -242,7 +262,6 @@ function autoSwitchMode() {
     }
     changeMode(); // deligate changeMode() to change totalSec & HTML
 }
-
 
 
 
