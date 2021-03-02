@@ -46,6 +46,14 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
 });
 
 
+// Statistics vars
+var totalWorkMins  = 0;
+var totalBreakMins = 0;
+var totalWorkCount = 0;
+var totalSBrkCount = 0;
+var totalLBrkCount = 0;
+
+
 
 
 /* ============================================================================
@@ -157,8 +165,8 @@ function countDown() {
 /* ============================================================================
  * Name         : autoSwitchMode()
  * First Created: Feb 15 -- Yichen Han
- * Last  Revised: Feb 15 -- Yichen Han
- * Revised Times: 1
+ * Last  Revised: Mar 2  -- Yichen Han, add statistics
+ * Revised Times: 2
  * 
  * Description  : If   current mode is working & counts < countsThres, 
  *                Then enter short break mode.
@@ -174,6 +182,9 @@ function countDown() {
 function autoSwitchMode() {
     // Now: working mode
     if (currMode == "w") {
+        totalWorkMins += (workSec / 60); // Statistics
+        totalWorkCount ++;               // Statistics
+        alert (totalWorkMins + " " + totalWorkCount);
         // count < countsThres. Next: short break mode
         if (counts < countsThres) {
             document.getElementById("radio-shortBreak-mode").checked = true;
@@ -186,6 +197,16 @@ function autoSwitchMode() {
     }
     // Now: short/long break mode. Next: working mode
     else {
+        // Statistics
+        if (currMode == "s") {
+            totalBreakMins += sBrkSec / 60;
+            totalSBrkCount ++;
+        }
+        else {
+            totalBreakMins += lBrkSec / 60;
+            totalLBrkCount ++;
+        }
+        alert (totalBreakMins + " " + totalSBrkCount + " " + totalLBrkCount);
         document.getElementById("radio-working-mode").checked = true;
     }
     changeMode(); // deligate changeMode() to change totalSec & HTML
