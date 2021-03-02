@@ -1,7 +1,7 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Feb 26 -- Yichen Han
+ * Last  Revised: Mar 2 -- Jiaming Li
  * Curr  Version: 1.2
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
@@ -25,6 +25,14 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
 
 document.getElementById("gear").addEventListener("click", function() { //On click, show settings
     document.getElementById("settingsMenu").style.visibility = "visible";
+});
+
+document.getElementById("statistics").addEventListener("click", function() { //On click, show statistics
+    document.getElementById("statisticsMenu").style.visibility = "visible";
+});
+
+document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
+    document.getElementById("statisticsMenu").style.visibility = "hidden";
 });
 
 document.getElementById("exitSettings").addEventListener("click", function() { //On click, hide settings
@@ -427,6 +435,7 @@ function SwitchToChinese() {
     document.getElementById("languageTitle").innerHTML = "语言选择 :";
     document.getElementById("LongBreakInterval").innerHTML = "较长休息时段区间 :"
     document.getElementById("statistics").innerHTML = "统计数据";
+    document.getElementById("statisticsTitle").innerHTML = "统计数据";
 
 
 
@@ -446,4 +455,5 @@ function SwitchToEnglish() {
     document.getElementById("languageTitle").innerHTML = "Language:";
     document.getElementById("LongBreakInterval").innerHTML = "Long Break Interval:"
     document.getElementById("statistics").innerHTML = "Statistics";
+    document.getElementById("statisticsTitle").innerHTML = "Statistics";
 }
