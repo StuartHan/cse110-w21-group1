@@ -1,7 +1,7 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Feb 26 -- Yichen Han
+ * Last  Revised: Mar 2 -- Jiaming Li
  * Curr  Version: 1.2
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
@@ -25,6 +25,14 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
 
 document.getElementById("gear").addEventListener("click", function() { //On click, show settings
     document.getElementById("settingsMenu").style.visibility = "visible";
+});
+
+document.getElementById("statistics").addEventListener("click", function() { //On click, show statistics
+    document.getElementById("statisticsMenu").style.visibility = "visible";
+});
+
+document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
+    document.getElementById("statisticsMenu").style.visibility = "hidden";
 });
 
 document.getElementById("exitSettings").addEventListener("click", function() { //On click, hide settings
@@ -362,7 +370,7 @@ function updateTable() {
 /* ============================================================================
  * Name         : saveTimeSettings()
  * First Created: Feb 23 -- Jiaming Li
- * Last  Revised: Mar 2  -- Yichen Han updates input check: edge case = 0
+ * Last  Revised: Mar 2  -- Yichen Han add local storage & updates input check: edge case = 0
  * Revised Times: 4
  * 
  * Description  : Update vars and HTMLs according to Settings
@@ -371,40 +379,55 @@ function updateTable() {
 /* --------------------------------------------------------------------------
  * Check the range of input values
  --------------------------------------------------------------------------- */
-var regex=/^[0-9]+$/;
+var regex=/^[0-9]+$/; // RegEx
+// Alerts
+var alertTime = "Please enter an integer between 1 and 120.";
+var alertIntv = "Please enter an integer between 1 and 10."
+
 // Work phase (min)
 document.getElementById("work-time-number").addEventListener("input", function() {
     let worknumber = document.getElementById("work-time-number").value;
-    if ((worknumber == "" && !worknumber.isEmpty()) || !(worknumber >= 0 && worknumber <= 120)) {  // Range: 0~120
-        alert("Please enter a value between 1 and 120");
+    if ((worknumber != "" && !worknumber.match(regex)) // RegEx: "" or int
+    ||  !(worknumber >= 0 && worknumber <= 120)) {     // Range: 0~120
+        alert(alertTime);
         document.getElementById("work-time-number").value = workSec / 60;
     }
 });
+
 // Short break (min)
 document.getElementById("short-break-number").addEventListener("input", function() {
     let shortBreaknumber = document.getElementById("short-break-number").value;
-    if (!(shortBreaknumber >= 0 && shortBreaknumber <= 120)) {
-        alert("Please enter a value between 1 and 120");
+    if ((shortBreaknumber != "" && !shortBreaknumber.match(regex)) // RegEx: "" or int
+    ||  !(shortBreaknumber >= 0 && shortBreaknumber <= 120)) {     // Range: 0~120
+        alert(alertTime);
         document.getElementById("short-break-number").value = sBrkSec / 60;
     }
 });
+
 // Long break (min)
 document.getElementById("long-break-number").addEventListener("input", function() {
     let longBreaknumber = document.getElementById("long-break-number").value;
-    if (!(longBreaknumber >= 0 && longBreaknumber <= 120)) {
-        alert("Please enter a value between 1 and 120");
+    if ((longBreaknumber != "" && !longBreaknumber.match(regex)) // RegEx: "" or int
+    ||  !(longBreaknumber >= 0 && longBreaknumber <= 120)) {     // Range: 0~120
+        alert(alertTime);
         document.getElementById("long-break-number").value = lBrkSec / 60;
     }
 });
+
 // Long break interval
 document.getElementById("long-break-interval").addEventListener("input", function() {
     let longBreakinterval = document.getElementById("long-break-interval").value;
-    if (!(longBreakinterval >= 0 && longBreakinterval <= 10)) {
-        alert("Please enter a value between 1 and 10");
+    if ((longBreakinterval != "" && !longBreakinterval.match(regex)) // RegEx: "" or int
+    ||  !(longBreakinterval >= 0 && longBreakinterval <= 10)) {      // Range: 0~10
+        alert(alertIntv);
         document.getElementById("long-break-interval").value = countsThres;
     }
 });
 
+
+/* --------------------------------------------------------------------------
+ * Read & update Settings
+ --------------------------------------------------------------------------- */
 function saveTimeSettings() {
     /* ------------------------------------------------------------------------
      * Work & Braks time
@@ -497,6 +520,9 @@ function SwitchToChinese() {
     document.getElementById("languageTitle").innerHTML = "语言选择 :";
     document.getElementById("LongBreakInterval").innerHTML = "较长休息时段区间 :"
     document.getElementById("statistics").innerHTML = "统计数据";
+    document.getElementById("statisticsTitle").innerHTML = "统计数据";
+    alertTime = "请输入1到120的整数。"
+    alertIntv = "请输入1到10的整数"
 }
 
 function SwitchToEnglish() {
@@ -512,4 +538,7 @@ function SwitchToEnglish() {
     document.getElementById("languageTitle").innerHTML = "Language:";
     document.getElementById("LongBreakInterval").innerHTML = "Long Break Interval:"
     document.getElementById("statistics").innerHTML = "Statistics";
+    document.getElementById("statisticsTitle").innerHTML = "Statistics";
+    alertTime = "Please enter an integer between 1 and 120.";
+    alertIntv = "Please enter an integer between 1 and 10."
 }

@@ -1,10 +1,10 @@
 <!--***************************************************************************
  * File Name    : index.html
  * First Created: Feb 14
- * Last  Revised: Feb 27 -- Jiaming Li
- * Curr  Version: 1.2
+ * Last  Revised: Mar 2-- Jiaming Li
+ * Curr  Version: 2.1
  * 
- * Description  : + long break interval
+ * Description  : + statistics page
  * Variables    : 
  * Functions    : 
  * 
@@ -92,11 +92,11 @@
                 <input id="volume-slider" type="range" min="0" max="100" value="100">
             </div>
             <h3    id="WorkTimeTitle">Work Phase (min):</h3>
-            <input id="work-time-number"   name="work-time-number"   type="number" min="1" max="120" value="25">
+            <input id="work-time-number"   name="work-time-number"   type="text" min="1" max="120" value="25">
             <h3    id="ShortBreakTitle">Short Break (min):</h3>
-            <input id="short-break-number" name="short-break-number" type="number" min="1" max="120" value="5">
+            <input id="short-break-number" name="short-break-number" type="text" min="1" max="120" value="5">
             <h3    id="LongBreakTitle">Long Break (min):</h3>
-            <input id="long-break-number"  name="long-break-number"  type="number" min="1" max="120" value="15">
+            <input id="long-break-number"  name="long-break-number"  type="text" min="1" max="120" value="15">
             <h3    id="languageTitle"> Language:</h3>
             <form style="text-align:center" id="language-form">
                 <input id="english-selection" type="radio" name="language" value="language" checked>English
@@ -105,11 +105,14 @@
                 </form>
             <!-- Long break interval -->
             <h3    id="LongBreakInterval">Long Break Interval:</h3>
-            <input id="long-break-interval" name="long-break-interval" type="number" min="1" max="10" value="4">
+            <input id="long-break-interval" name="long-break-interval" type="text" min="1" max="10" value="4">
             <!-- Statistics button -->
             <button id="statistics">Statistics</button>
         </span>
-
+        <span id="statisticsMenu">
+            <h2 id="statisticsTitle">Statistics</h2>
+            <button id="OKbtn-statistics">OK</button>
+        </span>
         <footer id="footer">
 
         </footer>
