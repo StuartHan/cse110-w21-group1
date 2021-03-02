@@ -231,7 +231,7 @@ header>h1 {
     justify-items: center;
     display: grid;
     grid-template-columns: 15% 50% 20% 15%;
-    grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 12%;
+    grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 10% 12%;
     z-index: 2;
     width: 80%;
     justify-self: center;
@@ -281,22 +281,30 @@ header>h1 {
 }
 
 
-#statistics {
-    grid-row: 9;
-    grid-column: 2 / span 2;
+#settingsButtons{
+    grid-row:9;
+    grid-column:2 / span 2;
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: 100%;
 }
 
-#saveSettings{
-    grid-row: 1;
-    grid-column: 2;
+#statistics, #saveSettings{
     border-radius: 8px;
     font-size: 2vw;
     font-family: 'Kanit', sans-serif;
     background-color: rgba(256,256,256,0.4);
     margin-left: 5%;
+}
+
+#statistics {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+#saveSettings{
+    grid-row: 1;
+    grid-column: 2;
 }
 
 #saveSettings:hover {
@@ -313,6 +321,10 @@ header>h1 {
     background-color: rgba(256,256,256,0.4);
 }
 
+#statistics:hover{
+    opacity: 0.3;
+}
+
 #statisticsMenu {
     visibility: hidden;
     grid-column: 2;
@@ -327,7 +339,7 @@ header>h1 {
     border-style: solid;
     display: grid;
     grid-template-columns: 15% 50% 20% 15%;
-    grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 12%;
+    grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 10% 12%;
 }
 
 #OKbtn-statistics {
@@ -513,7 +525,7 @@ header>h1 {
 #dogeSave:hover {
     opacity: 0.3;
 }
-=======
+
 /* Settings: Long break interval. NEED REVISED */
 
 #LongBreakInterval {

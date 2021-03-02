@@ -37,7 +37,7 @@ document.getElementById("OKbtn-statistics").addEventListener("click", function()
     document.getElementById("statisticsMenu").style.visibility = "hidden";
 });
 
-document.getElementById("exitSettings").addEventListener("click", function() { //On click, hide settings
+document.getElementById("saveSettings").addEventListener("click", function() { //On click, hide settings
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
     saveTimeSettings();
