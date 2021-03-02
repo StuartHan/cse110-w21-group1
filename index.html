@@ -1,10 +1,10 @@
 <!--***************************************************************************
  * File Name    : index.html
- * First Created: Feb 22
- * Last  Revised: Feb 22 -- Jiaming Li 
- * Curr  Version: 1.0
+ * First Created: Feb 14
+ * Last  Revised: Mar 2-- Jiaming Li
+ * Curr  Version: 2.1
  * 
- * Description  : [NOTE!!! TIME HTML MUST CORRESPOND TO worSec]
+ * Description  : + statistics page
  * Variables    : 
  * Functions    : 
  * 
@@ -61,7 +61,7 @@
 
             <table id="chart">
                 <tr id="workPhase">
-                    <td>Work Phase</td>
+                    <td id="workText">Work Phase</td>
                     <td id="workTime">25m</td>
                 </tr>
                 <tr>
@@ -69,15 +69,15 @@
                     <td id="counter">4x</td>
                 </tr>
                 <tr id="shortBreak">
-                    <td>Short Break</td>
+                    <td id="ShortBreakText">Short Break</td>
                     <td id="shortBreakTime">5m</td>
                 </tr>
                 <tr>
                     <td>&#8595</td>
                 </tr>
                 <tr id="longBreak">
-                    <td>Long Break</td>
-                    <td id=longBreakTime>15m</td>
+                    <td id="LongBreakText">Long Break</td>
+                    <td id="longBreakTime">15m</td>
                 </tr>
             </table>
 
@@ -100,7 +100,17 @@
             <input id="short-break-number" name="short-break-number" type="number" min="0" max="120" value="5">
             <h3 id="LongBreakTitle">Long Break (min):</h3>
             <input id="long-break-number" name="long-break-number" type="number" min="0" max="120" value="15">
+            <h3    id="languageTitle"> Language:</h3>
+            <form style="text-align:center" id="language-form">
+                <input id="english-selection" type="radio" name="language" value="language" checked>English
+                <br>
+                <input id="chinese-selection" type="radio" name="language" value="language">Chinese(简体中文)
+            </form>
+            <!-- Long break interval -->
+            <h3    id="LongBreakInterval">Long Break Interval:</h3>
+            <input id="long-break-interval" name="long-break-interval" type="text" min="1" max="10" value="4">
             <div id="settingsButtons">
+                <!-- Statistics button -->
                 <button id="statistics">Stats</button>
                 <button id="saveSettings">Save</button>
             </div>
@@ -137,7 +147,10 @@
             <button id="dogeSave">Save</button>
             <p id="insufficientText">Insufficient Funds</p>
         </span>
-
+        <span id="statisticsMenu">
+            <h2 id="statisticsTitle">Statistics</h2>
+            <button id="OKbtn-statistics">OK</button>
+        </span>
         <footer id="footer">
 
         </footer>
