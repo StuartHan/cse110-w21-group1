@@ -371,12 +371,11 @@ function updateTable() {
 /* --------------------------------------------------------------------------
  * Check the range of input values
  --------------------------------------------------------------------------- */
-var reg=/^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$/;
+var regex=/^[0-9]+$/;
 // Work phase (min)
 document.getElementById("work-time-number").addEventListener("input", function() {
     let worknumber = document.getElementById("work-time-number").value;
-    if (isNaN(worknumber) // RegEx: ""(0) or number
-    ||  !(worknumber >= 0 && worknumber <= 120)) {  // Range: 0~120
+    if ((worknumber == "" && !worknumber.isEmpty()) || !(worknumber >= 0 && worknumber <= 120)) {  // Range: 0~120
         alert("Please enter a value between 1 and 120");
         document.getElementById("work-time-number").value = workSec / 60;
     }
