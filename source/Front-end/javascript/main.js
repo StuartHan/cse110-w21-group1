@@ -118,6 +118,9 @@ saveTimeSettings();
  * Description  : Listen to button, if clicked, call runCounter().
  *                runCounter() increase counts if now is working mode. 
  *                Then deligate countDown()
+ * Discrip in CN: 监听按钮，如果单击，则调用runCounter（）。
+ *                runCounter（）如果现在处于工作模式，则增加计数。
+ *                然后使用countDown（）
  * Type         : Manager Function.
  * Parameter    : N/A. But need to listen radios.
  * Return       : N/A.
@@ -146,6 +149,9 @@ function runCounter() {
  * Description  : Listen mode radios. If another radio is checked, call
  *                changeMode() to change time(HTML), seconds(int), mode(Str).
  *                changeMode() can also be called by autoSwitchMode().
+ * Discrip in CN: 收听模式收音机。如果检查了另一个电台，请调用
+ *                changeMode（）来改变time（HTML），seconds（int），mode（Str）。
+ *                changeMode（）也可以由autoSwitchMode（）调用。
  * Type         : Major Function.
  * Parameter    : N/A. But need to listen radios.
  * Return       : N/A.
@@ -191,6 +197,10 @@ function changeMode() {
  *                Call secToTime(int) to change sec into time.
  *                Reset time HTML (-1 per sec).
  *                When finished, deligate autoSwitchMode() to switch mode.
+ * Discrip in CN: 倒数计时器启动时调用。每秒降低1秒。
+ *                调用secToTime（int）将sec更改为时间。
+ *                重置时间HTML（每秒-1）。
+ *                完成后，将autoSwitchMode（）设置为切换模式。
  * Type         : Major Function.
  * Parameter    : N/A. But need var totalSec.
  * Return       : N/A. But change HTML.
@@ -228,6 +238,13 @@ function countDown() {
  *                If   current mode is short break / long break,
  *                Then enter working mode.
  *                Finally deligate changeMode() to change totalSec & HTML.
+ * Discrip in CN: 如果当前模式正在工作且计数不等于 4，
+ *                那么进入短暂休息模式。
+ *                如果当前模式正在工作且计数等于 4，
+ *                那么进入长时间休息模式并清除计数。
+ *                如果当前模式是短暂或长时间休息，
+ *                那么进入工作模式。
+ *                最后使用changeMode（）更改totalSec和HTML。
  * Type         : Major Function.
  * Parameter    : N/A. But need var currMode.
  * Return       : N/A.
@@ -273,6 +290,7 @@ function autoSwitchMode() {
  * Revised Times: 1
  * 
  * Description  : Take in seconds, change it to time. Eg: 120 -> "02:00"
+ * Discrip in CN: 秒为单位，将其更改为时间。例如：120更改为“ 02:00”
  * Type         : Helper Function.
  * Parameter    : int   : how many seconds. Eg: 120
  * Return       : String: time.             Eg: "02:00"
@@ -302,6 +320,7 @@ function secToTime(currSec) {
  * Revised Times: 1
  * 
  * Description  : Take in time, change it to seconds. Eg: "02:00" -> 120
+ * Discrip in CN: 输入时间，将其更改为秒。例如：“ 02:00”变为 120
  * Type         : Helper Function.
  * Parameter    : String: time.             Eg: "02:00"
  * Return       : int   : how many seconds. Eg: 120
@@ -325,6 +344,7 @@ function timeToSec(currTime) {
  * Revised Times: 0
  * 
  * Description  : Take the color out of the page
+ * Discrip in CN: 将页面颜色抹除
  * Type         : Helper Function.
  =========================================================================== */
 function drainColor() {
@@ -344,6 +364,7 @@ function drainColor() {
 * Revised Times: 0
 * 
 * Description  : Put the color back in the page.
+* Discrip in CN: 将颜色放回页面中。
 * Type         : Helper Function.
 =========================================================================== */
 function fillColor() {
@@ -362,6 +383,7 @@ function fillColor() {
  * Revised Times: 3
  * 
  * Description  : Set the table below the clock when timer tuns
+ * Discrip in CN: 计时器开始时，将表格设置在时钟下方
  * Type         : Helper Function.
  =========================================================================== */
 function updateTable() {
@@ -393,6 +415,7 @@ function updateTable() {
  * Revised Times: 4
  * 
  * Description  : Update vars and HTMLs according to Settings
+ * Discrip in CN: 根据设置更新var和HTML
  * Type         : Major Function.
  =========================================================================== */
 /* --------------------------------------------------------------------------
@@ -524,6 +547,7 @@ function saveTimeSettings() {
  * Revised Times: 1
  * 
  * Description  : Switch the language of content based on the option selected
+ * Discrip in CN: 根据选择的选项切换内容的语言
  * Type         : Helper Function.
  =========================================================================== */
 function SwitchToChinese() {
