@@ -86,6 +86,7 @@
             </div>
 
             <audio id="sound-effect" src="./source/Front-end/css/assets/bellChime.mp3"></audio>
+            <audio id="bg-music" src="./source/Front-end/css/assets/DaoXiang.mp3"><audio></audio>
         </main>
 
         <span id="settingsMenu">
@@ -106,6 +107,22 @@
                 <br>
                 <input id="chinese-selection" type="radio" name="language" value="language">Chinese(简体中文)
             </form>
+            <h3 id="music-select">Select a background music:</h3>
+            <div>
+            <input type="radio" id="default-1" name="music" value="default-1" checked>
+            <label for="default-1">music-1</label>
+            </div>
+
+            <div>
+            <input type="radio" id="default-2" name="music" value="default-2">
+            <label for="default-2">music-2</label>
+            </div>
+              
+            <div>
+            <input type="radio" id="default-3" name="music" value="default-3">
+            <label for="default-3">music-3</label>
+            </div>
+                
             <!-- Long break interval -->
             <h3    id="LongBreakInterval">Long Break Interval:</h3>
             <input id="long-break-interval" name="long-break-interval" type="text" min="1" max="10" value="4">
