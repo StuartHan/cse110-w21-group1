@@ -59,6 +59,25 @@ var totalSBrkCount = 0;
 var totalLBrkCount = 0;
 
 
+// Local storage
+var storage = window.localStorage;
+if (storage["workSec"] != 0) {
+    workSec = storage["workSec"];
+    document.getElementById("work-time-number").value = (workSec / 60);
+}
+if (storage["sBrkSec"] != 0) {
+    sBrkSec = storage["sBrkSec"];
+    document.getElementById("short-break-number").value = (sBrkSec / 60);
+}
+if (storage["lBrkSec"] != 0) {
+    lBrkSec = storage["lBrkSec"];
+    document.getElementById("long-break-number").value = (lBrkSec / 60);
+}
+if (storage["lBrkItv"] != 0) {
+    countsThres = storage["lBrkItv"];
+    document.getElementById("long-break-interval").value = countsThres;
+}
+saveTimeSettings();
 
 
 
@@ -190,7 +209,6 @@ function autoSwitchMode() {
     if (currMode == "w") {
         totalWorkMins += (workSec / 60); // Statistics
         totalWorkCount ++;               // Statistics
-        alert (totalWorkMins + " " + totalWorkCount);
         // count < countsThres. Next: short break mode
         if (counts < countsThres) {
             document.getElementById("radio-shortBreak-mode").checked = true;
@@ -212,7 +230,6 @@ function autoSwitchMode() {
             totalBreakMins += lBrkSec / 60;
             totalLBrkCount ++;
         }
-        alert (totalBreakMins + " " + totalSBrkCount + " " + totalLBrkCount);
         document.getElementById("radio-working-mode").checked = true;
     }
     changeMode(); // deligate changeMode() to change totalSec & HTML
@@ -345,8 +362,8 @@ function updateTable() {
 /* ============================================================================
  * Name         : saveTimeSettings()
  * First Created: Feb 23 -- Jiaming Li
- * Last  Revised: Feb 26 -- Yichen Han
- * Revised Times: 3
+ * Last  Revised: Mar 2  -- Yichen Han updates input check: edge case = 0
+ * Revised Times: 4
  * 
  * Description  : Update vars and HTMLs according to Settings
  * Type         : Major Function.
@@ -354,11 +371,13 @@ function updateTable() {
 /* --------------------------------------------------------------------------
  * Check the range of input values
  --------------------------------------------------------------------------- */
+var reg=/^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$/;
 // Work phase (min)
 document.getElementById("work-time-number").addEventListener("input", function() {
     let worknumber = document.getElementById("work-time-number").value;
-    if (!(worknumber >= 0 && worknumber <= 120)) {
-        alert("Please enter a value between 0 and 120");
+    if (isNaN(worknumber) // RegEx: ""(0) or number
+    ||  !(worknumber >= 0 && worknumber <= 120)) {  // Range: 0~120
+        alert("Please enter a value between 1 and 120");
         document.getElementById("work-time-number").value = workSec / 60;
     }
 });
@@ -366,7 +385,7 @@ document.getElementById("work-time-number").addEventListener("input", function()
 document.getElementById("short-break-number").addEventListener("input", function() {
     let shortBreaknumber = document.getElementById("short-break-number").value;
     if (!(shortBreaknumber >= 0 && shortBreaknumber <= 120)) {
-        alert("Please enter a value between 0 and 120");
+        alert("Please enter a value between 1 and 120");
         document.getElementById("short-break-number").value = sBrkSec / 60;
     }
 });
@@ -374,7 +393,7 @@ document.getElementById("short-break-number").addEventListener("input", function
 document.getElementById("long-break-number").addEventListener("input", function() {
     let longBreaknumber = document.getElementById("long-break-number").value;
     if (!(longBreaknumber >= 0 && longBreaknumber <= 120)) {
-        alert("Please enter a value between 0 and 120");
+        alert("Please enter a value between 1 and 120");
         document.getElementById("long-break-number").value = lBrkSec / 60;
     }
 });
@@ -396,13 +415,27 @@ function saveTimeSettings() {
     let shortBreaknumber = document.getElementById("short-break-number").value;
     let longBreaknumber = document.getElementById("long-break-number").value;
 
+    // edge cases = 0
+    if (worknumber == 0) {
+        worknumber = 1;
+        document.getElementById("work-time-number").value = 1;
+    }
+    if (shortBreaknumber == 0) {
+        shortBreaknumber = 1;
+        document.getElementById("short-break-number").value = 1;
+    }
+    if (longBreaknumber == 0) {
+        longBreaknumber = 1;
+        document.getElementById("long-break-number").value = 1;
+    }
+
     // update HTMLs
     document.getElementById("workTime").innerHTML = worknumber + "m";
     document.getElementById("shortBreakTime").innerHTML = shortBreaknumber + "m";
     document.getElementById("longBreakTime").innerHTML = longBreaknumber + "m";
 
     // update modes' seconds
-    workSec = parseInt(worknumber * 60);
+    workSec = worknumber * 60;
     sBrkSec = shortBreaknumber * 60;
     lBrkSec = longBreaknumber * 60;
 
@@ -423,8 +456,25 @@ function saveTimeSettings() {
      * Long break interval
      ----------------------------------------------------------------------- */
     countsThres = document.getElementById("long-break-interval").value;
-    document.getElementById("counter").innerHTML = countsThres + "x"
+    // edge case 0 -> 1
+    if (countsThres == 0) {
+        countsThres = 1;
+        document.getElementById("long-break-interval").value = 1;
+    }
+    document.getElementById("counter").innerHTML 
+    = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
+
+
+    /* ------------------------------------------------------------------------
+     * Local Storage
+     ----------------------------------------------------------------------- */
+    storage["workSec"] = workSec;
+    storage["sBrkSec"] = sBrkSec;
+    storage["lBrkSec"] = lBrkSec;
+    storage["lBrkItv"] = countsThres;
 }
+
+
 
 /* ============================================================================
  * Name         : SwitchToLanguage
@@ -435,8 +485,6 @@ function saveTimeSettings() {
  * Description  : Switch the language of content based on the option selected
  * Type         : Helper Function.
  =========================================================================== */
-
-
 function SwitchToChinese() {
     document.getElementById("welcome").innerHTML = "欢迎使用";
     document.getElementById("workText").innerHTML = "工作时段";
@@ -450,10 +498,6 @@ function SwitchToChinese() {
     document.getElementById("languageTitle").innerHTML = "语言选择 :";
     document.getElementById("LongBreakInterval").innerHTML = "较长休息时段区间 :"
     document.getElementById("statistics").innerHTML = "统计数据";
-
-
-
-
 }
 
 function SwitchToEnglish() {
