@@ -69,19 +69,19 @@ var totalLBrkCount = 0;
 
 // Local storage
 var storage = window.localStorage;
-if (storage["workSec"] != 0) {
+if (storage["workSec"]) {
     workSec = storage["workSec"];
     document.getElementById("work-time-number").value = (workSec / 60);
 }
-if (storage["sBrkSec"] != 0) {
+if (storage["sBrkSec"]) {
     sBrkSec = storage["sBrkSec"];
     document.getElementById("short-break-number").value = (sBrkSec / 60);
 }
-if (storage["lBrkSec"] != 0) {
+if (storage["lBrkSec"]) {
     lBrkSec = storage["lBrkSec"];
     document.getElementById("long-break-number").value = (lBrkSec / 60);
 }
-if (storage["lBrkItv"] != 0) {
+if (storage["lBrkItv"]) {
     countsThres = storage["lBrkItv"];
     document.getElementById("long-break-interval").value = countsThres;
 }
