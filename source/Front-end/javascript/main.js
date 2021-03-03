@@ -30,6 +30,19 @@ document.getElementById("gear").addEventListener("click", function() { //On clic
     chooseSoundEffect();
 });
 
+document.getElementById("default-1").addEventListener("click", function(){//On click, play corresponding sound
+    document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
+    document.getElementById("sound-effect").play();
+});
+document.getElementById("default-2").addEventListener("click", function(){
+    document.getElementById("sound-effect").src = "source/Front-end/css/assets/BigBenBellChime.mp3";
+    document.getElementById("sound-effect").play();
+});
+document.getElementById("default-3").addEventListener("click", function(){
+    document.getElementById("sound-effect").src = "source/Front-end/css/assets/TempleBell.mp3";
+    document.getElementById("sound-effect").play();
+});
+
 document.getElementById("statistics").addEventListener("click", function() { //On click, show statistics
     document.getElementById("statisticsMenu").style.visibility = "visible";
 });
