@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@600&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body id="body">
     <div id="container">
         <header id="header">
             <h1>PomoTime</h1>
@@ -33,9 +33,13 @@
                 <!--<h2 id="stats">Stats</h2> To be implemented later.-->
                 <img id="gear" src="./source/Front-end/css/assets/Geartransparent.png">
             </div>
+            <div id="dogecoin">
+                <img id="coinimg" src="./source/Front-end/css/assets/dogecoin.png">
+                <p id="cointext">0</p>
+            </div>
         </header>
 
-        <main>
+        <main id="main">
             <div id="clock">
                 <h1 id="time">25:00</h1>
             </div>
@@ -85,30 +89,65 @@
         </main>
 
         <span id="settingsMenu">
-            <h2 id="exitSettings">X</h2>
             <h2 id="settingsTitle">Settings</h2>
             <div id="volume-controls">
                 <img id="volume-pic" src="source/Front-end/css/assets/volume-level-3.svg">
                 <input id="volume-slider" type="range" min="0" max="100" value="100">
             </div>
-            <h3    id="WorkTimeTitle">Work Phase (min):</h3>
-            <input id="work-time-number"   name="work-time-number"   type="text" min="1" max="120" value="25">
-            <h3    id="ShortBreakTitle">Short Break (min):</h3>
-            <input id="short-break-number" name="short-break-number" type="text" min="1" max="120" value="5">
-            <h3    id="LongBreakTitle">Long Break (min):</h3>
-            <input id="long-break-number"  name="long-break-number"  type="text" min="1" max="120" value="15">
+            <h3 id="WorkTimeTitle">Work Time (min):</h3>
+            <input id="work-time-number" name="work-time-number" type="number" min="0" max="120" value="25">
+            <h3 id="ShortBreakTitle">Short Break (min):</h3>
+            <input id="short-break-number" name="short-break-number" type="number" min="0" max="120" value="5">
+            <h3 id="LongBreakTitle">Long Break (min):</h3>
+            <input id="long-break-number" name="long-break-number" type="number" min="0" max="120" value="15">
             <h3    id="languageTitle"> Language:</h3>
             <form style="text-align:center" id="language-form">
                 <input id="english-selection" type="radio" name="language" value="language" checked>English
                 <br>
                 <input id="chinese-selection" type="radio" name="language" value="language">Chinese(简体中文)
-                </form>
+            </form>
             <!-- Long break interval -->
             <h3    id="LongBreakInterval">Long Break Interval:</h3>
             <input id="long-break-interval" name="long-break-interval" type="text" min="1" max="10" value="4">
-            <!-- Statistics button -->
-            <button id="statistics">Statistics</button>
+            <div id="settingsButtons">
+                <!-- Statistics button -->
+                <button id="statistics">Stats</button>
+                <button id="saveSettings">Save</button>
+            </div>
         </span>
+
+        <span id="dogeCoinMenu">
+            <h2 id="dogeTitle">Doge Shop</h2>
+            <h3 id="themeTitle">Themes</h3>
+            <div id="wildjungle" class="theme">
+                <h3>Wild Jungle</h3>
+                <p id="junglecost">Free</p>
+            </div>
+            <button id="wildjunglebuy" class="buyButton">Selected</button>
+            <div id="night" class="theme">
+                <h3>Night Mode</h3>
+                <p id="nightcost">Free</p>
+            </div>
+            <button id="nightbuy" class="buyButton">Owned</button>
+            <div id="aquatic" class="theme">
+                <h3>Aquatic</h3>
+                <p id="aquaticcost">50 Coins</p>
+            </div>
+            <button id="aquaticbuy" class="buyButton">Buy</button>
+            <div id="sanfrancisco" class="theme">
+                <h3>San Francisco</h3>
+                <p id="sanfranciscocost">100 Coins</p>
+            </div>
+            <button id="sanfranciscobuy" class="buyButton">Buy</button>
+            <div id="dogeland" class="theme">
+                <h3>Doge Land</h3>
+                <p id="dogecost">Everything</p>
+            </div>
+            <button id="dogebuy" class="buyButton">Buy</button>
+            <button id="dogeSave">Save</button>
+            <p id="insufficientText">Insufficient Funds</p>
+        </span>
+
         <span id="statisticsMenu">
             <h2 id="statisticsTitle">Statistics</h2>
             <button id="OKbtn-statistics">OK</button>
