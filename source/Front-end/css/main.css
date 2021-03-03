@@ -402,6 +402,15 @@ header>h1 {
     min-width: 60px;
     height: 1vw;
 }
+#sound-select {
+    grid-row: auto;
+    grid-column: 2;
+    font-size: 1.5vw;
+}
+#sound-selection{
+    grid-row: auto;
+    grid-column: auto;
+}
 
 /* ============================================================================
  * Doge Shop
