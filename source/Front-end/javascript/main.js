@@ -27,6 +27,7 @@ document.getElementById("gear").addEventListener("click", function() { //On clic
     document.getElementById("settingsMenu").style.visibility = "visible";
     document.getElementById("main").style.visibility = "hidden";
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
+    chooseSoundEffect();
 });
 
 document.getElementById("statistics").addEventListener("click", function() { //On click, show statistics
@@ -46,6 +47,7 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
     } else if (document.getElementById("english-selection").checked) {
         SwitchToEnglish();
     }
+    chooseSoundEffect();
 });
 
 document.getElementById("dogecoin").addEventListener("click", function() { //On click, show Doge Store
@@ -391,7 +393,24 @@ if (storage["lBrkItv"]) {
     countsThres = storage["lBrkItv"];
     document.getElementById("long-break-interval").value = countsThres;
 }
+if (storage["sound-selection"]){
+    document.getElementById("sound-effect").src = storage["sound-selection"];
+    if(storage["sound-selection"] == "source/Front-end/css/assets/bellChime.mp3"){
+        document.getElementById("default-1").checked = true;
+    }
+    else if(storage["sound-selection"] == "source/Front-end/css/assets/BigBenBellChime.mp3"){
+        document.getElementById("default-2").checked = true;
+    }
+    else{
+        document.getElementById("default-3").checked = true;
+    }
+}
+else{
+    document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
+    document.getElementById("default-1").checked = true;
+}
 saveTimeSettings();
+
 
 
 
@@ -472,6 +491,7 @@ function runCounter() {
     if (currMode == "w") {
         counts++;
         drainColor();
+        document.getElementById("sound-effect").play();
     }
     countDown();
 }
@@ -902,4 +922,29 @@ function SwitchToEnglish() {
     document.getElementById("statisticsTitle").innerHTML = "Statistics";
     alertTime = "Please enter an integer between 1 and 120.";
     alertIntv = "Please enter an integer between 1 and 10."
+}
+
+/* ============================================================================
+ * Name         : chooseSoundEffect
+ * First Created: March 2 -- Bo Yang
+ * Last  Revised: March 2 -- Bo Yang
+ * Revised Times: 1
+ * 
+ * Description  : Choose which sound effect to use according to user's input
+ * Type         : Helper Function.
+ =========================================================================== */
+function chooseSoundEffect(){
+    if(document.getElementById("default-1").checked){
+        document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
+        window.localStorage.setItem("sound-selection","source/Front-end/css/assets/bellChime.mp3");
+    }
+    else if(document.getElementById("default-2").checked){
+        document.getElementById("sound-effect").src = "source/Front-end/css/assets/BigBenBellChime.mp3";
+        window.localStorage.setItem("sound-selection","source/Front-end/css/assets/BigBenBellChime.mp3");
+    }
+    else{
+        document.getElementById("sound-effect").src = "source/Front-end/css/assets/TempleBell.mp3";
+        window.localStorage.setItem("sound-selection","source/Front-end/css/assets/TempleBell.mp3");
+    }
+    
 }

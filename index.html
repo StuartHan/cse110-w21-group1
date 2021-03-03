@@ -85,8 +85,7 @@
                 <button id="start-btn" type="button">START</button>
             </div>
 
-            <audio id="sound-effect" src="./source/Front-end/css/assets/bellChime.mp3"></audio>
-            <audio id="bg-music" src="./source/Front-end/css/assets/DaoXiang.mp3"><audio></audio>
+            <audio id="sound-effect"></audio>
         </main>
 
         <span id="settingsMenu">
@@ -107,22 +106,18 @@
                 <br>
                 <input id="chinese-selection" type="radio" name="language" value="language">Chinese(简体中文)
             </form>
-            <h3 id="music-select">Select a background music:</h3>
-            <div>
-            <input type="radio" id="default-1" name="music" value="default-1" checked>
-            <label for="default-1">music-1</label>
-            </div>
+            <h3 id="sound-select" style="text-align:center">Select sound:</h3>
+            <form style="text-align:center" id="sound-selection">
+                <input id="default-1" type="radio" name="sound" value="default-1">
+                <label for="default-1">sound-1</label>
+                <br>
+                <input id="default-2" type="radio" name="sound" value="default-2">
+                <label for="default-2">sound-2</label>
+                <br>
+                <input id="default-3" type="radio" name="sound" value="default-3">
+                <label for="default-3">sound-3</label>
+            </form>
 
-            <div>
-            <input type="radio" id="default-2" name="music" value="default-2">
-            <label for="default-2">music-2</label>
-            </div>
-              
-            <div>
-            <input type="radio" id="default-3" name="music" value="default-3">
-            <label for="default-3">music-3</label>
-            </div>
-                
             <!-- Long break interval -->
             <h3    id="LongBreakInterval">Long Break Interval:</h3>
             <input id="long-break-interval" name="long-break-interval" type="text" min="1" max="10" value="4">
