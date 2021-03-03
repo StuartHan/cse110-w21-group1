@@ -45,10 +45,13 @@ document.getElementById("default-3").addEventListener("click", function(){
 
 document.getElementById("statistics").addEventListener("click", function() { //On click, show statistics
     document.getElementById("statisticsMenu").style.visibility = "visible";
+    document.getElementById("settingsMenu").style.visibility = "hidden";
+    document.getElementById("dogeCoinMenu").style.visibility = "hidden";
 });
 
 document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
     document.getElementById("statisticsMenu").style.visibility = "hidden";
+    document.getElementById("gear").click()
 });
 
 document.getElementById("saveSettings").addEventListener("click", function() { //On click, hide settings

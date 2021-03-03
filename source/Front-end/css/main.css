@@ -312,11 +312,12 @@ header>h1 {
 }
 
 #statistics {
-    margin-right: 5%;
+    width: 80%;
     grid-row: 1;
     grid-column: 1;
     border-radius: 8px;
     font-size: 2vw;
+    justify-self: center;
     font-family: 'Kanit', sans-serif;
     background-color: rgba(256,256,256,0.4);
 }
@@ -329,14 +330,16 @@ header>h1 {
     visibility: hidden;
     grid-column: 2;
     grid-row: 2;
-    background-color: lightgreen;
+    background-color: rgba(256,256,256,0.4);
     border-radius: 8px;
     margin: 2% 5% 5% 2%;
     border-width: 2px;
+    width:80%;
     align-items: center;
     justify-items: center;
     border-color: black;
     border-style: solid;
+    justify-self: center;
     display: grid;
     grid-template-columns: 15% 50% 20% 15%;
     grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 10% 12%;
@@ -425,7 +428,7 @@ header>h1 {
     justify-items: center;
     display: grid;
     grid-template-columns: 10% 60% 20% 10%;
-    grid-template-rows: 8% 8% 10% 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-rows: 8% 4% 4% 10% 10% 10% 10% 10% 10% 10% 10%;
     z-index: 2;
     width: 80%;
     justify-self: center;
@@ -446,7 +449,20 @@ header>h1 {
 #themeTitle{
     grid-row: 2;
     grid-column: 1 / span 4;
-    font-size: 1.5vw;
+    font-size: 1.3vw;
+    align-self: center;
+}
+
+#preview{
+    font-size: 1vw;
+    grid-row: 3;
+    grid-column: 2;
+}
+
+#select{
+    font-size: 1vw;
+    grid-row: 3;
+    grid-column: 3;
 }
 
 .theme {
@@ -489,27 +505,27 @@ header>h1 {
 }
 
 #wildjungle, #wildjunglebuy{
-    grid-row: 3;
-}
-
-#night, #nightbuy{
     grid-row: 4;
 }
 
-#aquatic, #aquaticbuy{
+#night, #nightbuy{
     grid-row: 5;
 }
 
-#sanfrancisco, #sanfranciscobuy{
+#aquatic, #aquaticbuy{
     grid-row: 6;
 }
 
-#dogeland, #dogebuy{
+#sanfrancisco, #sanfranciscobuy{
     grid-row: 7;
 }
 
+#dogeland, #dogebuy{
+    grid-row: 8;
+}
+
 #insufficientText{
-    grid-row: 9;
+    grid-row: 10;
     grid-column: 2 / span 2;
     font-size: 1.5vw;
     color: rgb(256,0,0,0.8);
@@ -517,7 +533,7 @@ header>h1 {
 }
 
 #dogeSave{
-    grid-row:10;
+    grid-row:11;
     font-size: 2vw;
     border-radius: 8px;
     border-style: solid;
