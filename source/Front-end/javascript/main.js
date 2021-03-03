@@ -924,6 +924,7 @@ function SwitchToEnglish() {
     alertIntv = "Please enter an integer between 1 and 10."
 }
 
+
 /* ============================================================================
  * Name         : chooseSoundEffect
  * First Created: March 2 -- Bo Yang
@@ -948,3 +949,4 @@ function chooseSoundEffect(){
     }
     
 }
+=======
