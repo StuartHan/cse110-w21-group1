@@ -64,6 +64,7 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
         SwitchToEnglish();
     }
     chooseSoundEffect();
+    loadActive();
 });
 
 document.getElementById("dogecoin").addEventListener("click", function() { //On click, show Doge Store
@@ -83,49 +84,70 @@ document.getElementById("dogeSave").addEventListener("click", function() { //On 
 
 document.getElementById("wildjungle").addEventListener("click", function() { //On click, preview the Jungle Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
-    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/wildjungle.jpg")';
+    if (document.getElementById("colorblindbox").checked)
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbwildjungle.jpg")';
+    else
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/wildjungle.jpg")';
     turnLight();
 });
 
 document.getElementById("wildjunglebuy").addEventListener("click", function() { //On click, switch to Jungle Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
     setActive(0);
-    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/wildjungle.jpg")';
+    if (document.getElementById("colorblindbox").checked)
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbwildjungle.jpg")';
+    else
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/wildjungle.jpg")';
     turnLight();
     darkenChosen();
 });
 
 document.getElementById("night").addEventListener("click", function() { //On click, preview night Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
-    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/night.jpg")';
+    if (document.getElementById("colorblindbox").checked)
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbnight.jpg")';
+    else
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/night.jpg")';
     turnLight();
 });
 
 document.getElementById("nightbuy").addEventListener("click", function() { //On click, switch to night Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
     setActive(1);
-    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/night.jpg")';
+    if (document.getElementById("colorblindbox").checked)
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbnight.jpg")';
+    else
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/night.jpg")';
     turnDark();
     darkenChosen();
 });
 
 document.getElementById("aquatic").addEventListener("click", function() {//On click, preview Aquatic Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
-    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
+    if (document.getElementById("colorblindbox").checked)
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbaquatic.jpg")';
+    else
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
     turnLight();
 });
 
 document.getElementById("aquaticbuy").addEventListener("click", function() { //On click, switch to Aquatic Theme if enough coins
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[0] == '1'){
-        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
+        if (document.getElementById("colorblindbox").checked)
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbaquatic.jpg")';
+        else
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
         turnLight();
         setActive(2);
     }
     else if (parseInt(window.localStorage.getItem('coin')) >= 50){
         document.getElementById("cointext").innerHTML = (parseInt(window.localStorage.getItem('coin')) - 50).toString();
         window.localStorage.setItem('coin',(parseInt(window.localStorage.getItem('coin')) - 50).toString());
-        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
+        if (document.getElementById("colorblindbox").checked)
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbaquatic.jpg")';
+        else
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/aquatic.jpg")';
         setShopItems(0);
         turnLight();
         setActive(2);
@@ -137,14 +159,20 @@ document.getElementById("aquaticbuy").addEventListener("click", function() { //O
 
 document.getElementById("sanfrancisco").addEventListener("click", function() { //On click, preview San Francisco Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
-    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
+    if (document.getElementById("colorblindbox").checked)
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbsanfrancisco.jpg")';
+    else
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
     turnLight();
 });
 
 document.getElementById("sanfranciscobuy").addEventListener("click", function() { //On click, switch to San Francisco Theme if enough coins
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[1] == '1'){
-        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
+        if (document.getElementById("colorblindbox").checked)
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbsanfrancisco.jpg")';
+        else
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
         turnLight();
         setActive(3);
     }
@@ -152,7 +180,10 @@ document.getElementById("sanfranciscobuy").addEventListener("click", function() 
         document.getElementById("cointext").innerHTML = (parseInt(window.localStorage.getItem('coin')) - 100).toString();
         window.localStorage.setItem('coin',(parseInt(window.localStorage.getItem('coin')) - 100).toString());
         setShopItems(1);
-        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
+        if (document.getElementById("colorblindbox").checked)
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbsanfrancisco.jpg")';
+        else
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/sanfrancisco.jpg")';
         turnLight();
         setActive(3);
     }
@@ -163,14 +194,20 @@ document.getElementById("sanfranciscobuy").addEventListener("click", function() 
 
 document.getElementById("dogeland").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("insufficientText").style.visibility = "hidden";
-    document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/god.jpg")';
+    if (document.getElementById("colorblindbox").checked)
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbgod.jpg")';
+    else
+        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/god.jpg")';
     turnLight();
 });
 
 document.getElementById("dogebuy").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[2] == '1'){
-        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/god.jpg")';
+        if (document.getElementById("colorblindbox").checked)
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbgod.jpg")';
+        else
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/god.jpg")';
         turnLight();
         setActive(4);
     }
@@ -178,7 +215,10 @@ document.getElementById("dogebuy").addEventListener("click", function() { //On c
         window.localStorage.setItem("coin","0");//Take away everything they own. Everything.
         document.getElementById("cointext").innerHTML = "0";
         setShopItems(2);
-        document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/god.jpg")';
+        if (document.getElementById("colorblindbox").checked)
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbgod.jpg")';
+        else
+            document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/god.jpg")';
         turnLight();
         setActive(4);
     }
@@ -222,13 +262,13 @@ window.addEventListener('DOMContentLoaded', () => {
     else{
         document.getElementById("cointext").innerHTML = window.localStorage.getItem('coin');
     }
-    let items = window.localStorage.getItem('shopitems');
+    /*let items = window.localStorage.getItem('shopitems');
     if (items[0] == 1)
         document.getElementById('aquaticcost').innerHTML = "Owned";
     if (items[1] == 1)
         document.getElementById('sanfranciscocost').innerHTML = "Owned";
     if (items[2] == 1)
-        document.getElementById('dogecost').innerHTML = "Owned";
+        document.getElementById('dogecost').innerHTML = "Owned";*/
     loadActive();
     darkenChosen();
 });
