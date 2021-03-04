@@ -10,9 +10,9 @@ The Web App as it currently stands looks outdated and subpar compared to other P
 do a makeover of the website that is not distracting to the user yet more appealing to the eye.
 
 ## Decision Drivers
-1. Must be non-distracting additions to the website - colors should not detract from the user's attention \br
-2. Must be appealing to users with the option of changing styling to their own preferences \br
-3. Usability of the website must remain the same \br
+1. Must be non-distracting additions to the website - colors should not detract from the user's attention
+2. Must be appealing to users with the option of changing styling to their own preferences
+3. Usability of the website must remain the same
 
 ## Considered Options
 
@@ -27,9 +27,9 @@ the user to keep using the pomodoro timer while also adding to the visiblee styl
 
 ### Positive Consequences
 
-- More incentive for users to use the app \br
-- Gives users the option of selecting their own preferences \br
-- Retains full usability of the web application \br
+- More incentive for users to use the app
+- Gives users the option of selecting their own preferences
+- Retains full usability of the web application
 
 ### Negative Consequences
 

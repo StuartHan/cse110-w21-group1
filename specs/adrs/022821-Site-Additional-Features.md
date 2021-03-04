@@ -10,9 +10,9 @@ The Web App as it currently stands is too basic with little additional features.
 do a makeover of the website that is not detracting from the user's experience whilee also giving them a wider range of options.
 
 ## Decision Drivers
-1. Must be non-hindering features added to the website - features should not take away from the user's attention \br
-2. Features shouldn't be cluttered - interface should remain intuitive and clear \br
-3. Usability of the website must be kept. \br
+1. Must be non-hindering features added to the website - features should not take away from the user's attention
+2. Features shouldn't be cluttered - interface should remain intuitive and clear
+3. Usability of the website must be kept.
 
 ## Considered Options
 
@@ -26,9 +26,9 @@ We'll implement all the options here, but keep option 3 and option 2 minimal bec
 
 ### Positive Consequences
 
-- More incentive for users to use the app \br
-- Gives users the option of selecting their own preferences \br
-- Retains full usability of the web application \br
+- More incentive for users to use the app
+- Gives users the option of selecting their own preferences
+- Retains full usability of the web application
 
 ### Negative Consequences
 
