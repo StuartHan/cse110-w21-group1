@@ -3,7 +3,6 @@ describe('pomodoTests', () => {
         cy.visit('https://stuarthan.github.io/cse110-w21-group1/');
     });
 
-
     it('volume image change for sound level 3', () => {
         cy.get("#gear").click();
         cy.get('#volume-slider').invoke('val', 75).trigger('input');
@@ -13,7 +12,6 @@ describe('pomodoTests', () => {
             })
 
     });
-
 
     it('volume image change for sound level 2', () => {
         cy.get("#gear").click();
@@ -26,7 +24,6 @@ describe('pomodoTests', () => {
 
 
     });
-
 
     it('volume image change for sound level 1', () => {
         cy.get("#gear").click();
@@ -52,8 +49,7 @@ describe('pomodoTests', () => {
 
     });
 
-
-    it('start botton diasbaled after click', () => {
+    it('start botton disabled after click', () => {
         cy.get("#start-btn").click();
         cy.get('#start-btn')
             .then(function($el) {
@@ -61,7 +57,10 @@ describe('pomodoTests', () => {
             })
 
     });
+});
 
-
-
+describe('pomodoTests', () => {
+    beforeEach(() => {
+        cy.visit('https://stuarthan.github.io/cse110-w21-group1/');
+    });
 });
