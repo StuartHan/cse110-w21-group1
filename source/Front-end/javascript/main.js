@@ -43,6 +43,13 @@ document.getElementById("default-3").addEventListener("click", function(){
     document.getElementById("sound-effect").play();
 });
 
+document.getElementById("colorblindbox").addEventListener("click",function(){
+    if (document.getElementById("colorblindbox").checked)
+        localStorage.setItem("colorblind","1");
+    else
+    localStorage.setItem("colorblind","0");
+});
+
 document.getElementById("statistics").addEventListener("click", function() { //On click, show statistics
     document.getElementById("statisticsMenu").style.visibility = "visible";
     document.getElementById("settingsMenu").style.visibility = "hidden";
@@ -252,15 +259,17 @@ function incrementCoin(amount){
  *                Otherwise, load the most recently used background and coins.
  =========================================================================== */
 window.addEventListener('DOMContentLoaded', () => {
-    localStorage.setItem('coin',"900");
     if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null){ //Initialize Doge Coins
         window.localStorage.setItem('coin', "0");
         window.localStorage.setItem('shopitems', "000"); //Bit based indexing
         window.localStorage.setItem('active', "10000");
+        window.localStorage.setItem('colorblind', "0");
         document.getElementById("cointext").innerHTML = "0";
     }
     else{
         document.getElementById("cointext").innerHTML = window.localStorage.getItem('coin');
+        if (localStorage.getItem("colorblind") == "1")
+            document.getElementById("colorblindbox").checked = true;
     }
     /*let items = window.localStorage.getItem('shopitems');
     if (items[0] == 1)

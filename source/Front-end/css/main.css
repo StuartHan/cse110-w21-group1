@@ -41,7 +41,7 @@ fieldset {
     grid-row: 1;
     grid-column: 1 / span 3;
     display: grid;
-    grid-template-columns: 15% 15% 40% 10% 20%;
+    grid-template-columns: 5% 25% 40% 10% 20%;
     grid-template-rows: 100%;
     background-color: rgba(3,165,89,0.7);
     color: white;
@@ -114,11 +114,21 @@ header>h1 {
 }
 
 #welcome {
-    grid-column: 1 / span 2;
+    grid-column: 2;
     grid-row: 1;
-    justify-self: center;
+    justify-self: left;
     font-size: 1.5vw;
     color: rgba(256,256,256,1);
+    margin-left: 5%;
+}
+
+#profilepic{
+    grid-row:1;
+    grid-column: 1;
+    height:4vh;
+    width: 4vh;
+    opacity: 0.5;
+    justify-self: right;
 }
 
 
