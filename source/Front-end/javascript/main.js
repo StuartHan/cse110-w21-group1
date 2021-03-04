@@ -349,16 +349,17 @@ function setShopItems(index){
  * Return       : N/A
  =========================================================================== */
 document.getElementById("volume-slider").addEventListener("click", function() { //Alter volume
+    let source = document.getElementById("volume-pic");
     let volume = document.getElementById("volume-slider").value;
     document.getElementById("sound-effect").volume = volume / 100;
     if (volume == 0)
-        document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-0.svg";
+        source.src = "source/Front-end/css/assets/volume-level-0.svg";
     else if (volume > 0 && volume < 33)
-        document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-1.svg";
+        source.src = "source/Front-end/css/assets/volume-level-1.svg";
     else if (volume > 33 && volume < 66)
-        document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-2.svg";
+        source.src = "source/Front-end/css/assets/volume-level-2.svg";
     else
-        document.getElementById("volume-pic").src = "source/Front-end/css/assets/volume-level-3.svg";
+        source.src = "source/Front-end/css/assets/volume-level-3.svg";
 });
 
 
