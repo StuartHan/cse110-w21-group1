@@ -507,7 +507,7 @@ function runCounter() {
     if (currMode == "w") {
         counts++;
         drainColor();
-        document.getElementById("sound-effect").play();
+        //document.getElementById("sound-effect").play();
     }
     countDown();
 }
@@ -934,7 +934,7 @@ function SwitchToEnglish() {
     document.getElementById("LongBreakTitle").innerHTML = "Long Break (min):";
     document.getElementById("languageTitle").innerHTML = "Language:";
     document.getElementById("LongBreakInterval").innerHTML = "Long Break Interval:"
-    document.getElementById("statistics").innerHTML = "Statistics";
+    document.getElementById("statistics").innerHTML = "Stats";
     document.getElementById("statisticsTitle").innerHTML = "Statistics";
     alertTime = "Please enter an integer between 1 and 120.";
     alertIntv = "Please enter an integer between 1 and 10."

@@ -237,6 +237,13 @@ header>h1 {
     justify-self: center;
 }
 
+#settingsMenu > input {
+    background-color: rgba(256,256,256,0.6);
+    border-radius:8px;
+    text-align:center;
+    font-family: 'Kanit', sans-serif;
+}
+
 #exitSettings {
     grid-row: 1;
     grid-column: 4;
@@ -303,6 +310,7 @@ header>h1 {
 }
 
 #saveSettings{
+    margin-left: 15%;
     grid-row: 1;
     grid-column: 2;
 }
@@ -312,7 +320,6 @@ header>h1 {
 }
 
 #statistics {
-    width: 80%;
     grid-row: 1;
     grid-column: 1;
     border-radius: 8px;
@@ -406,15 +413,30 @@ header>h1 {
     height: 1vw;
 }
 #sound-select {
-    grid-row: auto;
+    grid-row: 7;
     grid-column: 2;
     font-size: 1.5vw;
 }
 #sound-selection{
-    grid-row: auto;
-    grid-column: auto;
+    grid-row: 7;
+    grid-column: 3;
+    font-size: 1vw;
 }
 
+#languageTitle {
+    grid-row: 6;
+    grid-column: 2;
+    font-size: 1.5vw;
+}
+
+#language-form {
+    margin-left: 70%;
+    grid-row: 6;
+    grid-column: 3;
+    font-size: 1vw;
+    min-width: 60px;
+    height: 1vw;
+}
 /* ============================================================================
  * Doge Shop
  =========================================================================== */
@@ -568,20 +590,7 @@ header>h1 {
     height: 1vw;
 }
 
-#languageTitle {
-    grid-row: 6;
-    grid-column: 2;
-    font-size: 1.5vw;
-}
 
-#language-form {
-    grid-row: 6;
-    grid-column: 3;
-    font-size: 1vw;
-    width: 40%;
-    min-width: 60px;
-    height: 1vw;
-}
 /* ============================================================================
  * Footer
  =========================================================================== */
