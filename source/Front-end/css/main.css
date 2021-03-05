@@ -11,9 +11,12 @@
  * Next Feature : 
  *****************************************************************************/
 
-body {
+#body {
     margin: 0 auto;
     white-space: nowrap;
+    background-image: url("assets/wildjungle.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #container {
@@ -38,23 +41,26 @@ fieldset {
     grid-row: 1;
     grid-column: 1 / span 3;
     display: grid;
-    grid-template-columns: 15% 15% 40% 30%;
+    grid-template-columns: 5% 25% 40% 10% 20%;
     grid-template-rows: 100%;
-    background-color: lightgreen;
+    background-color: rgba(3,165,89,0.7);
     color: white;
     text-shadow: 3px 3px black;
     font-size: 2vh;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 header>h1 {
     grid-column: 3;
-    font-size: 5vh;
+    font-size: 3vw;
     justify-self: center;
-    align-self: center;
+    color: rgba(256,256,256,1);
 }
 
 #options {
-    grid-column: 4;
+    grid-column: 5;
     justify-self: stretch;
     display: grid;
     grid-template-columns: 70% 30%;
@@ -70,7 +76,6 @@ header>h1 {
     width: 4vh;
     grid-column: 2;
     justify-self: left;
-    align-self: center;
     margin-left: 2%;
 }
 
@@ -78,10 +83,52 @@ header>h1 {
     opacity: 0.3;
 }
 
-#welcome {
-    grid-column: 1 / span 2;
+#dogecoin{
+    grid-column: 4;
+    grid-row:1;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+    align-items: center;
+    justify-items: center;
+    background-color: rgba(256,256,256,0.4);
+    border-radius: 10px;
+    height:5vh;
+    width: 8vw;
+}
+
+#dogecoin:hover{
+    opacity:0.4;
+}
+
+#coinimg{
+    height: 4vh;
+    width: 4vh;
     grid-row: 1;
-    justify-self: center;
+    grid-column: 1;
+}
+
+#cointext{
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#welcome {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: left;
+    font-size: 1.5vw;
+    color: rgba(256,256,256,1);
+    margin-left: 5%;
+}
+
+#profilepic{
+    grid-row:1;
+    grid-column: 1;
+    height:4vh;
+    width: 4vh;
+    opacity: 0.5;
+    justify-self: right;
 }
 
 
@@ -89,14 +136,21 @@ header>h1 {
  * Timer
  =========================================================================== */
 
-main {
+#main {
     display: grid;
     justify-items: center;
+    justify-self: center;
     max-width: 50vw;
     grid-row: 2;
     grid-column: 2;
     grid-template-rows: 30% 30% 20%;
     grid-template-columns: 100%;
+    background-color: rgba(256,256,256,0.4);
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width:75%;
+    border-radius: 15px;
+    z-index:1;
 }
 
 #mode-selection {
@@ -119,12 +173,13 @@ main {
     margin-right: 5%;
 }
 
-td {
+#chart td {
     margin-right: 40%;
     text-align: center;
+    font-size: 1vw;
 }
 
-tr {
+#chart tr {
     margin-bottom: 50%;
 }
 
@@ -138,7 +193,7 @@ tr {
 }
 
 #start-btn {
-    background-color: #ddd;
+    background-color: rgba(256,256,256,0.6);
     border: none;
     border-radius: 5px;
     grid-row: 3;
@@ -164,9 +219,10 @@ tr {
 }
 
 #time {
-    font-size: 12vh;
+    font-size: 6vw;
     grid-row: 1;
     grid-column: 1;
+    align-self: center;
 }
 
 
@@ -178,17 +234,29 @@ tr {
     visibility: hidden;
     grid-column: 2;
     grid-row: 2;
-    background-color: lightgreen;
+    background-color: rgba(256,256,256,0.4);
     border-radius: 8px;
     margin: 2% 5% 5% 2%;
-    border-width: 2px;
     align-items: center;
     justify-items: center;
-    border-color: black;
-    border-style: solid;
     display: grid;
     grid-template-columns: 15% 50% 20% 15%;
-    grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 12%;
+    grid-template-rows: 8% 10% 10% 10% 10% 10% 10% 10% 10% 12%;
+    z-index: 2;
+    width: 80%;
+    justify-self: center;
+}
+
+#settingsMenu > input {
+    background-color: rgba(256,256,256,0.6);
+    border-radius:8px;
+    text-align:center;
+    font-family: 'Kanit', sans-serif;
+}
+
+#settingsMenu > h3{
+    justify-self: right;
+    margin-right: 20%;
 }
 
 #exitSettings {
@@ -205,23 +273,32 @@ tr {
     grid-row: 1;
     grid-column: 2 / span 2;
     font-size: 4vh;
+    justify-self: center;
 }
 
 #volume-controls {
     grid-row: 2;
     grid-column: 2 / span 2;
     display: grid;
-    grid-auto-columns: 20% 80%;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 100%;
+    justify-self: stretch;
+    justify-items: center;
+    align-items: center;
 }
 
 #volume-pic {
     height: 90%;
     width: 90%;
     grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    justify-self: center;
 }
 
 #volume-slider {
-    grid-column: 2 / span 2;
+    grid-column: 2;
+    grid-row:1;
     background-color: black;
     width: 80%;
 }
@@ -234,31 +311,98 @@ tr {
     cursor: pointer;
 }
 
-#statistics {
-    grid-row: 9;
-    grid-column: 2 / span 2;
-    width: 30%;
-    height: 60%;
-    border-radius: 8px;
-    font-size: 2vh;
-    font-family: 'Kanit', sans-serif;
+
+#settingsButtons{
+    grid-row:10;
+    grid-column:2 / span 2;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
 }
+
+#statistics, #saveSettings{
+    border-radius: 8px;
+    font-size: 2vw;
+    font-family: 'Kanit', sans-serif;
+    background-color: rgba(256,256,256,0.4);
+    margin-left: 5%;
+}
+
+#statistics {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+#saveSettings{
+    margin-left: 15%;
+    grid-row: 1;
+    grid-column: 2;
+}
+
+#saveSettings:hover {
+    opacity: 0.3;
+}
+
+#statistics {
+    grid-row: 1;
+    grid-column: 1;
+    border-radius: 8px;
+    font-size: 2vw;
+    justify-self: center;
+    font-family: 'Kanit', sans-serif;
+    background-color: rgba(256,256,256,0.4);
+}
+
+#statistics:hover{
+    opacity: 0.3;
+}
+
+
+/* ============================================================================
+ * Statisitcs Menu
+ =========================================================================== */
 
 #statisticsMenu {
     visibility: hidden;
     grid-column: 2;
     grid-row: 2;
-    background-color: lightgreen;
+    background-color: rgba(256,256,256,0.4);
     border-radius: 8px;
     margin: 2% 5% 5% 2%;
     border-width: 2px;
+    width:80%;
     align-items: center;
     justify-items: center;
     border-color: black;
     border-style: solid;
+    justify-self: center;
     display: grid;
     grid-template-columns: 15% 50% 20% 15%;
-    grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 12%;
+    grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 10% 12%;
+}
+
+#statisticsTitle {
+    grid-row: 1;
+    grid-column: 2 / span 2;
+    font-size: 4vh;
+}
+
+#statsWork {
+    grid-row: 2;
+    grid-column: 2 / span 2;
+    font-size: 1.5vw;
+}
+
+#statsBreak {
+    grid-row: 3;
+    grid-column: 2 / span 2;
+    font-size: 1.5vw;
+}
+
+#statsCong {
+    grid-row: 4;
+    grid-column: 2 / span 2;
+    font-size: 1.5vw;
 }
 
 #OKbtn-statistics {
@@ -271,11 +415,7 @@ tr {
     font-family: 'Kanit', sans-serif;
 }
 
-#statisticsTitle {
-    grid-row: 1;
-    grid-column: 2 / span 2;
-    font-size: 4vh;
-}
+
 
 #WorkTimeTitle {
     grid-row: 3;
@@ -321,32 +461,42 @@ tr {
     min-width: 60px;
     height: 1vw;
 }
-
-
-/* Settings: Long break interval. NEED REVISED */
-
-#LongBreakInterval {
+#sound-select {
     grid-row: 8;
     grid-column: 2;
     font-size: 1.5vw;
 }
-
-#long-break-interval {
+#sound-selection{
     grid-row: 8;
     grid-column: 3;
     font-size: 1vw;
-    width: 40%;
-    min-width: 60px;
-    height: 1vw;
+    margin-left: 70%;
 }
 
 #languageTitle {
-    grid-row: 6;
+    grid-row: 7;
     grid-column: 2;
     font-size: 1.5vw;
 }
 
 #language-form {
+    margin-left: 70%;
+    grid-row: 7;
+    grid-column: 3;
+    font-size: 1vw;
+    min-width: 60px;
+    height: 1vw;
+    align-self: center;
+    margin-bottom:30%;
+}
+
+#LongBreakInterval {
+    grid-row: 6;
+    grid-column: 2;
+    font-size: 1.5vw;
+}
+
+#long-break-interval {
     grid-row: 6;
     grid-column: 3;
     font-size: 1vw;
@@ -355,6 +505,153 @@ tr {
     height: 1vw;
 }
 
+#colorblindtitle{
+    grid-row: 9;
+    grid-column: 2;
+    font-size: 1.5vw;
+}
+
+#colorblindbox{
+    grid-row: 9;
+    grid-column: 3;
+    height:30%;
+    width:30%;
+}
+/* ============================================================================
+ * Doge Shop
+ =========================================================================== */
+ #dogeCoinMenu {
+    visibility: hidden;
+    grid-column: 2;
+    grid-row: 2;
+    background-color: rgba(256,256,256,0.4);
+    border-radius: 8px;
+    margin: 2% 5% 5% 2%;
+    justify-items: center;
+    display: grid;
+    grid-template-columns: 10% 60% 20% 10%;
+    grid-template-rows: 8% 4% 4% 10% 10% 10% 10% 10% 10% 10% 10%;
+    z-index: 2;
+    width: 80%;
+    justify-self: center;
+}
+
+#dogeTitle{
+    grid-row: 1;
+    grid-column: 1 / span 4;
+    align-self: center;
+    justify-self: center;
+    font-size: 4vh;
+}
+
+#dogeCoinMenu > div > p{
+    margin-right: 5%;
+}
+
+#themeTitle{
+    grid-row: 2;
+    grid-column: 1 / span 4;
+    font-size: 1.3vw;
+    align-self: center;
+}
+
+#preview{
+    font-size: 1vw;
+    grid-row: 3;
+    grid-column: 2;
+}
+
+#select{
+    font-size: 1vw;
+    grid-row: 3;
+    grid-column: 3;
+}
+
+.theme {
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    grid-column: 2;
+    display:grid;
+    width: 90%;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 100%;
+    font-size: 1vw;
+    margin-top: 5%;
+    justify-items: center;
+    align-items: center;
+    background-color: rgba(256,256,256,0.4);
+}
+
+.buyButton{
+    grid-column: 3;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    border-width: 3px;
+    justify-items: center;
+    font-size: 1vw;
+    align-items: center;
+    font-family: 'Kanit', sans-serif;
+    background-color: rgba(256,256,256,0.4);
+    margin-top: 16%;
+    width: 70%;
+}
+
+.buyButton:hover{
+    opacity: 0.3;
+}
+
+.theme:hover{
+    opacity: 0.3;
+}
+
+#wildjungle, #wildjunglebuy{
+    grid-row: 4;
+}
+
+#night, #nightbuy{
+    grid-row: 5;
+}
+
+#aquatic, #aquaticbuy{
+    grid-row: 6;
+}
+
+#sanfrancisco, #sanfranciscobuy{
+    grid-row: 7;
+}
+
+#dogeland, #dogebuy{
+    grid-row: 8;
+}
+
+#insufficientText{
+    grid-row: 10;
+    grid-column: 2 / span 2;
+    font-size: 1.5vw;
+    color: rgb(256,0,0,0.8);
+    visibility: hidden;
+}
+
+#dogeSave{
+    grid-row:11;
+    font-size: 2vw;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    font-family: 'Kanit', sans-serif;
+    margin: 2% 5% 2% 5%;
+    background-color: rgba(256,256,256,0.4);
+    grid-column: 2 / span 2;
+    justify-items: center;
+    align-items: center;
+}
+
+#dogeSave:hover {
+    opacity: 0.3;
+}
 
 /* ============================================================================
  * Footer
@@ -363,5 +660,7 @@ tr {
 footer {
     grid-column: 1 / span 3;
     grid-row: 3;
-    background-color: lightgreen;
+    background-color: rgba(3,165,89,0.6);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
