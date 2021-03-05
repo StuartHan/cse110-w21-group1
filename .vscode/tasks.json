@@ -8,6 +8,13 @@
 			"problemMatcher": [],
 			"label": "npm: test",
 			"detail": "jest"
+		},
+		{
+			"type": "npm",
+			"script": "test-coverage",
+			"problemMatcher": [],
+			"label": "npm: test-coverage",
+			"detail": "jest --coverage"
 		}
 	]
 }
