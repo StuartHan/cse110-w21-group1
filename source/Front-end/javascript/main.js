@@ -1140,6 +1140,12 @@ function showStats() {
 
 // export all functions
 module.exports = {
+    incrementCoin: incrementCoin,
+    loadActive: loadActive,
+    setShopItems: setShopItems,
+    turnLight: turnLight,
+    turnDark: turnDark,
+
     runCounter: runCounter,
     changeMode: changeMode,
     countDown: countDown,
