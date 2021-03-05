@@ -232,6 +232,46 @@ document.getElementById("dogebuy").addEventListener("click", function() { //On c
     darkenChosen();
 });
 
+document.getElementById("guestCont").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("loginNotification").style.visibility = "hidden";
+    document.getElementById("greywrapper").style.visibility = "hidden";
+});
+
+document.getElementById("loginCont").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("loginNotification").style.visibility = "hidden";
+    document.getElementById("loginMain").style.visibility = "visible";
+});
+
+document.getElementById("quitLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("loginMain").style.visibility = "hidden";
+    document.getElementById("greywrapper").style.visibility = "hidden";
+});
+
+document.getElementById("createAcc").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("loginMain").style.visibility = "hidden";
+    document.getElementById("accountCreation").style.visibility = "visible";
+});
+
+document.getElementById("quitCreate").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("greywrapper").style.visibility = "hidden";
+    document.getElementById("accountCreation").style.visibility = "hidden";
+});
+
+document.getElementById("notifCreate").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("loginNotification").style.visibility = "hidden";
+    document.getElementById("accountCreation").style.visibility = "visible";
+});
+
+document.getElementById("createAccInstead").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("loginMain").style.visibility = "hidden";
+    document.getElementById("accountCreation").style.visibility = "visible";
+});
+
+document.getElementById("switchToLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("loginMain").style.visibility = "visible";
+    document.getElementById("accountCreation").style.visibility = "hidden";
+});
+
 /* ============================================================================
  * Name         : incrementCoin(amount)
  * First Created: March 2 -- Suk Chan (Kevin) Lee
@@ -259,17 +299,23 @@ function incrementCoin(amount){
  *                Otherwise, load the most recently used background and coins.
  =========================================================================== */
 window.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null){ //Initialize Doge Coins
+    localStorage.clear();
+    if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
         window.localStorage.setItem('coin', "0");
         window.localStorage.setItem('shopitems', "000"); //Bit based indexing
         window.localStorage.setItem('active', "10000");
         window.localStorage.setItem('colorblind', "0");
         document.getElementById("cointext").innerHTML = "0";
+        window.localStorage.setItem('visited',"true");
     }
     else{
         document.getElementById("cointext").innerHTML = window.localStorage.getItem('coin');
         if (localStorage.getItem("colorblind") == "1")
             document.getElementById("colorblindbox").checked = true;
+        if (localStorage.getItem("visited") == "true"){
+            document.getElementById("loginNotification").style.visibility = "hidden";
+            document.getElementById("greywrapper").style.visibility = "hidden";
+        }
     }
     /*let items = window.localStorage.getItem('shopitems');
     if (items[0] == 1)

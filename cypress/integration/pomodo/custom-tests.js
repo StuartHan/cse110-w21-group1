@@ -1,4 +1,4 @@
-describe('pomodoTests', () => {
+describe('Volume Tests', () => {
     beforeEach(() => {
         cy.visit('https://stuarthan.github.io/cse110-w21-group1/');
     });
@@ -48,19 +48,18 @@ describe('pomodoTests', () => {
 
 
     });
+});
 
-    it('start botton disabled after click', () => {
+describe('Base Functionality Test', () => {
+    beforeEach(() => {
+        cy.visit('https://stuarthan.github.io/cse110-w21-group1/');
+    });
+
+    it('start button disabled after click', () => {
         cy.get("#start-btn").click();
         cy.get('#start-btn')
             .then(function($el) {
                 expect($el).to.have.attr("disabled", "disabled");
             })
-
-    });
-});
-
-describe('pomodoTests', () => {
-    beforeEach(() => {
-        cy.visit('https://stuarthan.github.io/cse110-w21-group1/');
     });
 });
