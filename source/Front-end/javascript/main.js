@@ -54,6 +54,7 @@ document.getElementById("statistics").addEventListener("click", function() { //O
     document.getElementById("statisticsMenu").style.visibility = "visible";
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
+    showStats();
 });
 
 document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
@@ -948,8 +949,8 @@ function saveTimeSettings() {
 /* ============================================================================
  * Name         : SwitchToLanguage
  * First Created: Feb 27 -- Jiaming Li
- * Last  Revised: Feb 27 -- Jiaming Li, first created
- * Revised Times: 1
+ * Last  Revised: Mar 5  -- Yichen Han -- Add new translations
+ * Revised Times: 3
  * 
  * Description  : Switch the language of content based on the option selected
  * Type         : Helper Function.
@@ -961,13 +962,20 @@ function SwitchToChinese() {
     document.getElementById("LongBreakText").innerHTML = "较长休息时段";
     document.getElementById("start-btn").innerHTML = "开始计时";
     document.getElementById("settingsTitle").innerHTML = "设置";
-    document.getElementById("WorkTimeTitle").innerHTML = "工作时段时间(分钟) :";
-    document.getElementById("ShortBreakTitle").innerHTML = "较短休息时段(分钟）:";
-    document.getElementById("LongBreakTitle").innerHTML = "较长休息时段(分钟）:";
-    document.getElementById("languageTitle").innerHTML = "语言选择 :";
-    document.getElementById("LongBreakInterval").innerHTML = "较长休息时段区间 :"
-    document.getElementById("statistics").innerHTML = "统计数据";
+    document.getElementById("WorkTimeTitle").innerHTML = "工作时段时间(分钟)：";
+    document.getElementById("ShortBreakTitle").innerHTML = "较短休息时段(分钟）：";
+    document.getElementById("LongBreakTitle").innerHTML = "较长休息时段(分钟）：";
+    document.getElementById("languageTitle").innerHTML = "语言：";
+    document.getElementById("LongBreakInterval").innerHTML = "较长休息时段区间：";
+    document.getElementById("sound-select").innerHTML = "铃声：";
+    document.getElementById("Bell").innerHTML = "闹钟";
+    document.getElementById("BigBen").innerHTML = "大本钟";
+    document.getElementById("Temple").innerHTML = "教堂（低频）";
+    document.getElementById("colorblindtitle").innerHTML = "色盲模式：";
+    document.getElementById("statistics").innerHTML = "统计";
+    document.getElementById("saveSettings").innerHTML = "保存";
     document.getElementById("statisticsTitle").innerHTML = "统计数据";
+    document.getElementById("statsCong").innerHTML = "继续加油吧！";
     alertTime = "请输入1到120的整数。"
     alertIntv = "请输入1到10的整数"
 }
@@ -983,9 +991,16 @@ function SwitchToEnglish() {
     document.getElementById("ShortBreakTitle").innerHTML = "Short Break (min):";
     document.getElementById("LongBreakTitle").innerHTML = "Long Break (min):";
     document.getElementById("languageTitle").innerHTML = "Language:";
-    document.getElementById("LongBreakInterval").innerHTML = "Long Break Interval:"
+    document.getElementById("LongBreakInterval").innerHTML = "Long Break Interval:";
+    document.getElementById("sound-select").innerHTML = "Ring: ";
+    document.getElementById("Bell").innerHTML = "Bell";
+    document.getElementById("BigBen").innerHTML = "Big Ben";
+    document.getElementById("Temple").innerHTML = "Temple (Low Freq)";
+    document.getElementById("colorblindtitle").innerHTML = "Color Blind Mode:";
     document.getElementById("statistics").innerHTML = "Stats";
+    document.getElementById("saveSettings").innerHTML = "Save";
     document.getElementById("statisticsTitle").innerHTML = "Statistics";
+    document.getElementById("statsCong").innerHTML = "Congrats! Keep on moving!";
     alertTime = "Please enter an integer between 1 and 120.";
     alertIntv = "Please enter an integer between 1 and 10."
 }
@@ -1014,4 +1029,25 @@ function chooseSoundEffect(){
         window.localStorage.setItem("sound-selection","source/Front-end/css/assets/TempleBell.mp3");
     }
     
+}
+
+
+function showStats() {
+    let english = document.getElementById("english-selection").checked;
+
+    let statsWork = document.getElementById("statsWork");
+    if (english) {
+        statsWork.innerHTML = "You have worked " + totalWorkMins + " mins";
+    }
+    else {
+        statsWork.innerHTML = "您已工作" + totalWorkMins + "分钟";
+    }
+
+    let statsBreak = document.getElementById("statsBreak");
+    if (english) {
+        statsBreak.innerHTML = "You have worked " + totalBreakMins + " mins";
+    }
+    else {
+        statsBreak.innerHTML = "您已休息" + totalBreakMins + "分钟";
+    }
 }
