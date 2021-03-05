@@ -249,8 +249,24 @@ document.getElementById("quitLogin").addEventListener("click", function() { //On
 });
 
 document.getElementById("createAcc").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    document.getElementById("loginMain").style.visibility = "hidden";
-    document.getElementById("accountCreation").style.visibility = "visible";
+    firebase.auth().createUserWithEmailAndPassword(
+        document.getElementById("emailCreate").value, document.getElementById("passCreate").value)
+  .then((userCredential) => {
+    var user = userCredential.user;
+    user.updateProfile({
+        displayName: document.getElementById("nameCreate").value
+    });
+    localStorage.setItem("username", document.getElementById("emailCreate").value);
+    localStorage.setItem("password",document.getElementById("passCreate").value);
+    document.getElementById("welcome").innerHTML = "Welcome "+document.getElementById("nameCreate").value+"!";
+    document.getElementById("greywrapper").style.visibility = "hidden";
+    document.getElementById("accountCreation").style.visibility = "hidden";
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ..
+  });
 });
 
 document.getElementById("quitCreate").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
@@ -271,6 +287,22 @@ document.getElementById("createAccInstead").addEventListener("click", function()
 document.getElementById("switchToLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("loginMain").style.visibility = "visible";
     document.getElementById("accountCreation").style.visibility = "hidden";
+});
+
+document.getElementById("proceedLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    firebase.auth().signInWithEmailAndPassword(document.getElementById("user").value, document.getElementById("pass").value)
+  .then((userCredential) => {
+    var user = userCredential.user;
+    localStorage.setItem("username", document.getElementById("user").value);
+    localStorage.setItem("password",document.getElementById("pass").value);
+    document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
+    document.getElementById("loginMain").style.visibility = "hidden";
+    document.getElementById("greywrapper").style.visibility = "hidden";
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  });
 });
 
 /* ============================================================================
@@ -300,7 +332,6 @@ function incrementCoin(amount){
  *                Otherwise, load the most recently used background and coins.
  =========================================================================== */
 window.addEventListener('DOMContentLoaded', () => {
-    localStorage.clear();
     if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
         window.localStorage.setItem('coin', "0");
         window.localStorage.setItem('shopitems', "000"); //Bit based indexing
@@ -327,6 +358,15 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('dogecost').innerHTML = "Owned";*/
     loadActive();
     darkenChosen();
+    if (localStorage.getItem("username") != null) {
+        firebase.auth().signInWithEmailAndPassword(localStorage.getItem("username"),localStorage.getItem("password"))
+    .then((userCredential) => {
+        var user = userCredential.user;
+        document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
+        document.getElementById("loginNotification").style.visibility = "hidden";
+        document.getElementById("greywrapper").style.visibility = "hidden";
+    });
+    }
 });
 
 /* ============================================================================
