@@ -1,6 +1,4 @@
 document.body.innerHTML = `
-<body >
-<div id="body">
     <div id="container">
         <header id="header">
             <h1>PomoTime</h1>
@@ -16,6 +14,14 @@ document.body.innerHTML = `
                 <p id="cointext">0</p>
             </div>
         </header>
+
+        <span id="teams">
+            <h2>Teams</h2>
+            <button id="invite">Invite</button>
+            <p id="teamsExit">X</p>
+            <p id="disableText">Disable Teams</p>
+            <input type="checkbox" id="disableTeams">
+        </span> 
 
         <main id="main">
             <div id="clock">
@@ -211,9 +217,8 @@ document.body.innerHTML = `
         var db = firebase.firestore();
       </script>
     <script src="./source/Front-end/javascript/main.js"></script>
-</div>
-</body>
-`
+`;
+
 
 const { setShopItems } = require("../source/Front-end/javascript/main.js");
 

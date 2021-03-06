@@ -22,6 +22,14 @@ document.body.innerHTML = `
             </div>
         </header>
 
+        <span id="teams">
+            <h2>Teams</h2>
+            <button id="invite">Invite</button>
+            <p id="teamsExit">X</p>
+            <p id="disableText">Disable Teams</p>
+            <input type="checkbox" id="disableTeams">
+        </span> 
+
         <main id="main">
             <div id="clock">
                 <h1 id="time">25:00</h1>
