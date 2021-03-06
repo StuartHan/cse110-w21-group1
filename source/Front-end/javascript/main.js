@@ -289,6 +289,14 @@ document.getElementById("switchToLogin").addEventListener("click", function() { 
     document.getElementById("accountCreation").style.visibility = "hidden";
 });
 
+document.getElementById("profilepic").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("teams").style.visibility = "visible";
+});
+
+document.getElementById("teamsExit").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("teams").style.visibility = "hidden";
+});
+
 document.getElementById("proceedLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     firebase.auth().signInWithEmailAndPassword(document.getElementById("user").value, document.getElementById("pass").value)
   .then((userCredential) => {
@@ -332,12 +340,13 @@ function incrementCoin(amount){
  *                Otherwise, load the most recently used background and coins.
  =========================================================================== */
 window.addEventListener('DOMContentLoaded', () => {
+    window.localStorage.removeItem("visited");
     if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
-        window.localStorage.setItem('coin', "0");
+        window.localStorage.setItem('coin', "900");
         window.localStorage.setItem('shopitems', "000"); //Bit based indexing
         window.localStorage.setItem('active', "10000");
         window.localStorage.setItem('colorblind', "0");
-        document.getElementById("cointext").innerHTML = "0";
+        document.getElementById("cointext").innerHTML = "900";
         window.localStorage.setItem('visited',"true");
     }
     else{
