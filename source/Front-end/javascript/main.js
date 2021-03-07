@@ -902,7 +902,6 @@ function updateTable() {
         document.getElementById("workPhase").style.opacity = 0.4;
         document.getElementById("longBreak").style.opacity = 1;
         document.getElementById("shortBreak").style.opacity = 0.4;
-<<<<<<< HEAD
     }
 
     document.getElementById("counter").innerHTML 
@@ -1141,11 +1140,12 @@ function showStats() {
 
     let statsBreak = document.getElementById("statsBreak");
     if (english) {
-        statsBreak.innerHTML = "You have worked " + totalBreakMins + " mins";
+        statsBreak.innerHTML = "You have rested " + totalBreakMins + " mins";
     }
     else {
         statsBreak.innerHTML = "您已休息" + totalBreakMins + "分钟";
     }
+}
 
 // export all functions
 module.exports = {
