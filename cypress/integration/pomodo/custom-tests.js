@@ -4,6 +4,7 @@ describe('Volume Tests', () => {
     });
 
     it('volume image change for sound level 3', () => {
+        cy.get("#guestCont").click();
         cy.get("#gear").click();
         cy.get('#volume-slider').invoke('val', 75).trigger('input');
         cy.get('#volume-pic')
