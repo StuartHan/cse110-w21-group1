@@ -1090,17 +1090,24 @@ function saveTimeSettings() {
 function SwitchToChinese() {
     language = "CN";
     storage["language"] = "CN";
-    // Login
+    // Login- 1st page
     document.getElementById("heytitle").innerHTML = "嗨！";
     document.getElementById("lookstitle").innerHTML = "您还未登陆";
     document.getElementById("guestCont").innerHTML = "访客使用";
     document.getElementById("loginCont").innerHTML = "登陆";
     document.getElementById("notifCreate").innerHTML = "创建账号";
     document.getElementById("createTitle").innerHTML = "创建账号";
+    // Login - login
+    document.getElementById("logintitle").innerHTML = "登陆";
+    document.getElementById("usertext").innerHTML = "用户名";
+    document.getElementById("passtext").innerHTML = "密码";
+    document.getElementById("proceedLogin").innerHTML = "登陆";
+    document.getElementById("createAccInstead").innerHTML = "去注册";
+    // Login - create account
     document.getElementById("emailtext").innerHTML = "邮箱";
     document.getElementById("createPassText").innerHTML = "密码";
     document.getElementById("nameText").innerHTML = "用户名";
-    document.getElementById("switchToLogin").innerHTML = "回到登陆界面";
+    document.getElementById("switchToLogin").innerHTML = "去登陆";
     document.getElementById("createAcc").innerHTML = "注册";
     //document.getElementById("welcome").innerHTML = "欢迎使用";
     document.getElementById("workText").innerHTML = "工作时段";
