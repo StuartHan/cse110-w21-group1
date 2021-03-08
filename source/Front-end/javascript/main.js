@@ -19,6 +19,7 @@ var currMode = "w"; // current mode. Default is working mode
 var counts = 0; // # of working periods. counts >= countsThres -> long break
 var countsThres = 4; // = Long break interval
 var color = "rgba(3,165,89,0.6)";
+var language = "EN";
 
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
@@ -260,6 +261,7 @@ document.getElementById("createAcc").addEventListener("click", function() { //On
     localStorage.setItem("username", document.getElementById("emailCreate").value);
     localStorage.setItem("password",document.getElementById("passCreate").value);
     document.getElementById("welcome").innerHTML = "Welcome "+document.getElementById("nameCreate").value+"!";
+    //if (language == "CN") {document.getElementById("welcome").innerHTML = "欢迎使用， "+document.getElementById("nameCreate").value+"!";} // change language 
     document.getElementById("greywrapper").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "hidden";
   })
@@ -599,15 +601,12 @@ saveTimeSettings();
  * Type         : Global Variables.
  =========================================================================== */
  if (storage["language"]) {
-    let language = window.localStorage.getItem("language");
+    language = window.localStorage.getItem("language");
     if (language == "CN") {
-        //alert(language)
-        //document.getElementById("english-selection").remove("checked");
         document.getElementById("chinese-selection").checked = "checked";
         SwitchToChinese();
     }
     if (language == "EN") {
-        //document.getElementById("chinese-selection").remove("checked");
         document.getElementById("english-selection").checked = "checked";
         SwitchToEnglish();
     }
@@ -1089,8 +1088,28 @@ function saveTimeSettings() {
  * Type         : Helper Function.
  =========================================================================== */
 function SwitchToChinese() {
+    language = "CN";
     storage["language"] = "CN";
-    document.getElementById("welcome").innerHTML = "欢迎使用";
+    // Login- 1st page
+    document.getElementById("heytitle").innerHTML = "嗨！";
+    document.getElementById("lookstitle").innerHTML = "您还未登陆";
+    document.getElementById("guestCont").innerHTML = "访客使用";
+    document.getElementById("loginCont").innerHTML = "登陆";
+    document.getElementById("notifCreate").innerHTML = "创建账号";
+    document.getElementById("createTitle").innerHTML = "创建账号";
+    // Login - login
+    document.getElementById("logintitle").innerHTML = "登陆";
+    document.getElementById("usertext").innerHTML = "用户名";
+    document.getElementById("passtext").innerHTML = "密码";
+    document.getElementById("proceedLogin").innerHTML = "登陆";
+    document.getElementById("createAccInstead").innerHTML = "去注册";
+    // Login - create account
+    document.getElementById("emailtext").innerHTML = "邮箱";
+    document.getElementById("createPassText").innerHTML = "密码";
+    document.getElementById("nameText").innerHTML = "用户名";
+    document.getElementById("switchToLogin").innerHTML = "去登陆";
+    document.getElementById("createAcc").innerHTML = "注册";
+    //document.getElementById("welcome").innerHTML = "欢迎使用";
     document.getElementById("workText").innerHTML = "工作时段";
     document.getElementById("ShortBreakText").innerHTML = "较短休息时段";
     document.getElementById("LongBreakText").innerHTML = "较长休息时段";
@@ -1133,8 +1152,9 @@ function SwitchToChinese() {
 }
 
 function SwitchToEnglish() {
+    language = "EN";
     storage["language"] = "EN";
-    document.getElementById("welcome").innerHTML = "Welcome Guest!";
+    //document.getElementById("welcome").innerHTML = "Welcome Guest!";
     document.getElementById("workText").innerHTML = "Work Phase";
     document.getElementById("ShortBreakText").innerHTML = "Short Break";
     document.getElementById("LongBreakText").innerHTML = "Long Break";
