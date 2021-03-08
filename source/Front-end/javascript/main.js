@@ -68,7 +68,8 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
     saveTimeSettings();
     if (document.getElementById("chinese-selection").checked) {
         SwitchToChinese();
-    } else if (document.getElementById("english-selection").checked) {
+    } 
+    else if (document.getElementById("english-selection").checked) {
         SwitchToEnglish();
     }
     chooseSoundEffect();
@@ -588,6 +589,31 @@ saveTimeSettings();
 
 
 
+/* ============================================================================
+ * First Created: Mar 8  -- Yichen Han
+ * Last  Revised: Mar 8  -- Yichen Han
+ * Revised Times: 1
+ * 
+ * Description  : Fetch language from local storage
+ * Discrip in CN: 从本地储存读取语言（用户就不用每次打开都要切换语言了）。
+ * Type         : Global Variables.
+ =========================================================================== */
+ if (storage["language"]) {
+    let language = window.localStorage.getItem("language");
+    if (language == "CN") {
+        //alert(language)
+        //document.getElementById("english-selection").remove("checked");
+        document.getElementById("chinese-selection").checked = "checked";
+        SwitchToChinese();
+    }
+    if (language == "EN") {
+        //document.getElementById("chinese-selection").remove("checked");
+        document.getElementById("english-selection").checked = "checked";
+        SwitchToEnglish();
+    }
+}
+
+
 
 /* ============================================================================
  * Name         : turnLight()
@@ -1063,6 +1089,7 @@ function saveTimeSettings() {
  * Type         : Helper Function.
  =========================================================================== */
 function SwitchToChinese() {
+    storage["language"] = "CN";
     document.getElementById("welcome").innerHTML = "欢迎使用";
     document.getElementById("workText").innerHTML = "工作时段";
     document.getElementById("ShortBreakText").innerHTML = "较短休息时段";
@@ -1085,9 +1112,28 @@ function SwitchToChinese() {
     document.getElementById("statsCong").innerHTML = "继续加油吧！";
     alertTime = "请输入1到120的整数。"
     alertIntv = "请输入1到10的整数"
+    // Doge Shop
+    document.getElementById("dogeTitle").innerHTML = "Doge 商店";
+    document.getElementById("themeTitle").innerHTML = "主题";
+    document.getElementById("preview").innerHTML = "点击预览";
+    document.getElementById("select").innerHTML = "购买/选择";
+    document.getElementById("wildjungletitle").innerHTML = "原始森林";
+    document.getElementById("junglecost").innerHTML = "免费";
+    document.getElementById("nightmodetitle").innerHTML = "夜间模式";
+    document.getElementById("nightcost").innerHTML = "免费";
+    document.getElementById("aquatictitle").innerHTML = "深海";
+    document.getElementById("aquaticcost").innerHTML = "50金币";
+    document.getElementById("sanfranciscotitle").innerHTML = "旧金山";
+    document.getElementById("sanfranciscocost").innerHTML = "100金币";
+    document.getElementById("dogelandtitle").innerHTML = "Doge天地";
+    document.getElementById("dogecost").innerHTML = "倾家荡产";
+    document.getElementById("dogebuy").innerHTML = "购买";
+    document.getElementById("dogeSave").innerHTML = "关闭";
+    document.getElementById("insufficientText").innerHTML = "金币不足";
 }
 
 function SwitchToEnglish() {
+    storage["language"] = "EN";
     document.getElementById("welcome").innerHTML = "Welcome Guest!";
     document.getElementById("workText").innerHTML = "Work Phase";
     document.getElementById("ShortBreakText").innerHTML = "Short Break";
@@ -1109,7 +1155,25 @@ function SwitchToEnglish() {
     document.getElementById("statisticsTitle").innerHTML = "Statistics";
     document.getElementById("statsCong").innerHTML = "Congrats! Keep on moving!";
     alertTime = "Please enter an integer between 1 and 120.";
-    alertIntv = "Please enter an integer between 1 and 10."
+    alertIntv = "Please enter an integer between 1 and 10.";
+    // Doge Shop
+    document.getElementById("dogeTitle").innerHTML = "Doge Shop";
+    document.getElementById("themeTitle").innerHTML = "Themes";
+    document.getElementById("preview").innerHTML = "Click to Preview";
+    document.getElementById("select").innerHTML = "Buy/Select";
+    document.getElementById("wildjungletitle").innerHTML = "Wild Jungle";
+    document.getElementById("junglecost").innerHTML = "Free";
+    document.getElementById("nightmodetitle").innerHTML = "Night Mode";
+    document.getElementById("nightcost").innerHTML = "Free";
+    document.getElementById("aquatictitle").innerHTML = "Aquatic";
+    document.getElementById("aquaticcost").innerHTML = "50 Coins";
+    document.getElementById("sanfranciscotitle").innerHTML = "San Francisco";
+    document.getElementById("sanfranciscocost").innerHTML = "100 Coins";
+    document.getElementById("dogelandtitle").innerHTML = "Doge Land";
+    document.getElementById("dogecost").innerHTML = "Everything";
+    document.getElementById("dogebuy").innerHTML = "Buy";
+    document.getElementById("dogeSave").innerHTML = "Close";
+    document.getElementById("insufficientText").innerHTML = "Insufficient Funds";
 }
 
 
