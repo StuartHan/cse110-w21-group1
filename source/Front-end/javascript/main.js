@@ -293,11 +293,24 @@ document.getElementById("switchToLogin").addEventListener("click", function() { 
 });
 
 document.getElementById("profilepic").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    document.getElementById("teams").style.visibility = "visible";
+    //if (document.getElementById("teams").style.visibility == "hidden")
+        document.getElementById("teams").style.visibility = "visible";
+    //else if (document.getElementById("teams").style.visibility == "visible")
+    //    document.getElementById("teams").style.visibility = "hidden";
 });
 
 document.getElementById("teamsExit").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("teams").style.visibility = "hidden";
+});
+
+document.getElementById("quitCreateTeam").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("createTeam").style.visibility = "hidden";
+});
+
+document.getElementById("createTeamButton").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("createTeam").style.visibility = "visible";
 });
 
 document.getElementById("proceedLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins

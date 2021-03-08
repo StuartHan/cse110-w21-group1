@@ -394,13 +394,13 @@ header>h1 {
     height: 40%;
     width: 60%;
     grid-template-rows: 20% 20% 20% 20% 20%;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 30% 30% 30% 10%;
     display: grid;
 }
 
 #teamsExit{
     grid-row: 1;
-    grid-column: 2;
+    grid-column: 4;
     justify-self: right;
     align-self: start;
     margin-top: 3%;
@@ -412,11 +412,11 @@ header>h1 {
     font-family: 'Kanit', sans-serif;
     grid-row: 1;
     grid-column: 1;
-    justify-self: left;
+    justify-self: center;
     align-self: start;
     margin-top: 5%;
     margin-left: 5%;
-    width: 30%;
+    width: 50%;
     font-size: .7vw;
 }
 
@@ -424,15 +424,33 @@ header>h1 {
     opacity: 0.3;
 }
 
-#teams > h2{
+#createTeamButton{
+    font-family: 'Kanit', sans-serif;
     grid-row: 1;
-    grid-column: 1 / span 2;
+    grid-column: 3;
     justify-self: center;
+    align-self: start;
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 50%;
+    font-size: .7vw;
+}
+
+#createTeamButton:hover{
+    opacity: 0.3;
+}
+
+#teamsLabel{
+    grid-row: 1;
+    grid-column: 2;
+    align-self: start;
+    justify-self: center;
+    font-size: 1vw;
 }
 
 #disableText{
     grid-row: 5;
-    grid-column:1;
+    grid-column:3;
     justify-self: right;
     align-self: center;
     font-size: .7vw;
@@ -440,12 +458,111 @@ header>h1 {
 
 #disableTeams{
     grid-row: 5;
-    grid-column:2;
+    grid-column:4;
     justify-self: center;
     align-self: center;
     font-size: .7vw;
 }
 
+/* ============================================================================
+ * Create Team
+ =========================================================================== */
+ #createTeam{
+    visibility: hidden;
+    grid-row: 2;
+    grid-column: 1;
+    background-color: rgba(256,256,256,0.4);
+    margin-top:5%;
+    margin-left: 5%;
+    border-radius: 10px;
+    height: 40%;
+    width: 60%;
+    grid-template-rows: 20% 10% 10% 10% 10% 10% 20% 10%;
+    grid-template-columns: 30% 30% 30% 10%;
+    display: grid;
+}
+
+#quitCreateTeam{
+    grid-row: 1;
+    grid-column: 4;
+    justify-self: right;
+    align-self: start;
+    margin-top: 3%;
+    margin-right: 3%;
+    font-size: 1.3vw;
+}
+
+#quitCreateTeam:hover{
+    opacity: 0.3;
+}
+
+#backToTeams{
+    font-family: 'Kanit', sans-serif;
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: center;
+    align-self: start;
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 50%;
+    font-size: .7vw;
+}
+
+#finalizeCreate{
+    font-family: 'Kanit', sans-serif;
+    grid-row: 8;
+    grid-column: 2;
+    justify-self: center;
+    align-self: start;
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 50%;
+    font-size: .7vw;
+}
+
+#finalizeCreate:hover{
+    opacity: 0.3;
+}
+
+#createTeamTag{
+    grid-row: 1;
+    grid-column: 1 / span 4;
+    align-self: start;
+    justify-self: center;
+    font-size: 1vw;
+}
+
+#teamName{
+    grid-row: 2;
+    grid-column: 2;
+    align-self: start;
+    justify-self: center;
+    font-size: .7vw;
+}
+
+#workTeam{
+    grid-row: 3;
+    grid-column: 2;
+    align-self: start;
+    justify-self: center;
+    font-size: .7vw;
+}
+
+#shortTeam{
+    grid-row: 4;
+    grid-column: 2;
+    align-self: start;
+    justify-self: center;
+    font-size: .7vw;
+}
+
+#longTeam{
+    grid-row: 5;
+    grid-column: 2;
+    align-self: start;
+    justify-self: center;
+    font-size: .7vw;
+}
 /* ============================================================================
  * Timer
  =========================================================================== */
@@ -564,7 +681,6 @@ header>h1 {
 #settingsMenu > input {
     background-color: rgba(256,256,256,0.6);
     border-radius:8px;
-    text-align:center;
     font-family: 'Kanit', sans-serif;
 }
 
