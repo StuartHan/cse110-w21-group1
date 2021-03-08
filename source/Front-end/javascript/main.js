@@ -1104,8 +1104,19 @@ function SwitchToChinese() {
     document.getElementById("themeTitle").innerHTML = "主题";
     document.getElementById("preview").innerHTML = "点击预览";
     document.getElementById("select").innerHTML = "购买/选择";
-    document.getElementById("wildjungle").h3.innerHTML = "原始森林";
+    document.getElementById("wildjungletitle").innerHTML = "原始森林";
     document.getElementById("junglecost").innerHTML = "免费";
+    document.getElementById("nightmodetitle").innerHTML = "夜间模式";
+    document.getElementById("nightcost").innerHTML = "免费";
+    document.getElementById("aquatictitle").innerHTML = "深海";
+    document.getElementById("aquaticcost").innerHTML = "50金币";
+    document.getElementById("sanfranciscotitle").innerHTML = "旧金山";
+    document.getElementById("sanfranciscocost").innerHTML = "100金币";
+    document.getElementById("dogelandtitle").innerHTML = "Doge天地";
+    document.getElementById("dogecost").innerHTML = "倾家荡产";
+    document.getElementById("dogebuy").innerHTML = "购买";
+    document.getElementById("dogeSave").innerHTML = "关闭";
+    document.getElementById("insufficientText").innerHTML = "金币不足";
 }
 
 function SwitchToEnglish() {
@@ -1137,6 +1148,19 @@ function SwitchToEnglish() {
     document.getElementById("themeTitle").innerHTML = "Themes";
     document.getElementById("preview").innerHTML = "Click to Preview";
     document.getElementById("select").innerHTML = "Buy/Select";
+    document.getElementById("wildjungletitle").innerHTML = "Wild Jungle";
+    document.getElementById("junglecost").innerHTML = "Free";
+    document.getElementById("nightmodetitle").innerHTML = "Night Mode";
+    document.getElementById("nightcost").innerHTML = "Free";
+    document.getElementById("aquatictitle").innerHTML = "Aquatic";
+    document.getElementById("aquaticcost").innerHTML = "50 Coins";
+    document.getElementById("sanfranciscotitle").innerHTML = "San Francisco";
+    document.getElementById("sanfranciscocost").innerHTML = "100 Coins";
+    document.getElementById("dogelandtitle").innerHTML = "Doge Land";
+    document.getElementById("dogecost").innerHTML = "Everything";
+    document.getElementById("dogebuy").innerHTML = "Buy";
+    document.getElementById("dogeSave").innerHTML = "Close";
+    document.getElementById("insufficientText").innerHTML = "Insufficient Funds";
 }
 
 
