@@ -68,7 +68,8 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
     saveTimeSettings();
     if (document.getElementById("chinese-selection").checked) {
         SwitchToChinese();
-    } else if (document.getElementById("english-selection").checked) {
+    } 
+    else if (document.getElementById("english-selection").checked) {
         SwitchToEnglish();
     }
     chooseSoundEffect();
@@ -575,6 +576,31 @@ saveTimeSettings();
 
 
 
+/* ============================================================================
+ * First Created: Mar 8  -- Yichen Han
+ * Last  Revised: Mar 8  -- Yichen Han
+ * Revised Times: 1
+ * 
+ * Description  : Fetch language from local storage
+ * Discrip in CN: 从本地储存读取语言（用户就不用每次打开都要切换语言了）。
+ * Type         : Global Variables.
+ =========================================================================== */
+ if (storage["language"]) {
+    let language = window.localStorage.getItem("language");
+    if (language == "CN") {
+        //alert(language)
+        //document.getElementById("english-selection").remove("checked");
+        document.getElementById("chinese-selection").checked = "checked";
+        SwitchToChinese();
+    }
+    if (language == "EN") {
+        //document.getElementById("chinese-selection").remove("checked");
+        document.getElementById("english-selection").checked = "checked";
+        SwitchToEnglish();
+    }
+}
+
+
 
 /* ============================================================================
  * Name         : turnLight()
@@ -1050,6 +1076,7 @@ function saveTimeSettings() {
  * Type         : Helper Function.
  =========================================================================== */
 function SwitchToChinese() {
+    storage["language"] = "CN";
     document.getElementById("welcome").innerHTML = "欢迎使用";
     document.getElementById("workText").innerHTML = "工作时段";
     document.getElementById("ShortBreakText").innerHTML = "较短休息时段";
@@ -1072,9 +1099,17 @@ function SwitchToChinese() {
     document.getElementById("statsCong").innerHTML = "继续加油吧！";
     alertTime = "请输入1到120的整数。"
     alertIntv = "请输入1到10的整数"
+    // Doge Shop
+    document.getElementById("dogeTitle").innerHTML = "Doge 商店";
+    document.getElementById("themeTitle").innerHTML = "主题";
+    document.getElementById("preview").innerHTML = "点击预览";
+    document.getElementById("select").innerHTML = "购买/选择";
+    document.getElementById("wildjungle").h3.innerHTML = "原始森林";
+    document.getElementById("junglecost").innerHTML = "免费";
 }
 
 function SwitchToEnglish() {
+    storage["language"] = "EN";
     document.getElementById("welcome").innerHTML = "Welcome Guest!";
     document.getElementById("workText").innerHTML = "Work Phase";
     document.getElementById("ShortBreakText").innerHTML = "Short Break";
@@ -1096,7 +1131,12 @@ function SwitchToEnglish() {
     document.getElementById("statisticsTitle").innerHTML = "Statistics";
     document.getElementById("statsCong").innerHTML = "Congrats! Keep on moving!";
     alertTime = "Please enter an integer between 1 and 120.";
-    alertIntv = "Please enter an integer between 1 and 10."
+    alertIntv = "Please enter an integer between 1 and 10.";
+    // Doge Shop
+    document.getElementById("dogeTitle").innerHTML = "Doge Shop";
+    document.getElementById("themeTitle").innerHTML = "Themes";
+    document.getElementById("preview").innerHTML = "Click to Preview";
+    document.getElementById("select").innerHTML = "Buy/Select";
 }
 
 
