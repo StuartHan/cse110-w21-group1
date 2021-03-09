@@ -1,4 +1,3 @@
-
 document.body.innerHTML =
     `
     <div id="container">
@@ -237,19 +236,16 @@ document.body.innerHTML =
 `;
 
 
-const { turnLight } = require("../source/Front-end/javascript/main.js");
+const { setActive } = require("../source/Front-end/javascript/main.js");
 
-describe("turnLight testing", () => {
-    test("test", () => {
-        let color = "";
-
-        turnLight();
-
-        expect(1).toBe(1);
-        // expect(document.getElementById("header").style.backgroundColor).toBe("rgba(256,256,256,0.4)");
-        // expect(document.getElementById("main").style.backgroundColor).toBe("rgba(256,256,256,0.4)");
-        // expect(document.getElementById("footer").style.backgroundColor).toBe("rgba(256,256,256,0.4)");
-        // expect(color).toBe("rgba(256,256,256,0.4)");
+describe("setActive testing", () => {
+    test("setActive of first element", () => {
+        setActive(0);
+        expect(localStorage.getItem("active")).toBe("10000");
     })
 
+    test("setActive of third element", () => {
+        setActive(2);
+        expect(localStorage.getItem("active")).toBe("00100");
+    })
 })

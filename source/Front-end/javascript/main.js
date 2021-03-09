@@ -1250,6 +1250,7 @@ module.exports = {
     setShopItems: setShopItems,
     turnLight: turnLight,
     turnDark: turnDark,
+    setActive: setActive,
 
     runCounter: runCounter,
     changeMode: changeMode,
