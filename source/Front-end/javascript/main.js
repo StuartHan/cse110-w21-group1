@@ -1263,5 +1263,6 @@ module.exports = {
     updateTable: updateTable,
 
     workSec: workSec,
-    totalSec: totalSec
+    totalSec: totalSec,
+    color, color
 }

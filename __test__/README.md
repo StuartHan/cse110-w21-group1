@@ -9,10 +9,7 @@
 - `run task` -> `npm: test-coverage`
 
 #### function to be tested
-- turnLight
-- turnDark
 - loadActive (fix localStorage)
-
 - runCounter
 
 #### Done testing
@@ -28,3 +25,5 @@
 - incrementCoin
 - setShopItems
 - setActive
+- turnLight
+- turnDark
