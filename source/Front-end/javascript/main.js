@@ -20,6 +20,7 @@ var counts = 0; // # of working periods. counts >= countsThres -> long break
 var countsThres = 4; // = Long break interval
 var color = "rgba(3,165,89,0.6)";
 var language = "EN";
+var loggedIn = false;
 
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
@@ -329,6 +330,17 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
   });
 });
 
+document.getElementById("teamsAccountLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    if (loggedIn){
+        //save data
+        localStorage.clear();
+    }
+    else{
+        document.getElementById("loginMain").style.visibility = "visible";
+        document.getElementById("teams").style.visibility = "hidden";
+    }
+});
+
 /* ============================================================================
  * Name         : incrementCoin(amount)
  * First Created: March 2 -- Suk Chan (Kevin) Lee
@@ -390,7 +402,11 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
         document.getElementById("loginNotification").style.visibility = "hidden";
         document.getElementById("greywrapper").style.visibility = "hidden";
+        document.getElementById("teamsAccountLogin").innerHTML = "Logout";
     });
+    }
+    else{
+        document.getElementById("teamsAccountLogin").innerHTML = "Login";
     }
 });
 
