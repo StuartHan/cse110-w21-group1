@@ -16,8 +16,6 @@
 - loadActive (fix localStorage)
 - updateTable (half done)
 - changeMode (add more expect stmt to each test)
-- turnLight (fix color 255 256)
-- turnDark (fix color 255 256)
 - countDown (questionable)
 - autoSwitchMode (not working)
 - runCounter (not working)
@@ -30,3 +28,5 @@
 - incrementCoin
 - setShopItems
 - setActive
+- turnLight (fix color 256)
+- turnDark (fix color 256)
