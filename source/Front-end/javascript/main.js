@@ -19,6 +19,7 @@ var currMode = "w"; // current mode. Default is working mode
 var counts = 0; // # of working periods. counts >= countsThres -> long break
 var countsThres = 4; // = Long break interval
 var color = "rgba(3,165,89,0.6)";
+var language = "EN";
 
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
@@ -68,7 +69,8 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
     saveTimeSettings();
     if (document.getElementById("chinese-selection").checked) {
         SwitchToChinese();
-    } else if (document.getElementById("english-selection").checked) {
+    } 
+    else if (document.getElementById("english-selection").checked) {
         SwitchToEnglish();
     }
     chooseSoundEffect();
@@ -259,6 +261,7 @@ document.getElementById("createAcc").addEventListener("click", function() { //On
     localStorage.setItem("username", document.getElementById("emailCreate").value);
     localStorage.setItem("password",document.getElementById("passCreate").value);
     document.getElementById("welcome").innerHTML = "Welcome "+document.getElementById("nameCreate").value+"!";
+    //if (language == "CN") {document.getElementById("welcome").innerHTML = "欢迎使用， "+document.getElementById("nameCreate").value+"!";} // change language 
     document.getElementById("greywrapper").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "hidden";
   })
@@ -290,11 +293,24 @@ document.getElementById("switchToLogin").addEventListener("click", function() { 
 });
 
 document.getElementById("profilepic").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    document.getElementById("teams").style.visibility = "visible";
+    //if (document.getElementById("teams").style.visibility == "hidden")
+        document.getElementById("teams").style.visibility = "visible";
+    //else if (document.getElementById("teams").style.visibility == "visible")
+    //    document.getElementById("teams").style.visibility = "hidden";
 });
 
 document.getElementById("teamsExit").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("teams").style.visibility = "hidden";
+});
+
+document.getElementById("quitCreateTeam").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("createTeam").style.visibility = "hidden";
+});
+
+document.getElementById("createTeamButton").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("createTeam").style.visibility = "visible";
 });
 
 document.getElementById("proceedLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
@@ -573,6 +589,28 @@ else{
 }
 saveTimeSettings();
 
+
+
+/* ============================================================================
+ * First Created: Mar 8  -- Yichen Han
+ * Last  Revised: Mar 8  -- Yichen Han
+ * Revised Times: 1
+ * 
+ * Description  : Fetch language from local storage
+ * Discrip in CN: 从本地储存读取语言（用户就不用每次打开都要切换语言了）。
+ * Type         : Global Variables.
+ =========================================================================== */
+ if (storage["language"]) {
+    language = window.localStorage.getItem("language");
+    if (language == "CN") {
+        document.getElementById("chinese-selection").checked = "checked";
+        SwitchToChinese();
+    }
+    if (language == "EN") {
+        document.getElementById("english-selection").checked = "checked";
+        SwitchToEnglish();
+    }
+}
 
 
 
@@ -903,7 +941,6 @@ function updateTable() {
         document.getElementById("longBreak").style.opacity = 1;
         document.getElementById("shortBreak").style.opacity = 0.4;
     }
-
     document.getElementById("counter").innerHTML 
     = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
 }
@@ -1051,7 +1088,28 @@ function saveTimeSettings() {
  * Type         : Helper Function.
  =========================================================================== */
 function SwitchToChinese() {
-    document.getElementById("welcome").innerHTML = "欢迎使用";
+    language = "CN";
+    storage["language"] = "CN";
+    // Login- 1st page
+    document.getElementById("heytitle").innerHTML = "嗨！";
+    document.getElementById("lookstitle").innerHTML = "您还未登陆";
+    document.getElementById("guestCont").innerHTML = "访客使用";
+    document.getElementById("loginCont").innerHTML = "登陆";
+    document.getElementById("notifCreate").innerHTML = "创建账号";
+    document.getElementById("createTitle").innerHTML = "创建账号";
+    // Login - login
+    document.getElementById("logintitle").innerHTML = "登陆";
+    document.getElementById("usertext").innerHTML = "用户名";
+    document.getElementById("passtext").innerHTML = "密码";
+    document.getElementById("proceedLogin").innerHTML = "登陆";
+    document.getElementById("createAccInstead").innerHTML = "去注册";
+    // Login - create account
+    document.getElementById("emailtext").innerHTML = "邮箱";
+    document.getElementById("createPassText").innerHTML = "密码";
+    document.getElementById("nameText").innerHTML = "用户名";
+    document.getElementById("switchToLogin").innerHTML = "去登陆";
+    document.getElementById("createAcc").innerHTML = "注册";
+    //document.getElementById("welcome").innerHTML = "欢迎使用";
     document.getElementById("workText").innerHTML = "工作时段";
     document.getElementById("ShortBreakText").innerHTML = "较短休息时段";
     document.getElementById("LongBreakText").innerHTML = "较长休息时段";
@@ -1073,10 +1131,30 @@ function SwitchToChinese() {
     document.getElementById("statsCong").innerHTML = "继续加油吧！";
     alertTime = "请输入1到120的整数。"
     alertIntv = "请输入1到10的整数"
+    // Doge Shop
+    document.getElementById("dogeTitle").innerHTML = "Doge 商店";
+    document.getElementById("themeTitle").innerHTML = "主题";
+    document.getElementById("preview").innerHTML = "点击预览";
+    document.getElementById("select").innerHTML = "购买/选择";
+    document.getElementById("wildjungletitle").innerHTML = "原始森林";
+    document.getElementById("junglecost").innerHTML = "免费";
+    document.getElementById("nightmodetitle").innerHTML = "夜间模式";
+    document.getElementById("nightcost").innerHTML = "免费";
+    document.getElementById("aquatictitle").innerHTML = "深海";
+    document.getElementById("aquaticcost").innerHTML = "50金币";
+    document.getElementById("sanfranciscotitle").innerHTML = "旧金山";
+    document.getElementById("sanfranciscocost").innerHTML = "100金币";
+    document.getElementById("dogelandtitle").innerHTML = "Doge天地";
+    document.getElementById("dogecost").innerHTML = "倾家荡产";
+    document.getElementById("dogebuy").innerHTML = "购买";
+    document.getElementById("dogeSave").innerHTML = "关闭";
+    document.getElementById("insufficientText").innerHTML = "金币不足";
 }
 
 function SwitchToEnglish() {
-    document.getElementById("welcome").innerHTML = "Welcome Guest!";
+    language = "EN";
+    storage["language"] = "EN";
+    //document.getElementById("welcome").innerHTML = "Welcome Guest!";
     document.getElementById("workText").innerHTML = "Work Phase";
     document.getElementById("ShortBreakText").innerHTML = "Short Break";
     document.getElementById("LongBreakText").innerHTML = "Long Break";
@@ -1097,7 +1175,25 @@ function SwitchToEnglish() {
     document.getElementById("statisticsTitle").innerHTML = "Statistics";
     document.getElementById("statsCong").innerHTML = "Congrats! Keep on moving!";
     alertTime = "Please enter an integer between 1 and 120.";
-    alertIntv = "Please enter an integer between 1 and 10."
+    alertIntv = "Please enter an integer between 1 and 10.";
+    // Doge Shop
+    document.getElementById("dogeTitle").innerHTML = "Doge Shop";
+    document.getElementById("themeTitle").innerHTML = "Themes";
+    document.getElementById("preview").innerHTML = "Click to Preview";
+    document.getElementById("select").innerHTML = "Buy/Select";
+    document.getElementById("wildjungletitle").innerHTML = "Wild Jungle";
+    document.getElementById("junglecost").innerHTML = "Free";
+    document.getElementById("nightmodetitle").innerHTML = "Night Mode";
+    document.getElementById("nightcost").innerHTML = "Free";
+    document.getElementById("aquatictitle").innerHTML = "Aquatic";
+    document.getElementById("aquaticcost").innerHTML = "50 Coins";
+    document.getElementById("sanfranciscotitle").innerHTML = "San Francisco";
+    document.getElementById("sanfranciscocost").innerHTML = "100 Coins";
+    document.getElementById("dogelandtitle").innerHTML = "Doge Land";
+    document.getElementById("dogecost").innerHTML = "Everything";
+    document.getElementById("dogebuy").innerHTML = "Buy";
+    document.getElementById("dogeSave").innerHTML = "Close";
+    document.getElementById("insufficientText").innerHTML = "Insufficient Funds";
 }
 
 
@@ -1140,7 +1236,7 @@ function showStats() {
 
     let statsBreak = document.getElementById("statsBreak");
     if (english) {
-        statsBreak.innerHTML = "You have worked " + totalBreakMins + " mins";
+        statsBreak.innerHTML = "You have rested " + totalBreakMins + " mins";
     }
     else {
         statsBreak.innerHTML = "您已休息" + totalBreakMins + "分钟";
