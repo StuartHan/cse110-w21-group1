@@ -1242,3 +1242,19 @@ function showStats() {
         statsBreak.innerHTML = "您已休息" + totalBreakMins + "分钟";
     }
 }
+
+// export all functions
+module.exports = {
+    runCounter: runCounter,
+    changeMode: changeMode,
+    countDown: countDown,
+    autoSwitchMode: autoSwitchMode,
+    secToTime: secToTime,
+    timeToSec: timeToSec,
+    drainColor: drainColor,
+    fillColor: fillColor,
+    updateTable: updateTable,
+
+    workSec: workSec,
+    totalSec: totalSec
+}

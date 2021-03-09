@@ -101,7 +101,7 @@ let {
   currMode,
   currSec,
   counts,
-} = require("../source/Front-end/javascript/main.js");
+} = require("../source/Front-end/javascript/mainjest.js");
 
 describe("timeToSec testing", () => {
   test("should turn 02:00 into 120", () => {
