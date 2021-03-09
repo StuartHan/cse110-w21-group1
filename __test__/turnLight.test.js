@@ -1,5 +1,6 @@
 
-document.body.innerHTML = `
+document.body.innerHTML =
+    `
     <div id="container">
         <header id="header">
             <h1>PomoTime</h1>
@@ -17,12 +18,27 @@ document.body.innerHTML = `
         </header>
 
         <span id="teams">
-            <h2>Teams</h2>
+            <h2 id="teamsLabel">Teams</h2>
             <button id="invite">Invite</button>
+            <button id="createTeamButton">Create</button>
             <p id="teamsExit">X</p>
+            <span id="teamsEntry">
+
+            </span>
             <p id="disableText">Disable Teams</p>
             <input type="checkbox" id="disableTeams">
-        </span> 
+        </span>
+
+        <span id="createTeam">
+            <h2 id="createTeamTag">Create Team</h2>
+            <button id="backToTeams">Back</button>
+            <p id="quitCreateTeam">X</p>
+            <p id="teamName">Name</p>
+            <p id="workTeam">Work Time</p>
+            <p id="shortTeam">Short Break</p>
+            <p id="longTeam">Long Break</p>
+            <button id="finalizeCreate">Create</button>
+        </span>
 
         <main id="main">
             <div id="clock">
@@ -120,28 +136,28 @@ document.body.innerHTML = `
             <p id="preview">Click to Preview</p>
             <p id="select">Buy/Select</p>
             <div id="wildjungle" class="theme">
-                <h3>Wild Jungle</h3>
-                <p id="junglecost">Free</p>
+                <h3 id="wildjungletitle">Wild Jungle</h3>
+                <p  id="junglecost">Free</p>
             </div>
             <button id="wildjunglebuy" class="buyButton">Selected</button>
             <div id="night" class="theme">
-                <h3>Night Mode</h3>
-                <p id="nightcost">Free</p>
+                <h3 id="nightmodetitle">Night Mode</h3>
+                <p  id="nightcost">Free</p>
             </div>
             <button id="nightbuy" class="buyButton">Owned</button>
             <div id="aquatic" class="theme">
-                <h3>Aquatic</h3>
-                <p id="aquaticcost">50 Coins</p>
+                <h3 id="aquatictitle">Aquatic</h3>
+                <p  id="aquaticcost">50 Coins</p>
             </div>
             <button id="aquaticbuy" class="buyButton">Buy</button>
             <div id="sanfrancisco" class="theme">
-                <h3>San Francisco</h3>
-                <p id="sanfranciscocost">100 Coins</p>
+                <h3 id="sanfranciscotitle">San Francisco</h3>
+                <p  id="sanfranciscocost">100 Coins</p>
             </div>
             <button id="sanfranciscobuy" class="buyButton">Buy</button>
             <div id="dogeland" class="theme">
-                <h3>Doge Land</h3>
-                <p id="dogecost">Everything</p>
+                <h3 id="dogelandtitle">Doge Land</h3>
+                <p  id="dogecost">Everything</p>
             </div>
             <button id="dogebuy" class="buyButton">Buy</button>
             <button id="dogeSave">Close</button>
@@ -160,15 +176,15 @@ document.body.innerHTML = `
         </footer>
 
         <span id="loginNotification">
-            <h2>Hey There!</h2>
-            <h3>Looks like you aren't logged in</h3>
+            <h2 id="heytitle">Hey There!</h2>
+            <h3 id="lookstitle">Looks like you aren't logged in</h3>
             <button id="guestCont">Continue as </br>Guest</button>
             <button id="loginCont">Login</button>
             <p id="notifCreate">Create an account</p>
         </span>
 
         <span id="loginMain">
-            <h1>Login</h1>
+            <h1 id="logintitle">Login</h1>
             <h2 id="usertext">Username </h2>
             <input type="text" id="user">
             <h2 id="passtext">Password </h2>
@@ -179,7 +195,7 @@ document.body.innerHTML = `
         </span>
 
         <span id="accountCreation">
-            <h1>Create Account</h1>
+            <h1 id="createTitle">Create Account</h1>
             <h2 id="emailtext">Email </h2>
             <input type="text" id="emailCreate">
             <h2 id="createPassText">Password </h2>
@@ -219,7 +235,6 @@ document.body.innerHTML = `
       </script>
     <script src="./source/Front-end/javascript/main.js"></script>
 `;
-
 
 
 const { turnLight } = require("../source/Front-end/javascript/main.js");
