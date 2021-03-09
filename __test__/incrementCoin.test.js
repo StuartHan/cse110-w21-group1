@@ -256,4 +256,10 @@ describe("incrementCoin testing", () => {
         incrementCoin(120);
         expect(document.getElementById("cointext").innerHTML).toBe("175");
     })
+
+    // test("should be 0 when negative number entered", () => {
+    //     localStorage.setItem("coin", 80);
+    //     incrementCoin(-1);
+    //     expect(document.getElementById("cointext").innerHTML).toBe("80");
+    // })
 })

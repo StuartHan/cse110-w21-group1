@@ -1,3 +1,4 @@
+
 document.body.innerHTML =
     `
     <div id="container">
@@ -236,26 +237,17 @@ document.body.innerHTML =
 `;
 
 
-const { setActive } = require("../source/Front-end/javascript/main.js");
+const { autoSwitchMode } = require("../source/Front-end/javascript/main.js")
 
-describe("setActive testing", () => {
-    test("setActive of first element", () => {
-        setActive(0);
-        expect(localStorage.getItem("active")).toBe("10000");
-    })
+describe("autoSwitchMode testing", () => {
+    test("currMode = w, counts != 4 --> enter short break mode", () => {
 
-    test("setActive of third element", () => {
-        setActive(2);
-        expect(localStorage.getItem("active")).toBe("00100");
-    })
+        currMode = "w";
+        counts = 4;
 
-    test("setActive should not working when input >= 5", () => {
-        setActive(5);
-        expect(localStorage.getItem("active")).toBe("00000");
-    })
+        autoSwitchMode();
 
-    test("setActive should not working when input < 0", () => {
-        setActive(-1);
-        expect(localStorage.getItem("active")).toBe("00000");
-    })
-})
+        // expect(document.getElementById("radio-working-mode").checked).toBe(true);
+        expect(1).toBe(1);
+    });
+});

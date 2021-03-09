@@ -4,26 +4,29 @@
 - `npm run test`
 - `npm run test-coverage`
 
+- `npm run test -- ./__test__/<filename>` : to test a single test file (single unit)
+
 ## With vscode task
 - `run task` -> `npm: test`
 - `run task` -> `npm: test-coverage`
 
-#### function to be tested
-- loadActive (fix localStorage)
-- runCounter
+# testing progress
 
-#### Done testing
+### function not done testing
+- loadActive (fix localStorage)
+- updateTable (half done)
+- changeMode (add more expect stmt to each test)
+- turnLight (fix color 255 256)
+- turnDark (fix color 255 256)
+- countDown (questionable)
+- autoSwitchMode (not working)
+- runCounter (not working)
+
+### Done testing, all working good
 - timeToSec
 - secToTime
 - fillColor
-- drainColoru
-- pdateTable
-- countDown
-- autoSwitchMode
-- changeMode
-
+- drainColor
 - incrementCoin
 - setShopItems
 - setActive
-- turnLight
-- turnDark

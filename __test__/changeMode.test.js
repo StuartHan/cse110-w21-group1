@@ -1,3 +1,4 @@
+
 document.body.innerHTML =
     `
     <div id="container">
@@ -236,26 +237,32 @@ document.body.innerHTML =
 `;
 
 
-const { setActive } = require("../source/Front-end/javascript/main.js");
+const { changeMode, workSec, secToTime } = require("../source/Front-end/javascript/main.js")
 
-describe("setActive testing", () => {
-    test("setActive of first element", () => {
-        setActive(0);
-        expect(localStorage.getItem("active")).toBe("10000");
-    })
+describe("changeMode testing", () => {
+    //
+    // test 1
+    //
+    test("change HTML content when radio-working-mode is checked", () => {
+        changeMode();
+        expect(document.getElementById("time").innerHTML).toBe(secToTime(workSec));
+    });
 
-    test("setActive of third element", () => {
-        setActive(2);
-        expect(localStorage.getItem("active")).toBe("00100");
-    })
+    //
+    // test 2
+    //
+    test("change HTML content when radio-shortBreak-mode is checked", () => {
 
-    test("setActive should not working when input >= 5", () => {
-        setActive(5);
-        expect(localStorage.getItem("active")).toBe("00000");
-    })
+        changeMode();
+        expect(document.getElementById("time").innerHTML).toBe(secToTime(workSec));
+    });
 
-    test("setActive should not working when input < 0", () => {
-        setActive(-1);
-        expect(localStorage.getItem("active")).toBe("00000");
-    })
-})
+    //
+    // test 3
+    //
+    test("change HTML content when radio-longBreak-mode is checked", () => {
+
+        changeMode();
+        expect(document.getElementById("time").innerHTML).toBe(secToTime(workSec));
+    });
+});

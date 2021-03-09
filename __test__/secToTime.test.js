@@ -1,3 +1,4 @@
+
 document.body.innerHTML =
     `
     <div id="container">
@@ -236,26 +237,22 @@ document.body.innerHTML =
 `;
 
 
-const { setActive } = require("../source/Front-end/javascript/main.js");
+const { secToTime } = require("../source/Front-end/javascript/main.js");
 
-describe("setActive testing", () => {
-    test("setActive of first element", () => {
-        setActive(0);
-        expect(localStorage.getItem("active")).toBe("10000");
-    })
+describe("secToTime testing", () => {
+    test("should turn 120 into 02:00", () => {
+        expect(secToTime(120)).toBe("02:00");
+    });
 
-    test("setActive of third element", () => {
-        setActive(2);
-        expect(localStorage.getItem("active")).toBe("00100");
-    })
+    test("should turn 0 into 00:00", () => {
+        expect(secToTime(0)).toBe("00:00");
+    });
 
-    test("setActive should not working when input >= 5", () => {
-        setActive(5);
-        expect(localStorage.getItem("active")).toBe("00000");
-    })
+    test("should turn 322 into 05:22", () => {
+        expect(secToTime(322)).toBe("05:22");
+    });
 
-    test("setActive should not working when input < 0", () => {
-        setActive(-1);
-        expect(localStorage.getItem("active")).toBe("00000");
-    })
-})
+    test("should turn 1439 into 23:59", () => {
+        expect(secToTime(1439)).toBe("23:59");
+    });
+});

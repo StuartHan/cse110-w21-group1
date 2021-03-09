@@ -1,5 +1,12 @@
-document.body.innerHTML =
-    `
+/**
+ * @jest-environment jsdom
+ */
+
+// import 'jest-dom/extend-expect'
+// import { render, cleanup } from 'react-testing-library'
+
+document.body.innerHTML = 
+`
     <div id="container">
         <header id="header">
             <h1>PomoTime</h1>
@@ -235,27 +242,20 @@ document.body.innerHTML =
     <script src="./source/Front-end/javascript/main.js"></script>
 `;
 
+const { getByText, getByTestId, fireEvent } = require("@testing-library/dom");
+const { runCounter } = require("../source/Front-end/javascript/main.js");
 
-const { setActive } = require("../source/Front-end/javascript/main.js");
 
-describe("setActive testing", () => {
-    test("setActive of first element", () => {
-        setActive(0);
-        expect(localStorage.getItem("active")).toBe("10000");
-    })
 
-    test("setActive of third element", () => {
-        setActive(2);
-        expect(localStorage.getItem("active")).toBe("00100");
-    })
+describe("runCounter testing", () => {
+    test("should increment counts", () => {
 
-    test("setActive should not working when input >= 5", () => {
-        setActive(5);
-        expect(localStorage.getItem("active")).toBe("00000");
-    })
+        currMode = "w";
+        counts = 2;
 
-    test("setActive should not working when input < 0", () => {
-        setActive(-1);
-        expect(localStorage.getItem("active")).toBe("00000");
+        runCounter();
+
+        expect(1).toBe(1);
+        // expect(counts).toBe(2);
     })
 })

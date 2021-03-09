@@ -236,26 +236,33 @@ document.body.innerHTML =
 `;
 
 
-const { setActive } = require("../source/Front-end/javascript/main.js");
+const { fillColor } = require("../source/Front-end/javascript/main.js");
 
-describe("setActive testing", () => {
-    test("setActive of first element", () => {
-        setActive(0);
-        expect(localStorage.getItem("active")).toBe("10000");
-    })
+describe("fillColor testing", () => {
+    test("before setting, should be empty string", () => {
+        header = document.getElementById("header");
+        footer = document.getElementById("footer");
+        gear = document.getElementById("gear");
 
-    test("setActive of third element", () => {
-        setActive(2);
-        expect(localStorage.getItem("active")).toBe("00100");
-    })
+        expect(header.style.backgroundColor).toBe("");
+        expect(header.style.color).toBe("");
+        expect(header.style.textShadow).toBe("");
+        expect(footer.style.backgroundColor).toBe("");
+    });
 
-    test("setActive should not working when input >= 5", () => {
-        setActive(5);
-        expect(localStorage.getItem("active")).toBe("00000");
-    })
+    test("should set style attribute", () => {
+        header = document.getElementById("header");
+        footer = document.getElementById("footer");
+        gear = document.getElementById("gear");
+        gear_img = "source/Front-end/css/assets/Geartransparent.png";
 
-    test("setActive should not working when input < 0", () => {
-        setActive(-1);
-        expect(localStorage.getItem("active")).toBe("00000");
-    })
-})
+        fillColor();
+
+        // after calling function
+        expect(header.style.backgroundColor).toBe("rgba(3, 165, 89, 0.6)");
+        expect(header.style.color).toBe("white");
+        expect(header.style.textShadow).toBe("2px 2px black");
+        expect(footer.style.backgroundColor).toBe("rgba(3, 165, 89, 0.6)");
+        expect(gear.src).toBe("http://localhost/" + gear_img);
+    });
+});
