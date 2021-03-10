@@ -1,8 +1,8 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Mar 2
- * Curr  Version: 2.1
+ * Last  Revised: Mar 10 
+ * Curr  Version: 3.0
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
  * Variables    : 
@@ -14,6 +14,9 @@
 var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
 var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
+var ms = 10; // 1000 = 1s
+/* Test function： ms smaller, timer runs faster */
+function setms(thisms) { ms = thisms; }
 
 var currMode = "w"; // current mode. Default is working mode
 var counts = 0; // # of working periods. counts >= countsThres -> long break
@@ -829,7 +832,7 @@ function changeMode() {
     else if (radioMode[1].checked) {
         document.getElementById("time").innerHTML = secToTime(sBrkSec); // time
         totalSec = sBrkSec; // seconds
-        currMode = "s"; // mode
+        currMode = "s"; // mode'
     }
     // Long break mode.
     else {
@@ -872,7 +875,7 @@ function countDown() {
             //console.log(currTime); // TEST CODE
             document.getElementById("time").innerHTML = currTime; // reset HTML
         }
-    }, 10); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
+    }, ms); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
 }
 
 
@@ -1222,9 +1225,9 @@ function SwitchToChinese() {
     document.getElementById("languageTitle").innerHTML = "语言：";
     document.getElementById("LongBreakInterval").innerHTML = "较长休息时段区间：";
     document.getElementById("sound-select").innerHTML = "铃声：";
-    document.getElementById("Bell").innerHTML = "闹钟";
-    document.getElementById("BigBen").innerHTML = "大本钟";
-    document.getElementById("Temple").innerHTML = "教堂（低频）";
+    document.getElementById("default-1").innerHTML = "闹钟";
+    document.getElementById("default-2").innerHTML = "大本钟";
+    document.getElementById("default-3").innerHTML = "教堂（低频）";
     document.getElementById("colorblindtitle").innerHTML = "色盲模式：";
     document.getElementById("statistics").innerHTML = "统计";
     document.getElementById("saveSettings").innerHTML = "保存";
