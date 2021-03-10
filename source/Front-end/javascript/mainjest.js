@@ -1,8 +1,8 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Mar 2
- * Curr  Version: 2.1
+ * Last  Revised: Mar 10 
+ * Curr  Version: 3.0
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
  * Variables    : 
@@ -14,12 +14,16 @@
 var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
 var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
+var ms = 10; // 1000 = 1s
+/* Test function： ms smaller, timer runs faster */
+function setms(thisms) { ms = thisms; }
 
 var currMode = "w"; // current mode. Default is working mode
 var counts = 0; // # of working periods. counts >= countsThres -> long break
 var countsThres = 4; // = Long break interval
 var color = "rgba(3,165,89,0.6)";
 var language = "EN";
+var loggedIn = false;
 
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
@@ -31,17 +35,19 @@ document.getElementById("gear").addEventListener("click", function() { //On clic
     chooseSoundEffect();
 });
 
-document.getElementById("default-1").addEventListener("click", function(){//On click, play corresponding sound
-    document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
-    document.getElementById("sound-effect").play();
-});
-document.getElementById("default-2").addEventListener("click", function(){
-    document.getElementById("sound-effect").src = "source/Front-end/css/assets/BigBenBellChime.mp3";
-    document.getElementById("sound-effect").play();
-});
-document.getElementById("default-3").addEventListener("click", function(){
-    document.getElementById("sound-effect").src = "source/Front-end/css/assets/TempleBell.mp3";
-    document.getElementById("sound-effect").play();
+document.getElementById("sound-selection").addEventListener("onchange", function(){//On click, play corresponding sound
+    if (document.getElementById("sound-selection").value == "Bell"){
+        document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
+        document.getElementById("sound-effect").play();
+    }
+    else if (document.getElementById("sound-selection").value == "BigBen"){
+        document.getElementById("sound-effect").src = "source/Front-end/css/assets/BigBenBellChime.mp3";
+        document.getElementById("sound-effect").play();
+    }
+    else{
+        document.getElementById("sound-effect").src = "source/Front-end/css/assets/TempleBell.mp3";
+        document.getElementById("sound-effect").play();
+    }
 });
 
 document.getElementById("colorblindbox").addEventListener("click",function(){
@@ -67,10 +73,10 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
     saveTimeSettings();
-    if (document.getElementById("chinese-selection").checked) {
+    if (document.getElementById("language-form").value == "Chinese") {
         SwitchToChinese();
     } 
-    else if (document.getElementById("english-selection").checked) {
+    else if (document.getElementById("language-form").value == "English") {
         SwitchToEnglish();
     }
     chooseSoundEffect();
@@ -258,6 +264,14 @@ document.getElementById("createAcc").addEventListener("click", function() { //On
     user.updateProfile({
         displayName: document.getElementById("nameCreate").value
     });
+    createUserData(
+        document.getElementById("emailCreate").value,
+        document.getElementById("nameCreate").value,
+        localStorage.getElementById('coin'),
+        localStorage.getElementById('shopitems'),
+        localStorage.getElementById('active'),
+        localStorage.getElementById('colorblind'),
+    );
     localStorage.setItem("username", document.getElementById("emailCreate").value);
     localStorage.setItem("password",document.getElementById("passCreate").value);
     document.getElementById("welcome").innerHTML = "Welcome "+document.getElementById("nameCreate").value+"!";
@@ -313,6 +327,11 @@ document.getElementById("createTeamButton").addEventListener("click", function()
     document.getElementById("createTeam").style.visibility = "visible";
 });
 
+document.getElementById("backToTeams").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("teams").style.visibility = "visible";
+    document.getElementById("createTeam").style.visibility = "hidden";
+});
+
 document.getElementById("proceedLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     firebase.auth().signInWithEmailAndPassword(document.getElementById("user").value, document.getElementById("pass").value)
   .then((userCredential) => {
@@ -329,6 +348,45 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
   });
 });
 
+document.getElementById("teamsAccountLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    if (loggedIn){//Logout Operation
+    }
+    else{
+        document.getElementById("loginMain").style.visibility = "visible";
+        document.getElementById("teams").style.visibility = "hidden";
+    }
+});
+
+function createUserData(email,name,coins,shopitems,active,colorblind){
+    firebase.database().ref('users/'+email).set({
+        username: name,
+        coin: coins,
+        shopitems: shopitems,
+        active: active,
+        colorblind: colorblind,
+        teams: {}
+    });
+}
+
+function createTeam(name,worktime,shorttime,longtime,user){
+    firebase.database().ref('teams/'+name).set({
+        worktime: worktime,
+        shorttime: shorttime,
+        longtime: longtime,
+        admins: {user1: user},
+        users: {user1: user}
+    });
+}
+
+function updateUser(email,name,coins,shopitems,active,colorblind){
+
+}
+
+function updateCoin(user,amount){
+    let string = '/users/' + user +'/coin'
+    firebase.database().ref().update({string : amount})
+}
+
 /* ============================================================================
  * Name         : incrementCoin(amount)
  * First Created: March 2 -- Suk Chan (Kevin) Lee
@@ -342,6 +400,8 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
 function incrementCoin(amount){
     let newNum = (parseInt(localStorage.getItem("coin"))+amount).toString();
     localStorage.setItem("coin",newNum);
+    if (loggedIn)
+        updateCoin(localStorage.getItem("username"),localStorage.getItem("coin"));
     document.getElementById("cointext").innerHTML = newNum;
 }
 
@@ -390,7 +450,11 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
         document.getElementById("loginNotification").style.visibility = "hidden";
         document.getElementById("greywrapper").style.visibility = "hidden";
+        document.getElementById("teamsAccountLogin").innerHTML = "Logout";
     });
+    }
+    else{
+        document.getElementById("teamsAccountLogin").innerHTML = "Login";
     }
 });
 
@@ -436,6 +500,7 @@ function loadActive(){
 function darkenChosen(){
     let active = window.localStorage.getItem('active');
     let shopitems = window.localStorage.getItem('shopitems');
+    let english = document.getElementById("language-form").value == "English";
     document.getElementById('wildjunglebuy').style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById('nightbuy').style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById('aquaticbuy').style.backgroundColor = "rgba(256,256,256,0.4)";
@@ -443,37 +508,76 @@ function darkenChosen(){
     document.getElementById('dogebuy').style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById('wildjunglebuy').innerHTML = "Owned";
     document.getElementById('nightbuy').innerHTML = "Owned";
-    if (shopitems[0] == 1)
-        document.getElementById('aquaticbuy').innerHTML = "Owned";
-    else
-        document.getElementById('aquaticbuy').innerHTML = "Buy";
-    if (shopitems[1] == 1)
-        document.getElementById('sanfranciscobuy').innerHTML = "Owned";
-    else
-        document.getElementById('sanfranciscobuy').innerHTML = "Buy";
-    if (shopitems[2] == 1)
-        document.getElementById('dogebuy').innerHTML = "Owned";
-    else
-        document.getElementById('dogebuy').innerHTML = "Buy";
+    if (shopitems[0] == 1){
+        if (english)
+            document.getElementById('aquaticbuy').innerHTML = "Owned";
+        else
+            document.getElementById('aquaticbuy').innerHTML = "已拥有";
+    }
+    else{
+        if (english)
+            document.getElementById('aquaticbuy').innerHTML = "Buy";
+        else
+            document.getElementById('aquaticbuy').innerHTML = "购买";
+    }
+    if (shopitems[1] == 1){
+        if (english)
+            document.getElementById('sanfranciscobuy').innerHTML = "Owned";
+        else
+            document.getElementById('sanfranciscobuy').innerHTML = "已拥有";
+    }
+    else{
+        if (english)
+            document.getElementById('sanfranciscobuy').innerHTML = "Buy";
+        else
+            document.getElementById('sanfranciscobuy').innerHTML = "购买";
+    }
+    if (shopitems[2] == 1){
+        if (english)
+            document.getElementById('dogebuy').innerHTML = "Owned";
+        else
+            document.getElementById('dogebuy').innerHTML = "已拥有";
+    }
+    else{
+        if (english)
+            document.getElementById('dogebuy').innerHTML = "Buy";
+        else
+            document.getElementById('dogebuy').innerHTML = "购买";
+    }
     if (active[0] == 1){
         document.getElementById('wildjunglebuy').style.backgroundColor = "rgba(256,256,256,0.1)";
-        document.getElementById('wildjunglebuy').innerHTML = "Selected";
+        if (english)
+            document.getElementById('wildjunglebuy').innerHTML = "Selected";
+        else
+            document.getElementById('wildjunglebuy').innerHTML = "已选择";
     }
     else if (active[1] == 1){
         document.getElementById('nightbuy').style.backgroundColor = "rgba(256,256,256,0.1)";
-        document.getElementById('nightbuy').innerHTML = "Selected";
+        if (english)
+            document.getElementById('nightbuy').innerHTML = "Selected";
+        else
+            document.getElementById('nightbuy').innerHTML = "已选择";
     }
     else if (active[2] == 1){
         document.getElementById('aquaticbuy').style.backgroundColor = "rgba(256,256,256,0.1)";
-        document.getElementById('aquaticbuy').innerHTML = "Selected";
+        if (english)
+            document.getElementById('aquaticbuy').innerHTML = "Selected";
+        else
+            document.getElementById('aquaticbuy').innerHTML = "已选择";
     }
     else if (active[3] == 1){
         document.getElementById('sanfranciscobuy').style.backgroundColor = "rgba(256,256,256,0.1)";
-        document.getElementById('sanfranciscobuy').innerHTML = "Selected";
+        if (english)
+            document.getElementById('sanfranciscobuy').innerHTML = "Selected";
+        else
+            document.getElementById('sanfranciscobuy').innerHTML = "已选择";
     }
     else if (active[4] == 1){
         document.getElementById('dogebuy').style.backgroundColor = "rgba(256,256,256,0.1)";
-        document.getElementById('dogebuy').innerHTML = "Selected";
+        if (english)
+            document.getElementById('dogebuy').innerHTML = "Selected";
+        else
+            document.getElementById('dogebuy').innerHTML = "已选择";
     }
 }
 
@@ -574,18 +678,18 @@ if (storage["lBrkItv"]) {
 if (storage["sound-selection"]){
     document.getElementById("sound-effect").src = storage["sound-selection"];
     if(storage["sound-selection"] == "source/Front-end/css/assets/bellChime.mp3"){
-        document.getElementById("default-1").checked = true;
+        document.getElementById("sound-selection").value = "Bell";
     }
     else if(storage["sound-selection"] == "source/Front-end/css/assets/BigBenBellChime.mp3"){
-        document.getElementById("default-2").checked = true;
+        document.getElementById("sound-selection").value = "BigBen";
     }
     else{
-        document.getElementById("default-3").checked = true;
+        document.getElementById("sound-selection").value = "Temple";
     }
 }
 else{
     document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
-    document.getElementById("default-1").checked = true;
+    document.getElementById("sound-selection").value = "Bell";
 }
 saveTimeSettings();
 
@@ -603,11 +707,11 @@ saveTimeSettings();
  if (storage["language"]) {
     language = window.localStorage.getItem("language");
     if (language == "CN") {
-        document.getElementById("chinese-selection").checked = "checked";
+        document.getElementById("language-form").value = "Chinese";
         SwitchToChinese();
     }
     if (language == "EN") {
-        document.getElementById("english-selection").checked = "checked";
+        document.getElementById("language-form").checked = "English";
         SwitchToEnglish();
     }
 }
@@ -728,7 +832,7 @@ function changeMode() {
     else if (radioMode[1].checked) {
         document.getElementById("time").innerHTML = secToTime(sBrkSec); // time
         totalSec = sBrkSec; // seconds
-        currMode = "s"; // mode
+        currMode = "s"; // mode'
     }
     // Long break mode.
     else {
@@ -771,7 +875,7 @@ function countDown() {
             console.log(currTime); // TEST CODE
             document.getElementById("time").innerHTML = currTime; // reset HTML
         }
-    }, 10); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
+    }, ms); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
 }
 
 
@@ -1121,9 +1225,9 @@ function SwitchToChinese() {
     document.getElementById("languageTitle").innerHTML = "语言：";
     document.getElementById("LongBreakInterval").innerHTML = "较长休息时段区间：";
     document.getElementById("sound-select").innerHTML = "铃声：";
-    document.getElementById("Bell").innerHTML = "闹钟";
-    document.getElementById("BigBen").innerHTML = "大本钟";
-    document.getElementById("Temple").innerHTML = "教堂（低频）";
+    document.getElementById("default-1").innerHTML = "闹钟";
+    document.getElementById("default-2").innerHTML = "大本钟";
+    document.getElementById("default-3").innerHTML = "教堂（低频）";
     document.getElementById("colorblindtitle").innerHTML = "色盲模式：";
     document.getElementById("statistics").innerHTML = "统计";
     document.getElementById("saveSettings").innerHTML = "保存";
@@ -1166,9 +1270,9 @@ function SwitchToEnglish() {
     document.getElementById("languageTitle").innerHTML = "Language:";
     document.getElementById("LongBreakInterval").innerHTML = "Long Break Interval:";
     document.getElementById("sound-select").innerHTML = "Ring: ";
-    document.getElementById("Bell").innerHTML = "Bell";
-    document.getElementById("BigBen").innerHTML = "Big Ben";
-    document.getElementById("Temple").innerHTML = "Temple (Low Freq)";
+    document.getElementById("default-1").innerHTML = "Bell";
+    document.getElementById("default-2").innerHTML = "Big Ben";
+    document.getElementById("default-3").innerHTML = "Temple (Low Freq)";
     document.getElementById("colorblindtitle").innerHTML = "Color Blind Mode:";
     document.getElementById("statistics").innerHTML = "Stats";
     document.getElementById("saveSettings").innerHTML = "Save";
@@ -1207,11 +1311,11 @@ function SwitchToEnglish() {
  * Type         : Helper Function.
  =========================================================================== */
 function chooseSoundEffect(){
-    if(document.getElementById("default-1").checked){
+    if(document.getElementById("sound-selection").value == "Bell"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
         window.localStorage.setItem("sound-selection","source/Front-end/css/assets/bellChime.mp3");
     }
-    else if(document.getElementById("default-2").checked){
+    else if(document.getElementById("sound-selection").value == "BigBen"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/BigBenBellChime.mp3";
         window.localStorage.setItem("sound-selection","source/Front-end/css/assets/BigBenBellChime.mp3");
     }
@@ -1224,7 +1328,7 @@ function chooseSoundEffect(){
 
 
 function showStats() {
-    let english = document.getElementById("english-selection").checked;
+    let english = document.getElementById("language-form").value == "English";
 
     let statsWork = document.getElementById("statsWork");
     if (english) {
@@ -1242,6 +1346,7 @@ function showStats() {
         statsBreak.innerHTML = "您已休息" + totalBreakMins + "分钟";
     }
 }
+
 
 // export all functions
 module.exports = {
