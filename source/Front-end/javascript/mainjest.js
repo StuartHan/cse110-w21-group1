@@ -1260,7 +1260,15 @@ module.exports = {
     incrementCoin: incrementCoin,
     setActive: setActive,
     darkenChosen: darkenChosen,
+    saveTimeSettings: saveTimeSettings,
+
+    SwitchToChinese: SwitchToChinese,
 
     workSec: workSec,
+    sBrkSec: sBrkSec,
+    lBrkSec: lBrkSec,
+    currMode: currMode,
+    counts: counts,
+
     totalSec: totalSec
 }

@@ -28,13 +28,13 @@
 - incrementCoin
 - setShopItems
 - setActive
-- turnLight (fix color 256)
-- turnDark (fix color 256)
+- turnLight
+- turnDark
 - darkenchosen
+- saveTimeSettings
 
 ### function not started yet
-- saveTimeSettings
-- SwitchToChinese
+- SwitchToChinese (current)
 - SwitchToEnglish
 - chooseSoundEffect
 - showStats
