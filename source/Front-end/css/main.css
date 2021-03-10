@@ -964,7 +964,9 @@ header>h1 {
     grid-row: 8;
     grid-column: 3;
     font-size: 1vw;
-    margin-left: 70%;
+    width: 100%;
+    align-self: center;
+    font-family: 'Kanit', sans-serif;
 }
 
 #languageTitle {
@@ -974,14 +976,13 @@ header>h1 {
 }
 
 #language-form {
-    margin-left: 70%;
     grid-row: 7;
     grid-column: 3;
     font-size: 1vw;
+    width: 100%;
     min-width: 60px;
-    height: 1vw;
     align-self: center;
-    margin-bottom:30%;
+    font-family: 'Kanit', sans-serif;
 }
 
 #LongBreakInterval {

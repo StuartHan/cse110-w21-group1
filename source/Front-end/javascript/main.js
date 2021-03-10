@@ -32,17 +32,19 @@ document.getElementById("gear").addEventListener("click", function() { //On clic
     chooseSoundEffect();
 });
 
-document.getElementById("default-1").addEventListener("click", function(){//On click, play corresponding sound
-    document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
-    document.getElementById("sound-effect").play();
-});
-document.getElementById("default-2").addEventListener("click", function(){
-    document.getElementById("sound-effect").src = "source/Front-end/css/assets/BigBenBellChime.mp3";
-    document.getElementById("sound-effect").play();
-});
-document.getElementById("default-3").addEventListener("click", function(){
-    document.getElementById("sound-effect").src = "source/Front-end/css/assets/TempleBell.mp3";
-    document.getElementById("sound-effect").play();
+document.getElementById("sound-selection").addEventListener("onchange", function(){//On click, play corresponding sound
+    if (document.getElementById("sound-selection").value == "Bell"){
+        document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
+        document.getElementById("sound-effect").play();
+    }
+    else if (document.getElementById("sound-selection").value == "BigBen"){
+        document.getElementById("sound-effect").src = "source/Front-end/css/assets/BigBenBellChime.mp3";
+        document.getElementById("sound-effect").play();
+    }
+    else{
+        document.getElementById("sound-effect").src = "source/Front-end/css/assets/TempleBell.mp3";
+        document.getElementById("sound-effect").play();
+    }
 });
 
 document.getElementById("colorblindbox").addEventListener("click",function(){
@@ -68,10 +70,10 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
     saveTimeSettings();
-    if (document.getElementById("chinese-selection").checked) {
+    if (document.getElementById("language-form").value == "Chinese") {
         SwitchToChinese();
     } 
-    else if (document.getElementById("english-selection").checked) {
+    else if (document.getElementById("language-form").value == "English") {
         SwitchToEnglish();
     }
     chooseSoundEffect();
@@ -331,15 +333,35 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
 });
 
 document.getElementById("teamsAccountLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    if (loggedIn){
-        //save data
-        localStorage.clear();
+    if (loggedIn){//Logout Operation
+        
     }
     else{
         document.getElementById("loginMain").style.visibility = "visible";
         document.getElementById("teams").style.visibility = "hidden";
     }
 });
+
+function createUserData(email,name,coins,shopitems,active,colorblind){
+    firebase.database().ref('users/'+email).set({
+        username: name,
+        coin: coins,
+        shopitems: shopitems,
+        active: active,
+        colorblind: colorblind,
+        teams: {}
+    });
+}
+
+function createTeam(name,worktime,shorttime,longtime,user){
+    firebase.database().ref('teams/'+name).set({
+        worktime: worktime,
+        shorttime: shorttime,
+        longtime: longtime,
+        admins: {user1: user},
+        users: {user1: user}
+    });
+}
 
 /* ============================================================================
  * Name         : incrementCoin(amount)
@@ -590,18 +612,18 @@ if (storage["lBrkItv"]) {
 if (storage["sound-selection"]){
     document.getElementById("sound-effect").src = storage["sound-selection"];
     if(storage["sound-selection"] == "source/Front-end/css/assets/bellChime.mp3"){
-        document.getElementById("default-1").checked = true;
+        document.getElementById("sound-selection").value = "Bell";
     }
     else if(storage["sound-selection"] == "source/Front-end/css/assets/BigBenBellChime.mp3"){
-        document.getElementById("default-2").checked = true;
+        document.getElementById("sound-selection").value = "BigBen";
     }
     else{
-        document.getElementById("default-3").checked = true;
+        document.getElementById("sound-selection").value = "Temple";
     }
 }
 else{
     document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
-    document.getElementById("default-1").checked = true;
+    document.getElementById("sound-selection").value = "Bell";
 }
 saveTimeSettings();
 
@@ -619,11 +641,11 @@ saveTimeSettings();
  if (storage["language"]) {
     language = window.localStorage.getItem("language");
     if (language == "CN") {
-        document.getElementById("chinese-selection").checked = "checked";
+        document.getElementById("language-form").value = "Chinese";
         SwitchToChinese();
     }
     if (language == "EN") {
-        document.getElementById("english-selection").checked = "checked";
+        document.getElementById("language-form").checked = "English";
         SwitchToEnglish();
     }
 }
@@ -1182,9 +1204,9 @@ function SwitchToEnglish() {
     document.getElementById("languageTitle").innerHTML = "Language:";
     document.getElementById("LongBreakInterval").innerHTML = "Long Break Interval:";
     document.getElementById("sound-select").innerHTML = "Ring: ";
-    document.getElementById("Bell").innerHTML = "Bell";
-    document.getElementById("BigBen").innerHTML = "Big Ben";
-    document.getElementById("Temple").innerHTML = "Temple (Low Freq)";
+    document.getElementById("default-1").innerHTML = "Bell";
+    document.getElementById("default-2").innerHTML = "Big Ben";
+    document.getElementById("default-3").innerHTML = "Temple (Low Freq)";
     document.getElementById("colorblindtitle").innerHTML = "Color Blind Mode:";
     document.getElementById("statistics").innerHTML = "Stats";
     document.getElementById("saveSettings").innerHTML = "Save";
@@ -1223,11 +1245,11 @@ function SwitchToEnglish() {
  * Type         : Helper Function.
  =========================================================================== */
 function chooseSoundEffect(){
-    if(document.getElementById("default-1").checked){
+    if(document.getElementById("sound-selection").value == "Bell"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
         window.localStorage.setItem("sound-selection","source/Front-end/css/assets/bellChime.mp3");
     }
-    else if(document.getElementById("default-2").checked){
+    else if(document.getElementById("sound-selection").value == "BigBen"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/BigBenBellChime.mp3";
         window.localStorage.setItem("sound-selection","source/Front-end/css/assets/BigBenBellChime.mp3");
     }
@@ -1240,7 +1262,7 @@ function chooseSoundEffect(){
 
 
 function showStats() {
-    let english = document.getElementById("english-selection").checked;
+    let english = document.getElementById("language-form").value == "English";
 
     let statsWork = document.getElementById("statsWork");
     if (english) {

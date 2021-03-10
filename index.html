@@ -131,22 +131,16 @@
             <h3 id="LongBreakTitle">Long Break (min):</h3>
             <input id="long-break-number" name="long-break-number" type="text" min="0" max="120" value="15">
             <h3 id="languageTitle"> Language:</h3>
-            <form  id="language-form">
-                <input id="english-selection" type="radio" name="language" value="language" checked>English
-                <br>
-                <input id="chinese-selection" type="radio" name="language" value="language">Chinese(简体中文)
-            </form>
+            <select id="language-form">
+                <option value="English" id="english-selection">English</option>
+                <option value="Chinese" id="chinese-selection">Chinese(简体中文)</option>
+            </select>
             <h3 id="sound-select" style="text-align:center">Select sound:</h3>
-            <form id="sound-selection">
-                <input id="default-1" type="radio" name="sound" value="default-1">
-                <label id="Bell" for="default-1">Bell</label>
-                <br>
-                <input id="default-2" type="radio" name="sound" value="default-2">
-                <label id="BigBen" for="default-2">Big Ben</label>
-                <br>
-                <input id="default-3" type="radio" name="sound" value="default-3">
-                <label id="Temple" for="default-3">Temple (Low Freq)</label>
-            </form>
+            <select id="sound-selection">
+                <option value="Bell" id="default-1">Bell</option>
+                <option value="BigBen" id="default-2">Big Ben</option>
+                <option value="Temple" id="default-3">Temple (Low Freq)</option>
+            </select>
             <!-- Long break interval -->
             <h3    id="LongBreakInterval">Long Break Interval:</h3>
             <input id="long-break-interval" name="long-break-interval" type="text" min="1" max="10" value="4">
@@ -258,7 +252,6 @@
             appId: "1:161185941557:web:89bd010354b630be6b897c",
             databaseURL: "https://userdata-e83e7-default-rtdb.firebaseio.com",
             measurementId: "G-QE552WPF9J",
-
         };
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
