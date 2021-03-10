@@ -17,6 +17,8 @@
     background-image: url("assets/wildjungle.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    min-width: 500px;
+    min-height: 800px;
 }
 
 #container {
@@ -53,6 +55,8 @@ fieldset {
     justify-items: center;
     grid-template-rows: 20% 15% 40% 25%;
     grid-template-columns: 50% 50%;
+    min-height: 200px;
+    min-width: 250px;
 }
 
 #loginNotification > h2{
@@ -66,19 +70,19 @@ fieldset {
     font-size: 1vw;
 }
 #loginNotification > p{
-    font-size: .8vw;
+    font-size: max(.8vw,2vh);
     grid-row: 4;
     grid-column: 1 / span 2;
     text-decoration: underline;
 }
 #loginCont, #guestCont{
-    font-size: 1.4vw;
+    font-size: max(1.4vw,2.2vh);
     border-style: solid;
     border-radius: 8px;
     border-width: 3px;
     border-color: black;
     height: 70%;
-    width: 70%;
+    width: 75%;
     font-family: 'Kanit', sans-serif;
     background-color: rgba(256,256,256,0.9);
 }
@@ -123,6 +127,8 @@ fieldset {
     justify-items: center;
     grid-template-rows: 20% 20% 15% 40%;
     grid-template-columns: 50% 50%;
+    min-height: 200px;
+    min-width: 250px;
 }
 
 #loginMain > h1{
@@ -134,11 +140,13 @@ fieldset {
     grid-row: 2;
     grid-column: 1;
     justify-self: right;
+    font-size: 1vw;
 }
 #passtext{
     grid-row: 3;
     grid-column: 1;
     justify-self: right;
+    font-size:1vw;
 }
 #quitLogin{
     grid-row: 1;
@@ -209,6 +217,8 @@ fieldset {
     justify-items: center;
     grid-template-rows: 20% 15% 15% 15% 20%;
     grid-template-columns: 50% 50%;
+    min-height: 200px;
+    min-width: 250px;
 }
 
 #accountCreation > h1{
@@ -243,6 +253,7 @@ fieldset {
     grid-column: 2;
     justify-self: left;
     margin-left: 5%;
+    width: 80%;
 }
 
 #emailtext, #emailCreate{
@@ -264,7 +275,7 @@ fieldset {
     margin-right: 5%;
     width: 50%;
     height: 60%;
-    font-size: .7vw;
+    font-size: min(.7vw,1.5vh);
     font-family: 'Kanit', sans-serif;
 }
 
@@ -296,6 +307,7 @@ fieldset {
     align-items: center;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    min-height: 50px;
 }
 
 header>h1 {
@@ -357,6 +369,7 @@ header>h1 {
 #cointext{
     grid-column: 2;
     grid-row: 1;
+    font-size: 1.3vw;
 }
 
 #welcome {
@@ -394,13 +407,15 @@ header>h1 {
     height: 40%;
     width: 60%;
     grid-template-rows: 20% 20% 20% 20% 20%;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 30% 30% 30% 10%;
     display: grid;
+    min-height: 100px;
+    min-width: 100px;
 }
 
 #teamsExit{
     grid-row: 1;
-    grid-column: 2;
+    grid-column: 4;
     justify-self: right;
     align-self: start;
     margin-top: 3%;
@@ -412,27 +427,59 @@ header>h1 {
     font-family: 'Kanit', sans-serif;
     grid-row: 1;
     grid-column: 1;
-    justify-self: left;
+    justify-self: center;
     align-self: start;
     margin-top: 5%;
     margin-left: 5%;
-    width: 30%;
+    width: 70%;
     font-size: .7vw;
+    border-radius: 4px;
+    border-width: 0px;
 }
 
-#teamsExit:hover{
+#createTeamButton{
+    font-family: 'Kanit', sans-serif;
+    grid-row: 1;
+    grid-column: 3;
+    justify-self: center;
+    align-self: start;
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 70%;
+    font-size: .7vw;
+    border-radius: 4px;
+    border-width: 0px;
+}
+
+#createTeamButton:hover, #teamsExit:hover, #invite:hover, #teamsAccountLogin:hover{
     opacity: 0.3;
 }
 
-#teams > h2{
-    grid-row: 1;
-    grid-column: 1 / span 2;
+#teamsAccountLogin{
+    font-family: 'Kanit', sans-serif;
+    grid-row: 5;
+    grid-column: 1;
     justify-self: center;
+    align-self: center;
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 70%;
+    font-size: .7vw;
+    border-radius: 4px;
+    border-width: 0px;
+}
+
+#teamsLabel{
+    grid-row: 1;
+    grid-column: 2;
+    align-self: start;
+    justify-self: center;
+    font-size: 1vw;
 }
 
 #disableText{
     grid-row: 5;
-    grid-column:1;
+    grid-column:3;
     justify-self: right;
     align-self: center;
     font-size: .7vw;
@@ -440,12 +487,142 @@ header>h1 {
 
 #disableTeams{
     grid-row: 5;
-    grid-column:2;
+    grid-column:4;
     justify-self: center;
     align-self: center;
     font-size: .7vw;
 }
 
+/* ============================================================================
+ * Create Team
+ =========================================================================== */
+ #createTeam{
+    visibility: hidden;
+    grid-row: 2;
+    grid-column: 1;
+    background-color: rgba(256,256,256,0.4);
+    margin-top:5%;
+    margin-left: 5%;
+    border-radius: 10px;
+    height: 40%;
+    width: 60%;
+    grid-template-rows: 20% 10% 10% 10% 10% 10% 20% 10%;
+    grid-template-columns: 15% 30% 50% 5%;
+    display: grid;
+    min-height: 100px;
+    min-width: 100px;
+}
+
+#quitCreateTeam{
+    grid-row: 1;
+    grid-column: 4;
+    justify-self: right;
+    align-self: start;
+    margin-top: 3%;
+    margin-right: 3%;
+    font-size: 1.3vw;
+}
+
+#quitCreateTeam:hover{
+    opacity: 0.3;
+}
+
+#backToTeams{
+    font-family: 'Kanit', sans-serif;
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: center;
+    align-self: start;
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 90%;
+    font-size: .7vw;
+}
+
+#finalizeCreate{
+    font-family: 'Kanit', sans-serif;
+    grid-row: 8;
+    grid-column: 1/ span 3;
+    justify-self: center;
+    align-self: start;
+    width: 30%;
+    font-size: .7vw;
+}
+
+#finalizeCreate:hover{
+    opacity: 0.3;
+}
+
+#createTeamTag{
+    grid-row: 1;
+    grid-column: 1 / span 4;
+    align-self: center;
+    justify-self: center;
+    font-size: 1vw;
+}
+
+#teamName{
+    grid-row: 2;
+    grid-column: 2;
+    align-self: center;
+    justify-self: right;
+    font-size: .7vw;
+    margin-right: 5%;
+}
+
+#workTeam{
+    grid-row: 3;
+    grid-column: 2;
+    align-self: center;
+    justify-self: right;
+    font-size: .7vw;
+    margin-right: 5%;
+}
+
+#shortTeam{
+    grid-row: 4;
+    grid-column: 2;
+    align-self: center;
+    justify-self: right;
+    font-size: .7vw;
+    margin-right: 5%;
+}
+
+#longTeam{
+    grid-row: 5;
+    grid-column: 2;
+    align-self: center;
+    justify-self: right;
+    font-size: .7vw;
+    margin-right: 5%;
+}
+
+#createTeam > input{
+    width: 80%;
+    font-size: 0.7vw;
+    height: 50%;
+    align-self: center;
+}
+
+#nameTeam{
+    grid-row: 2;
+    grid-column: 3;
+}
+
+#workTimeTeam{
+    grid-row: 3;
+    grid-column: 3;
+}
+
+#shortTimeTeam{
+    grid-row: 4;
+    grid-column: 3;
+}
+
+#longTimeTeam{
+    grid-row: 5;
+    grid-column: 3;
+}
 /* ============================================================================
  * Timer
  =========================================================================== */
@@ -465,6 +642,8 @@ header>h1 {
     width:75%;
     border-radius: 15px;
     z-index:1;
+    min-height:400px;
+    min-width:300px;
 }
 
 #mode-selection {
@@ -490,7 +669,7 @@ header>h1 {
 #chart td {
     margin-right: 40%;
     text-align: center;
-    font-size: 1vw;
+    font-size: max(1vw,1.5vh);
 }
 
 #chart tr {
@@ -533,7 +712,7 @@ header>h1 {
 }
 
 #time {
-    font-size: 6vw;
+    font-size: min(6vw,max(3vw,12vh));
     grid-row: 1;
     grid-column: 1;
     align-self: center;
@@ -559,12 +738,13 @@ header>h1 {
     z-index: 2;
     width: 80%;
     justify-self: center;
+    min-width: 300px;
+    min-height: 400px;
 }
 
 #settingsMenu > input {
     background-color: rgba(256,256,256,0.6);
     border-radius:8px;
-    text-align:center;
     font-family: 'Kanit', sans-serif;
 }
 
@@ -636,7 +816,7 @@ header>h1 {
 
 #statistics, #saveSettings{
     border-radius: 8px;
-    font-size: 2vw;
+    font-size: min(2vw,3.5vh);
     font-family: 'Kanit', sans-serif;
     background-color: rgba(256,256,256,0.4);
     margin-left: 5%;
@@ -661,7 +841,7 @@ header>h1 {
     grid-row: 1;
     grid-column: 1;
     border-radius: 8px;
-    font-size: 2vw;
+    font-size: min(2vw,3.5vh);
     justify-self: center;
     font-family: 'Kanit', sans-serif;
     background-color: rgba(256,256,256,0.4);
@@ -784,7 +964,9 @@ header>h1 {
     grid-row: 8;
     grid-column: 3;
     font-size: 1vw;
-    margin-left: 70%;
+    width: 100%;
+    align-self: center;
+    font-family: 'Kanit', sans-serif;
 }
 
 #languageTitle {
@@ -794,14 +976,13 @@ header>h1 {
 }
 
 #language-form {
-    margin-left: 70%;
     grid-row: 7;
     grid-column: 3;
     font-size: 1vw;
+    width: 100%;
     min-width: 60px;
-    height: 1vw;
     align-self: center;
-    margin-bottom:30%;
+    font-family: 'Kanit', sans-serif;
 }
 
 #LongBreakInterval {
@@ -848,6 +1029,8 @@ header>h1 {
     z-index: 2;
     width: 80%;
     justify-self: center;
+    min-width: 300px;
+    min-height: 400px;
 }
 
 #dogeTitle{
@@ -909,7 +1092,7 @@ header>h1 {
     font-family: 'Kanit', sans-serif;
     background-color: rgba(256,256,256,0.4);
     margin-top: 16%;
-    width: 70%;
+    width: 80%;
 }
 
 .buyButton:hover{
