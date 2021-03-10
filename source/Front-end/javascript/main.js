@@ -324,6 +324,11 @@ document.getElementById("createTeamButton").addEventListener("click", function()
     document.getElementById("createTeam").style.visibility = "visible";
 });
 
+document.getElementById("backToTeams").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+    document.getElementById("teams").style.visibility = "visible";
+    document.getElementById("createTeam").style.visibility = "hidden";
+});
+
 document.getElementById("proceedLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     firebase.auth().signInWithEmailAndPassword(document.getElementById("user").value, document.getElementById("pass").value)
   .then((userCredential) => {
@@ -342,7 +347,6 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
 
 document.getElementById("teamsAccountLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     if (loggedIn){//Logout Operation
-        
     }
     else{
         document.getElementById("loginMain").style.visibility = "visible";
@@ -369,6 +373,10 @@ function createTeam(name,worktime,shorttime,longtime,user){
         admins: {user1: user},
         users: {user1: user}
     });
+}
+
+function updateUser(email,name,coins,shopitems,active,colorblind){
+
 }
 
 function updateCoin(user,amount){
