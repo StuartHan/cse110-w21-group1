@@ -1254,12 +1254,12 @@ module.exports = {
     drainColor: drainColor,
     fillColor: fillColor,
     updateTable: updateTable,
-
     turnLight: turnLight,
     turnDark: turnDark,
     setShopItems: setShopItems,
     incrementCoin: incrementCoin,
     setActive: setActive,
+    darkenChosen: darkenChosen,
 
     workSec: workSec,
     totalSec: totalSec

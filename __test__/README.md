@@ -30,3 +30,11 @@
 - setActive
 - turnLight (fix color 256)
 - turnDark (fix color 256)
+- darkenchosen
+
+### function not started yet
+- saveTimeSettings
+- SwitchToChinese
+- SwitchToEnglish
+- chooseSoundEffect
+- showStats
