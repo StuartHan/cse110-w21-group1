@@ -261,6 +261,14 @@ document.getElementById("createAcc").addEventListener("click", function() { //On
     user.updateProfile({
         displayName: document.getElementById("nameCreate").value
     });
+    createUserData(
+        document.getElementById("emailCreate").value,
+        document.getElementById("nameCreate").value,
+        localStorage.getElementById('coin'),
+        localStorage.getElementById('shopitems'),
+        localStorage.getElementById('active'),
+        localStorage.getElementById('colorblind'),
+    );
     localStorage.setItem("username", document.getElementById("emailCreate").value);
     localStorage.setItem("password",document.getElementById("passCreate").value);
     document.getElementById("welcome").innerHTML = "Welcome "+document.getElementById("nameCreate").value+"!";
@@ -363,6 +371,11 @@ function createTeam(name,worktime,shorttime,longtime,user){
     });
 }
 
+function updateCoin(user,amount){
+    let string = '/users/' + user +'/coin'
+    firebase.database().ref().update({string : amount})
+}
+
 /* ============================================================================
  * Name         : incrementCoin(amount)
  * First Created: March 2 -- Suk Chan (Kevin) Lee
@@ -376,6 +389,8 @@ function createTeam(name,worktime,shorttime,longtime,user){
 function incrementCoin(amount){
     let newNum = (parseInt(localStorage.getItem("coin"))+amount).toString();
     localStorage.setItem("coin",newNum);
+    if (loggedIn)
+        updateCoin(localStorage.getItem("username"),localStorage.getItem("coin"));
     document.getElementById("cointext").innerHTML = newNum;
 }
 
@@ -474,6 +489,7 @@ function loadActive(){
 function darkenChosen(){
     let active = window.localStorage.getItem('active');
     let shopitems = window.localStorage.getItem('shopitems');
+    let english = document.getElementById("language-form").value == "English";
     document.getElementById('wildjunglebuy').style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById('nightbuy').style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById('aquaticbuy').style.backgroundColor = "rgba(256,256,256,0.4)";
@@ -481,37 +497,76 @@ function darkenChosen(){
     document.getElementById('dogebuy').style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById('wildjunglebuy').innerHTML = "Owned";
     document.getElementById('nightbuy').innerHTML = "Owned";
-    if (shopitems[0] == 1)
-        document.getElementById('aquaticbuy').innerHTML = "Owned";
-    else
-        document.getElementById('aquaticbuy').innerHTML = "Buy";
-    if (shopitems[1] == 1)
-        document.getElementById('sanfranciscobuy').innerHTML = "Owned";
-    else
-        document.getElementById('sanfranciscobuy').innerHTML = "Buy";
-    if (shopitems[2] == 1)
-        document.getElementById('dogebuy').innerHTML = "Owned";
-    else
-        document.getElementById('dogebuy').innerHTML = "Buy";
+    if (shopitems[0] == 1){
+        if (english)
+            document.getElementById('aquaticbuy').innerHTML = "Owned";
+        else
+            document.getElementById('aquaticbuy').innerHTML = "已拥有";
+    }
+    else{
+        if (english)
+            document.getElementById('aquaticbuy').innerHTML = "Buy";
+        else
+            document.getElementById('aquaticbuy').innerHTML = "购买";
+    }
+    if (shopitems[1] == 1){
+        if (english)
+            document.getElementById('sanfranciscobuy').innerHTML = "Owned";
+        else
+            document.getElementById('sanfranciscobuy').innerHTML = "已拥有";
+    }
+    else{
+        if (english)
+            document.getElementById('sanfranciscobuy').innerHTML = "Buy";
+        else
+            document.getElementById('sanfranciscobuy').innerHTML = "购买";
+    }
+    if (shopitems[2] == 1){
+        if (english)
+            document.getElementById('dogebuy').innerHTML = "Owned";
+        else
+            document.getElementById('dogebuy').innerHTML = "已拥有";
+    }
+    else{
+        if (english)
+            document.getElementById('dogebuy').innerHTML = "Buy";
+        else
+            document.getElementById('dogebuy').innerHTML = "购买";
+    }
     if (active[0] == 1){
         document.getElementById('wildjunglebuy').style.backgroundColor = "rgba(256,256,256,0.1)";
-        document.getElementById('wildjunglebuy').innerHTML = "Selected";
+        if (english)
+            document.getElementById('wildjunglebuy').innerHTML = "Selected";
+        else
+            document.getElementById('wildjunglebuy').innerHTML = "已选择";
     }
     else if (active[1] == 1){
         document.getElementById('nightbuy').style.backgroundColor = "rgba(256,256,256,0.1)";
-        document.getElementById('nightbuy').innerHTML = "Selected";
+        if (english)
+            document.getElementById('nightbuy').innerHTML = "Selected";
+        else
+            document.getElementById('nightbuy').innerHTML = "已选择";
     }
     else if (active[2] == 1){
         document.getElementById('aquaticbuy').style.backgroundColor = "rgba(256,256,256,0.1)";
-        document.getElementById('aquaticbuy').innerHTML = "Selected";
+        if (english)
+            document.getElementById('aquaticbuy').innerHTML = "Selected";
+        else
+            document.getElementById('aquaticbuy').innerHTML = "已选择";
     }
     else if (active[3] == 1){
         document.getElementById('sanfranciscobuy').style.backgroundColor = "rgba(256,256,256,0.1)";
-        document.getElementById('sanfranciscobuy').innerHTML = "Selected";
+        if (english)
+            document.getElementById('sanfranciscobuy').innerHTML = "Selected";
+        else
+            document.getElementById('sanfranciscobuy').innerHTML = "已选择";
     }
     else if (active[4] == 1){
         document.getElementById('dogebuy').style.backgroundColor = "rgba(256,256,256,0.1)";
-        document.getElementById('dogebuy').innerHTML = "Selected";
+        if (english)
+            document.getElementById('dogebuy').innerHTML = "Selected";
+        else
+            document.getElementById('dogebuy').innerHTML = "已选择";
     }
 }
 
