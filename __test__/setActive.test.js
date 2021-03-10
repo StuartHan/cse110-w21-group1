@@ -236,7 +236,7 @@ document.body.innerHTML =
 `;
 
 
-const { setActive } = require("../source/Front-end/javascript/main.js");
+const { setActive } = require("../source/Front-end/javascript/mainjest.js");
 
 describe("setActive testing", () => {
     test("setActive of first element", () => {

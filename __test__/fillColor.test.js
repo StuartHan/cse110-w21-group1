@@ -236,7 +236,7 @@ document.body.innerHTML =
 `;
 
 
-const { fillColor } = require("../source/Front-end/javascript/main.js");
+const { fillColor } = require("../source/Front-end/javascript/mainjest.js");
 
 describe("fillColor testing", () => {
     test("before setting, should be empty string", () => {

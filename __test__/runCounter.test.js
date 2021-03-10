@@ -243,7 +243,7 @@ document.body.innerHTML =
 `;
 
 const { getByText, getByTestId, fireEvent } = require("@testing-library/dom");
-const { runCounter } = require("../source/Front-end/javascript/main.js");
+const { runCounter } = require("../source/Front-end/javascript/mainjest.js");
 
 
 

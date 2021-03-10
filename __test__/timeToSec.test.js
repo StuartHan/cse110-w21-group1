@@ -237,7 +237,7 @@ document.body.innerHTML =
 `;
 
 
-const { timeToSec } = require("../source/Front-end/javascript/main.js");
+const { timeToSec } = require("../source/Front-end/javascript/mainjest.js");
 
 
 describe("timeToSec testing", () => {

@@ -238,7 +238,7 @@ document.body.innerHTML =
 `;
 
 
-const { incrementCoin } = require("../source/Front-end/javascript/main.js");
+const { incrementCoin } = require("../source/Front-end/javascript/mainjest.js");
 
 describe("incrementCoin testing", () => {
     test("should be 0 initially", () => {

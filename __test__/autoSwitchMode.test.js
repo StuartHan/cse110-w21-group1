@@ -237,7 +237,7 @@ document.body.innerHTML =
 `;
 
 
-const { autoSwitchMode } = require("../source/Front-end/javascript/main.js")
+const { autoSwitchMode } = require("../source/Front-end/javascript/mainjest.js")
 
 describe("autoSwitchMode testing", () => {
     test("currMode = w, counts != 4 --> enter short break mode", () => {

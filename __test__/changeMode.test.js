@@ -237,7 +237,7 @@ document.body.innerHTML =
 `;
 
 
-const { changeMode, workSec, secToTime } = require("../source/Front-end/javascript/main.js")
+const { changeMode, workSec, secToTime } = require("../source/Front-end/javascript/mainjest.js")
 
 describe("changeMode testing", () => {
     //

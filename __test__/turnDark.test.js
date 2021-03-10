@@ -237,7 +237,7 @@ document.body.innerHTML =
 `;
 
 
-const { turnDark, color } = require("../source/Front-end/javascript/main.js");
+const { turnDark, color } = require("../source/Front-end/javascript/mainjest.js");
 
 describe("turnDark testing", () => {
     test("test", () => {

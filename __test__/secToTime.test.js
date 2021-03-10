@@ -237,7 +237,7 @@ document.body.innerHTML =
 `;
 
 
-const { secToTime } = require("../source/Front-end/javascript/main.js");
+const { secToTime } = require("../source/Front-end/javascript/mainjest.js");
 
 describe("secToTime testing", () => {
     test("should turn 120 into 02:00", () => {

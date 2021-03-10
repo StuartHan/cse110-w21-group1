@@ -237,7 +237,7 @@ document.body.innerHTML =
 `;
 
 
-const { setShopItems } = require("../source/Front-end/javascript/main.js");
+const { setShopItems } = require("../source/Front-end/javascript/mainjest.js");
 
 describe("setShopItems testing", () => {
     test("should set at index 0", () => {

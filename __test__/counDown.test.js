@@ -237,7 +237,7 @@ document.body.innerHTML =
 `;
 
 
-const { countDown } = require("../source/Front-end/javascript/main.js")
+const { countDown } = require("../source/Front-end/javascript/mainjest.js")
 
 describe("countDown testing", () => {
     test("totalSec = 0, should call autoSwitchMode", () => {

@@ -237,7 +237,7 @@ document.body.innerHTML =
 `;
 
 
-const { loadActive } = require("../source/Front-end/javascript/main.js");
+const { loadActive } = require("../source/Front-end/javascript/mainjest.js");
 
 // TODO: after fixing all dependencies on DOM
 

@@ -236,7 +236,7 @@ document.body.innerHTML =
 `;
 
 
-const { drainColor } = require("../source/Front-end/javascript/main.js");
+const { drainColor } = require("../source/Front-end/javascript/mainjest.js");
 
 describe("drainColor testing", () => {
 

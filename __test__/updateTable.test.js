@@ -236,7 +236,7 @@ document.body.innerHTML =
 `;
 
 
-const { updateTable } = require("../source/Front-end/javascript/main.js");
+const { updateTable } = require("../source/Front-end/javascript/mainjest.js");
 
 describe("updateTable testing", () => {
     let counter = document.getElementById("counter");

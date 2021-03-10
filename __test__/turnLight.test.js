@@ -237,7 +237,7 @@ document.body.innerHTML =
 `;
 
 
-const { turnLight } = require("../source/Front-end/javascript/main.js");
+const { turnLight } = require("../source/Front-end/javascript/mainjest.js");
 
 describe("turnLight testing", () => {
     test("test", () => {
