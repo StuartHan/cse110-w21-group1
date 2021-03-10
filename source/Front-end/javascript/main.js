@@ -1346,3 +1346,8 @@ function showStats() {
         statsBreak.innerHTML = "您已休息" + totalBreakMins + "分钟";
     }
 }
+
+function cypressSetCoin(amount){
+    localStorage.setItem("coin",amount);
+    document.getElementById("cointext").innerHTML = amount;
+}
