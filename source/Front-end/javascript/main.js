@@ -376,7 +376,7 @@ function createTeam(name,worktime,shorttime,longtime,user){
 }
 
 function updateUser(email,name,coins,shopitems,active,colorblind){
-
+    
 }
 
 function updateCoin(user,amount){
@@ -869,7 +869,7 @@ function countDown() {
         } else {
             currSec--; // decrease remaining sec by 1
             let currTime = secToTime(currSec);
-            console.log(currTime); // TEST CODE
+            //console.log(currTime); // TEST CODE
             document.getElementById("time").innerHTML = currTime; // reset HTML
         }
     }, 10); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
