@@ -1222,9 +1222,9 @@ function SwitchToChinese() {
     document.getElementById("languageTitle").innerHTML = "语言：";
     document.getElementById("LongBreakInterval").innerHTML = "较长休息时段区间：";
     document.getElementById("sound-select").innerHTML = "铃声：";
-    document.getElementById("Bell").innerHTML = "闹钟";
-    document.getElementById("BigBen").innerHTML = "大本钟";
-    document.getElementById("Temple").innerHTML = "教堂（低频）";
+    document.getElementById("default-1").innerHTML = "闹钟";
+    document.getElementById("default-2").innerHTML = "大本钟";
+    document.getElementById("default-3").innerHTML = "教堂（低频）";
     document.getElementById("colorblindtitle").innerHTML = "色盲模式：";
     document.getElementById("statistics").innerHTML = "统计";
     document.getElementById("saveSettings").innerHTML = "保存";
