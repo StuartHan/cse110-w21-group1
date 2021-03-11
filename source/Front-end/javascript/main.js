@@ -1332,7 +1332,7 @@ function showStats() {
 
     let statsWork = document.getElementById("statsWork");
     if (english) {
-        statsWork.innerHTML = "You have worked " + totalWorkMins + " mins";
+        statsWork.innerHTML = "You have worked " + totalWorkMins + " mins.";
     }
     else {
         statsWork.innerHTML = "您已工作" + totalWorkMins + "分钟";
@@ -1340,7 +1340,7 @@ function showStats() {
 
     let statsBreak = document.getElementById("statsBreak");
     if (english) {
-        statsBreak.innerHTML = "You have rested " + totalBreakMins + " mins";
+        statsBreak.innerHTML = "And rested " + totalBreakMins + " mins.";
     }
     else {
         statsBreak.innerHTML = "您已休息" + totalBreakMins + "分钟";

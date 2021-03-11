@@ -929,25 +929,29 @@ header>h1 {
     width: 3vw;
     /* min-width: 60px; */
     height: 1vw;
+    justify-self: left;
 }
 
 #short-break-number {
     grid-row: 4;
     grid-column: 3;
     font-size: 1vw;
-    width: 40%;
-    min-width: 60px;
+    width: 3vw;
+    /* min-width: 60px; */
     height: 1vw;
+    justify-self: left;
 }
 
 #long-break-number {
     grid-row: 5;
     grid-column: 3;
     font-size: 1vw;
-    width: 40%;
-    min-width: 60px;
+    width: 3vw;
+    /* min-width: 60px; */
     height: 1vw;
+    justify-self: left;
 }
+
 #sound-select {
     grid-row: 8;
     grid-column: 2;
@@ -978,19 +982,19 @@ header>h1 {
     font-family: 'Kanit', sans-serif;
 }
 
-#LongBreakInterval {
+#LongBreakInterval { /* lbr HTML */
     grid-row: 6;
     grid-column: 2;
     font-size: 1.5vw;
 }
-
-#long-break-interval {
+#long-break-interval { /* lbr input */
     grid-row: 6;
     grid-column: 3;
     font-size: 1vw;
-    width: 40%;
-    min-width: 60px;
+    width: 2em;
+    /* min-width: 60px; */
     height: 1vw;
+    justify-self: left;
 }
 
 #colorblindtitle{
@@ -1004,6 +1008,7 @@ header>h1 {
     grid-column: 3;
     height:30%;
     width:30%;
+    justify-self: left;
 }
 }
 /* High Screen */
@@ -1177,19 +1182,19 @@ header>h1 {
 /* Wide Screen */
 @media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
 #statsWork {
-    grid-row: 2;
+    grid-row: 4;
     grid-column: 2 / span 2;
     font-size: 1.5vw;
 }
 
 #statsBreak {
-    grid-row: 3;
+    grid-row: 5;
     grid-column: 2 / span 2;
     font-size: 1.5vw;
 }
 
 #statsCong {
-    grid-row: 4;
+    grid-row: 6;
     grid-column: 2 / span 2;
     font-size: 1.5vw;
 }
@@ -1197,32 +1202,32 @@ header>h1 {
 /* High Screen */
 @media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
 #statsWork {
-    grid-row: 2;
+    grid-row: 4;
     grid-column: 2 / span 2;
     font-size: 2vh;
 }
 
 #statsBreak {
-    grid-row: 3;
+    grid-row: 5;
     grid-column: 2 / span 2;
     font-size: 2vh;
 }
 
 #statsCong {
-    grid-row: 4;
+    grid-row: 6;
     grid-column: 2 / span 2;
     font-size: 2vh;
 }
 }
 
-#OKbtn-statistics {
+#OKbtn-statistics { /* OK button */
     grid-row: 9;
     grid-column: 2 / span 2;
     width: 30%;
-    height: 60%;
-    border-radius: 8px;
-    font-size: 2vh;
+    border-radius: 0.3em;
+    font-size: max(2vw, 3.5vh);
     font-family: 'Kanit', sans-serif;
+    background-color: rgba(256,256,256,0.4);
 }
 
 
