@@ -89,8 +89,11 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
     loadActive();
 });
 
+
+// Open Doge shop
 document.getElementById("dogecoin").addEventListener("click", function() { //On click, show Doge Store
     document.getElementById("dogeCoinMenu").style.visibility = "visible";
+    document.getElementById("statisticsMenu").style.visibility = "hidden";
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "hidden";
     saveTimeSettings();
@@ -1235,10 +1238,11 @@ function SwitchToChinese() {
     document.getElementById("default-2").innerHTML = "大本钟";
     document.getElementById("default-3").innerHTML = "教堂（低频）";
     document.getElementById("colorblindtitle").innerHTML = "色盲模式：";
-    document.getElementById("statistics").innerHTML = "统计";
+    // document.getElementById("statistics").innerHTML = "统计";
     document.getElementById("saveSettings").innerHTML = "保存";
     document.getElementById("statisticsTitle").innerHTML = "统计数据";
     document.getElementById("statsCong").innerHTML = "继续加油吧！";
+    document.getElementById("OKbtn-statistics").innerHTML = "好";
     alertTime = "请输入1到120的整数。"
     alertIntv = "请输入1到10的整数"
     // Doge Shop
@@ -1280,10 +1284,11 @@ function SwitchToEnglish() {
     document.getElementById("default-2").innerHTML = "Big Ben";
     document.getElementById("default-3").innerHTML = "Temple (Low Freq)";
     document.getElementById("colorblindtitle").innerHTML = "Color Blind Mode:";
-    document.getElementById("statistics").innerHTML = "Stats";
+    // document.getElementById("statistics").innerHTML = "Stats";
     document.getElementById("saveSettings").innerHTML = "Save";
     document.getElementById("statisticsTitle").innerHTML = "Statistics";
     document.getElementById("statsCong").innerHTML = "Congrats! Keep on moving!";
+    document.getElementById("OKbtn-statistics").innerHTML = "OK";
     alertTime = "Please enter an integer between 1 and 120.";
     alertIntv = "Please enter an integer between 1 and 10.";
     // Doge Shop

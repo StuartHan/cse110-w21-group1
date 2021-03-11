@@ -770,7 +770,7 @@ header>h1 {
  * Timer
  =========================================================================== */
 /* Wide Screen */
-@media screen and (min-device-aspect-ratio:1/1) {
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
 #main {
     display: grid;
     justify-items: center;
@@ -790,7 +790,7 @@ header>h1 {
 }
 }
 /* High Screen */
-@media screen and (max-device-aspect-ratio:1/1) {
+@media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
 #main {
     display: grid;
     justify-items: center;
@@ -1002,34 +1002,29 @@ header>h1 {
     grid-row:10;
     grid-column:2 / span 2;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 100%;
     grid-template-rows: 100%;
 }
 
-#statistics, #saveSettings{ /* save button */
+#saveSettings{ /* save button */
     border-radius: 0.3em;
-    font-size: max(2vw, 3.5vh);
+    font-size: max(2vw, 3.5vh); /* Revised -Stuart */
     font-family: 'Kanit', sans-serif;
     background-color: rgba(256,256,256,0.4);
-    margin-left: 5%;
+    /* margin-left: 5%; */
 }
 
-#statistics {
+#saveSettings{ /* save button */
+    /* margin-left: 15%; */
     grid-row: 1;
     grid-column: 1;
-}
-
-#saveSettings{
-    margin-left: 15%;
-    grid-row: 1;
-    grid-column: 2;
 }
 
 #saveSettings:hover {
     opacity: 0.3;
 }
-
-#statistics { /* stats button */
+/* 
+#statistics { /* stats button 
     grid-row: 1;
     grid-column: 1;
     border-radius: 0.3em;
@@ -1041,7 +1036,7 @@ header>h1 {
 
 #statistics:hover{
     opacity: 0.3;
-}
+} */
 
 
 /* Settings: User inputs */
@@ -1270,7 +1265,7 @@ header>h1 {
 
 
 /* ============================================================================
- * Statisitcs Menu
+ * Statistics Menu
  =========================================================================== */
 /* Wide Screen */
 @media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
@@ -1309,12 +1304,13 @@ header>h1 {
     margin-bottom: 5%; /* New -Stuart */
     /* border-width: 2px; */
     width:90vw;
-    height:65%;
+    height:75%;
     /* border-color: black; */
     /* border-style: solid; */
     display: grid;
     grid-template-columns: 15% 50% 20% 15%;
     grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 10% 12%;
+    min-height: 400px;
 }
 }
 
@@ -1324,6 +1320,7 @@ header>h1 {
     font-size: 4vh;
 }
 
+/* HTMLs of worked time, rested time, and congrads */
 /* Wide Screen */
 @media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
 #statsWork {
@@ -1331,13 +1328,11 @@ header>h1 {
     grid-column: 2 / span 2;
     font-size: 1.5vw;
 }
-
 #statsBreak {
     grid-row: 5;
     grid-column: 2 / span 2;
     font-size: 1.5vw;
 }
-
 #statsCong {
     grid-row: 6;
     grid-column: 2 / span 2;
@@ -1351,13 +1346,11 @@ header>h1 {
     grid-column: 2 / span 2;
     font-size: 2vh;
 }
-
 #statsBreak {
     grid-row: 5;
     grid-column: 2 / span 2;
     font-size: 2vh;
 }
-
 #statsCong {
     grid-row: 6;
     grid-column: 2 / span 2;
@@ -1380,22 +1373,47 @@ header>h1 {
 /* ============================================================================
  * Doge Shop
  =========================================================================== */
- #dogeCoinMenu {
+/* Wide Screen */
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
+#dogeCoinMenu {
     visibility: hidden;
     grid-column: 2;
     grid-row: 2;
     background-color: rgba(256,256,256,0.4);
-    border-radius: 8px;
-    margin: 2% 5% 5% 2%;
+    border-radius: max(3vw, 3vh); /* Revised -Stuart */
+    margin-top: 5%; /* Revised -Stuart */
+    margin-bottom: 5%; /* Revised -Stuart */
     justify-items: center;
     display: grid;
     grid-template-columns: 10% 60% 20% 10%;
     grid-template-rows: 8% 4% 4% 10% 10% 10% 10% 10% 10% 10% 10%;
     z-index: 2;
-    width: 80%;
+    width: 75%; /* Revised -Stuart */
     justify-self: center;
     min-width: 300px;
     min-height: 400px;
+}
+}
+/* High Screen */
+@media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
+#dogeCoinMenu {
+    visibility: hidden;
+    grid-column: 2;
+    grid-row: 2;
+    background-color: rgba(256,256,256,0.4);
+    border-radius: max(3vw, 3vh); /* Revised -Stuart */
+    margin-top: 5%; /* Revised -Stuart */
+    margin-bottom: 5%; /* Revised -Stuart */
+    justify-items: center;
+    display: grid;
+    grid-template-columns: 10% 60% 20% 10%;
+    grid-template-rows: 8% 4% 4% 10% 10% 10% 10% 10% 10% 10% 10%;
+    z-index: 2;
+    width: 90vw; /* Revised -Stuart */
+    justify-self: center;
+    min-width: 300px;
+    min-height: 400px;
+}
 }
 
 #dogeTitle{
@@ -1410,26 +1428,26 @@ header>h1 {
     margin-right: 5%;
 }
 
-#themeTitle{
+#themeTitle{ /* Themes */
     grid-row: 2;
     grid-column: 1 / span 4;
-    font-size: 1.3vw;
+    font-size: max(1.3vw, 2.6vh); /* Revised -Stuart */
     align-self: center;
 }
 
-#preview{
-    font-size: 1vw;
+#preview{ /* Click to Preview */
+    font-size: max(1vw, 1.5vh); /* Revised -Stuart */
     grid-row: 3;
     grid-column: 2;
 }
 
-#select{
-    font-size: 1vw;
+#select{ /* Buy/Select */
+    font-size: max(1vw, 1.5vh); /* Revised -Stuart */
     grid-row: 3;
     grid-column: 3;
 }
 
-.theme {
+.theme { /* 5 names of themse + costs */
     border-style: solid;
     border-color: black;
     border-radius: 10px;
@@ -1438,21 +1456,21 @@ header>h1 {
     width: 90%;
     grid-template-columns: 70% 30%;
     grid-template-rows: 100%;
-    font-size: 1vw;
+    font-size: max(1vw,1.5vh); /* Revised -Stuart */
     margin-top: 5%;
     justify-items: center;
     align-items: center;
     background-color: rgba(256,256,256,0.4);
 }
 
-.buyButton{
+.buyButton{ /* 5 Buy buttons */
     grid-column: 3;
     border-style: solid;
     border-color: black;
     border-radius: 10px;
     border-width: 3px;
     justify-items: center;
-    font-size: 1vw;
+    font-size: max(1vw, 1.3vh); /* Revised -Stuart */
     align-items: center;
     font-family: 'Kanit', sans-serif;
     background-color: rgba(256,256,256,0.4);
@@ -1488,17 +1506,17 @@ header>h1 {
     grid-row: 8;
 }
 
-#insufficientText{
+#insufficientText{ /* Insufficient Funds */
     grid-row: 10;
     grid-column: 2 / span 2;
-    font-size: 1.5vw;
+    font-size: max(1.5vw, 2.5vh); /* Revised -Stuart */
     color: rgb(256,0,0,0.8);
     visibility: hidden;
 }
 
 #dogeSave{
     grid-row:11;
-    font-size: 2vw;
+    font-size: max(2vw, 3.5vh);
     border-radius: 8px;
     border-style: solid;
     border-color: black;
@@ -1514,6 +1532,8 @@ header>h1 {
 #dogeSave:hover {
     opacity: 0.3;
 }
+
+
 
 /* ============================================================================
  * Footer
