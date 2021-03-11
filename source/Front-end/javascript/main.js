@@ -53,7 +53,7 @@ document.getElementById("OKbtn-statistics").addEventListener("click", function()
     document.getElementById("main").style.visibility = "visible";
 });
 
-document.getElementById("sound-selection").addEventListener("onchange", function(){//On click, play corresponding sound
+document.getElementById("sound-selection").addEventListener("input", function(){//On click, preview corresponding sound
     if (document.getElementById("sound-selection").value == "Bell"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
         document.getElementById("sound-effect").play();
@@ -1346,8 +1346,8 @@ function SwitchToEnglish() {
 
 /* ============================================================================
  * Name         : chooseSoundEffect
- * First Created: March 2 -- Bo Yang
- * Last  Revised: March 2 -- Bo Yang
+ * First Created: March 2  -- Bo Yang
+ * Last  Revised: March 2  -- Bo Yang
  * Revised Times: 1
  * 
  * Description  : Choose which sound effect to use according to user's input
