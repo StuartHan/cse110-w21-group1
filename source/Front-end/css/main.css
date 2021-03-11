@@ -308,6 +308,7 @@ fieldset {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     min-height: 50px;
+    width: 100vw; /* New */
 }
 
 header>h1 {
@@ -1160,4 +1161,5 @@ footer {
     background-color: rgba(3,165,89,0.6);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    width: 100vw; /* New */
 }
