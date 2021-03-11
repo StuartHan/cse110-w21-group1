@@ -539,12 +539,15 @@ header>h1 {
 /* ============================================================================
  * Teams
  =========================================================================== */
+/* Wide screen */
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
 #teams{
+    z-index: 99999; /* New -Stuart (put at top) */
     visibility: hidden;
     grid-row: 2;
     grid-column: 1;
-    background-color: rgba(256,256,256,0.4);
-    margin-top:5%;
+    background-color: rgba(256,256,256,1); /* Revised -Stuart */
+    /* margin-top:5%; */ /* Revised -Stuart */
     margin-left: 5%;
     border-radius: 10px;
     height: 40%;
@@ -555,18 +558,39 @@ header>h1 {
     min-height: 100px;
     min-width: 100px;
 }
+}
+/* High screen */
+@media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
+#teams{
+    z-index: 99999; /* New -Stuart (put at top) */
+    visibility: hidden;
+    grid-row: 2;
+    grid-column: 1;
+    background-color: rgba(256,256,256,1); /* Revised -Stuart */
+    /* margin-top:5%; */ /* Revised -Stuart */
+    margin-left: 5%;
+    border-radius: 10px;
+    height: 40%;
+    width: 100%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+    grid-template-columns: 30% 30% 30% 10%;
+    display: grid;
+    min-height: 100px;
+    min-width: 100px;
+}
+}
 
-#teamsExit{
+#teamsExit{ /* X */
     grid-row: 1;
     grid-column: 4;
     justify-self: right;
     align-self: start;
     margin-top: 3%;
     margin-right: 3%;
-    font-size: 1.3vw;
+    font-size: max(1.3vw, 2vh); /* Revised -Stuart */
 }
 
-#invite{
+#invite{ /* Invite button */
     font-family: 'Kanit', sans-serif;
     grid-row: 1;
     grid-column: 1;
@@ -575,12 +599,12 @@ header>h1 {
     margin-top: 5%;
     margin-left: 5%;
     width: 70%;
-    font-size: .7vw;
+    font-size: max(.7vw, 1vh); /* Revised -Stuart */
     border-radius: 4px;
     border-width: 0px;
 }
 
-#createTeamButton{
+#createTeamButton{ /* Create button */
     font-family: 'Kanit', sans-serif;
     grid-row: 1;
     grid-column: 3;
@@ -589,7 +613,7 @@ header>h1 {
     margin-top: 5%;
     margin-left: 5%;
     width: 70%;
-    font-size: .7vw;
+    font-size: max(.7vw, 1vh); /* Revised -Stuart */
     border-radius: 4px;
     border-width: 0px;
 }
@@ -598,7 +622,7 @@ header>h1 {
     opacity: 0.3;
 }
 
-#teamsAccountLogin{
+#teamsAccountLogin{ /* Login button */
     font-family: 'Kanit', sans-serif;
     grid-row: 5;
     grid-column: 1;
@@ -607,33 +631,33 @@ header>h1 {
     margin-top: 5%;
     margin-left: 5%;
     width: 70%;
-    font-size: .7vw;
+    font-size: max(.7vw, 1vh); /* Revised -Stuart */
     border-radius: 4px;
     border-width: 0px;
 }
 
-#teamsLabel{
+#teamsLabel{ /* Teams */
     grid-row: 1;
     grid-column: 2;
     align-self: start;
     justify-self: center;
-    font-size: 1vw;
+    font-size: max(1vw, 1.5vh); /* Revised -Stuart */
 }
 
-#disableText{
+#disableText{ /* Disable Teams */
     grid-row: 5;
     grid-column:3;
     justify-self: right;
     align-self: center;
-    font-size: .7vw;
+    font-size: max(.7vw, 1vh); /* Revised -Stuart */
 }
 
-#disableTeams{
+#disableTeams{ /* Disable Teams check */
     grid-row: 5;
     grid-column:4;
     justify-self: center;
     align-self: center;
-    font-size: .7vw;
+    font-size: max(.7vw, 1vh); /* Revised -Stuart */
 }
 
 /* ============================================================================
@@ -663,7 +687,7 @@ header>h1 {
     align-self: start;
     margin-top: 3%;
     margin-right: 3%;
-    font-size: 1.3vw;
+    font-size: max(1.3vw, 1.6vh); /* Revised -Stuart */
 }
 
 #quitCreateTeam:hover{
@@ -679,7 +703,7 @@ header>h1 {
     margin-top: 5%;
     margin-left: 5%;
     width: 90%;
-    font-size: .7vw;
+    font-size: max(.7vw, 1vh); /* Revised -Stuart */
 }
 
 #finalizeCreate{
@@ -689,7 +713,7 @@ header>h1 {
     justify-self: center;
     align-self: start;
     width: 30%;
-    font-size: .7vw;
+    font-size: max(.7vw, 1vh); /* Revised -Stuart */
 }
 
 #finalizeCreate:hover{
@@ -701,7 +725,7 @@ header>h1 {
     grid-column: 1 / span 4;
     align-self: center;
     justify-self: center;
-    font-size: 1vw;
+    font-size: max(1vw, 1.3vh); /* Revised -Stuart */
 }
 
 #teamName{
@@ -709,7 +733,7 @@ header>h1 {
     grid-column: 2;
     align-self: center;
     justify-self: right;
-    font-size: .7vw;
+    font-size: max(.7vw, 1vh); /* Revised -Stuart */
     margin-right: 5%;
 }
 
@@ -718,7 +742,7 @@ header>h1 {
     grid-column: 2;
     align-self: center;
     justify-self: right;
-    font-size: .7vw;
+    font-size: max(.7vw, 1vh); /* Revised -Stuart */
     margin-right: 5%;
 }
 
@@ -727,7 +751,7 @@ header>h1 {
     grid-column: 2;
     align-self: center;
     justify-self: right;
-    font-size: .7vw;
+    font-size: max(.7vw, 1vh); /* Revised -Stuart */
     margin-right: 5%;
 }
 
@@ -736,7 +760,7 @@ header>h1 {
     grid-column: 2;
     align-self: center;
     justify-self: right;
-    font-size: .7vw;
+    font-size: max(.7vw, 1vh); /* Revised -Stuart */
     margin-right: 5%;
 }
 
@@ -766,6 +790,9 @@ header>h1 {
     grid-row: 5;
     grid-column: 3;
 }
+
+
+
 /* ============================================================================
  * Timer
  =========================================================================== */
