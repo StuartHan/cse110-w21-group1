@@ -342,5 +342,376 @@ describe('Sound changes', () => {
 
 
 
+});
+
+
+
+
+
+it('Add 5 coin each time after finish a work phase', () => {
+    cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
+    cy.window().then(win => win.cypressSetCoin(0));
+    cy.get("#guestCont").click();
+    cy.get("#gear").click();
+    cy.get('#work-time-number').invoke('val', 1).trigger('input');
+    cy.get("#saveSettings").click();
+    cy.get("#start-btn").click();
+    cy.wait(2000);
+    cy.get("#cointext")
+        .then(function($el) {
+            expect($el).to.have.text("5");
+        })
+});
+
+
+it('Add 15 coins each time after reach a long break', () => {
+    cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
+    cy.window().then(win => win.cypressSetCoin(0));
+    cy.get("#guestCont").click();
+    cy.get("#gear").click();
+    cy.get('#work-time-number').invoke('val', 1).trigger('input');
+    cy.get('#long-break-interval').invoke('val', 0).trigger('input');
+    cy.get("#saveSettings").click();
+    cy.get("#start-btn").click();
+    cy.wait(2000);
+    cy.get("#cointext")
+        .then(function($el) {
+            expect($el).to.have.text("15");
+        })
+});
+
+
+
+describe('background image preview', () => {
+    beforeEach(() => {
+        cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
+        cy.get("#guestCont").click();
+        cy.get("#coinimg").click();
+
+    });
+
+    it('preview for WildJungle', () => {
+        cy.get("#wildjungletitle").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/wildjungle.jpg");
+    });
+
+    it('preview for NightMode', () => {
+        cy.get("#nightmodetitle").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/night.jpg");
+    });
+
+
+    it('preview for Aquatic', () => {
+        cy.get("#aquatictitle").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/aquatic.jpg");
+    });
+
+
+    it('preview for San Fransisco', () => {
+        cy.get("#sanfranciscotitle").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/sanfrancisco.jpg");
+    });
+
+
+    it('preview for DogeLand', () => {
+        cy.get("#dogelandtitle").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/god.jpg");
+    });
+
+
+
+});
+
+
+
+describe('background image preview color blind mode', () => {
+    beforeEach(() => {
+        cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
+        cy.get("#guestCont").click();
+        cy.window().then(win => win.cypressSetCoin(900));
+        cy.get("#gear").click();
+        cy.get("#colorblindbox").check();
+        cy.get("#saveSettings").click();
+        cy.get("#coinimg").click();
+
+    });
+
+    it('preview for WildJungle', () => {
+        cy.get("#wildjungletitle").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/cbwildjungle.jpg");
+    });
+
+    it('preview for NightMode', () => {
+        cy.get("#nightmodetitle").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/cbnight.jpg");
+    });
+
+
+    it('preview for Aquatic', () => {
+        cy.get("#aquatictitle").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/cbaquatic.jpg");
+    });
+
+
+    it('preview for San Fransisco', () => {
+        cy.get("#sanfranciscotitle").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/cbsanfrancisco.jpg");
+    });
+
+
+    it('preview for DogeLand', () => {
+        cy.get("#dogelandtitle").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/cbgod.jpg");
+    });
+
+
+
+});
+
+
+
+
+
+describe('buy background images Tests', () => {
+    beforeEach(() => {
+        cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
+        cy.get("#guestCont").click();
+        cy.window().then(win => win.cypressSetCoin(900));
+        cy.get("#coinimg").click();
+
+    });
+
+    it('Buy for WildJungle, cost 0', () => {
+        cy.get("#wildjunglebuy").click();
+        cy.get("#insufficientText").should('not.be.visible');
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/wildjungle.jpg");
+        cy.get("#cointext")
+            .then(function($el) {
+                expect($el).to.have.text("900");
+            });
+        cy.get("#wildjunglebuy")
+            .then(function($el) {
+                expect($el).to.have.text("Selected");
+            });
+    });
+
+    it('Buy for Night mode, cost 0', () => {
+        cy.get("#nightbuy").click();
+        cy.get("#insufficientText").should('not.be.visible');
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/night.jpg");
+        cy.get("#cointext")
+            .then(function($el) {
+                expect($el).to.have.text("900");
+            });
+        cy.get("#nightbuy")
+            .then(function($el) {
+                expect($el).to.have.text("Selected");
+            });
+    });
+
+
+
+    it('Buy for Aquatic, cost 50', () => {
+        cy.get("#aquaticbuy").click();
+        cy.get("#insufficientText").should('not.be.visible');
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/aquatic.jpg");
+        cy.get("#cointext")
+            .then(function($el) {
+                expect($el).to.have.text("850");
+            });
+        cy.get("#aquaticbuy")
+            .then(function($el) {
+                expect($el).to.have.text("Selected");
+            });
+    });
+
+    it('Buy for San Francisco, cost 100', () => {
+        cy.get("#sanfranciscobuy").click();
+        cy.get("#insufficientText").should('not.be.visible');
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/sanfrancisco.jpg");
+        cy.get("#cointext")
+            .then(function($el) {
+                expect($el).to.have.text("800");
+            });
+        cy.get("#sanfranciscobuy")
+            .then(function($el) {
+                expect($el).to.have.text("Selected");
+            });
+    });
+
+    it('Buy for Doge Land, cost all', () => {
+        cy.get("#dogebuy").click();
+        cy.get("#insufficientText").should('not.be.visible');
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/god.jpg");
+        cy.get("#cointext")
+            .then(function($el) {
+                expect($el).to.have.text("0");
+            });
+        cy.get("#dogebuy")
+            .then(function($el) {
+                expect($el).to.have.text("Selected");
+            });
+    });
+
+
+    it('Buy All, all owned', () => {
+        cy.get("#wildjunglebuy").click();
+        cy.get("#nightbuy").click();
+        cy.get("#aquaticbuy").click();
+        cy.get("#sanfranciscobuy").click();
+        cy.get("#dogebuy").click();
+        cy.get("#wildjunglebuy")
+            .then(function($el) {
+                expect($el).to.have.text("Owned");
+            });
+        cy.get("#nightbuy")
+            .then(function($el) {
+                expect($el).to.have.text("Owned");
+            });
+        cy.get("#aquaticbuy")
+            .then(function($el) {
+                expect($el).to.have.text("Owned");
+            });
+        cy.get("#sanfranciscobuy")
+            .then(function($el) {
+                expect($el).to.have.text("Owned");
+            });
+        cy.get("#wildjunglebuy").click();
+        cy.get("#dogebuy")
+            .then(function($el) {
+                expect($el).to.have.text("Owned");
+            });
+    });
+
+
+});
+
+
+
+describe('buy background images Tests blind mode', () => {
+    beforeEach(() => {
+        cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
+        cy.get("#guestCont").click();
+        cy.window().then(win => win.cypressSetCoin(900));
+        cy.get("#gear").click();
+        cy.get("#colorblindbox").check();
+        cy.get("#saveSettings").click();
+        cy.get("#coinimg").click();
+
+    });
+
+    it('Buy for WildJungle blind mode', () => {
+        cy.get("#wildjunglebuy").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/cbwildjungle.jpg");
+
+    });
+
+    it('Buy for Night mode blind mode', () => {
+        cy.get("#nightbuy").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/cbnight.jpg");
+
+    });
+
+
+
+    it('Buy for Aquatic blind mode', () => {
+        cy.get("#aquaticbuy").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/cbaquatic.jpg");
+
+    });
+
+    it('Buy for San Francisco blind mode', () => {
+        cy.get("#sanfranciscobuy").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/cbsanfrancisco.jpg");
+
+    });
+
+    it('Buy for DogeLand blind mode', () => {
+        cy.get("#dogebuy").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/cbgod.jpg");
+
+    });
+});
+
+
+
+
+
+describe('buy background images Tests insufficient fund', () => {
+    beforeEach(() => {
+        cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
+        cy.get("#guestCont").click();
+        cy.window().then(win => win.cypressSetCoin(0));
+        cy.get("#coinimg").click();
+
+    });
+
+
+    it('Buy for Aquatic insufficient fund', () => {
+        cy.get("#aquaticbuy").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/wildjungle.jpg");
+        cy.get("#insufficientText").should('be.visible');
+        cy.get("#aquaticbuy")
+            .then(function($el) {
+                expect($el).to.have.text("Buy");
+            });
+
+    });
+
+    it('Buy for San Francisco insufficient fund', () => {
+        cy.get("#sanfranciscobuy").click();
+        cy.get("#body")
+            .should('have.css', "background-image")
+            .and("include", "assets/wildjungle.jpg");
+        cy.get("#insufficientText").should('be.visible');
+        cy.get("#sanfranciscobuy")
+            .then(function($el) {
+                expect($el).to.have.text("Buy");
+            });
+
+    });
+
 
 });

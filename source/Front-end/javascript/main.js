@@ -5,8 +5,8 @@
  * Curr  Version: 3.0
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
- * Variables    : 
- * Functions    : 
+ * Variables    : workSec, sBrkSec, lBrkSec, ms, currMode, counts, countsThres, color, language, loggedIn, totalSec
+ * Functions    : setms(thisms), 
  * 
  * Next Feature : 
  *****************************************************************************/
