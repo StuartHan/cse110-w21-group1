@@ -628,6 +628,7 @@ header>h1 {
 /* ============================================================================
  * Timer
  =========================================================================== */
+/* Wide Screen */
 @media screen and (min-device-aspect-ratio:1/1) {
 #main {
     display: grid;
@@ -647,6 +648,7 @@ header>h1 {
     max-width: 50vw;
 }
 }
+/* High Screen */
 @media screen and (max-device-aspect-ratio:1/1) {
 #main {
     display: grid;
@@ -744,7 +746,8 @@ header>h1 {
 /* ============================================================================
  * Settings Menu
  =========================================================================== */
-
+/* Wide screen */
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
 #settingsMenu {
     visibility: hidden;
     grid-column: 2;
@@ -763,10 +766,34 @@ header>h1 {
     min-width: 300px;
     min-height: 400px;
 }
+}
+/* High screen */
+@media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
+    #settingsMenu {
+        visibility: hidden;
+        grid-column: 2;
+        grid-row: 2;
+        background-color: rgba(256,256,256,0.4);
+        border-radius: 8px;
+        margin: 2% 5% 5% 2%;
+        align-items: center;
+        justify-items: center;
+        display: grid;
+        grid-template-columns: 15% 50% 20% 15%;
+        grid-template-rows: 8% 10% 10% 10% 10% 10% 10% 10% 10% 12%;
+        z-index: 2;
+        width: 90vw; 
+        height: 65%;
+        justify-self: center;
+        /* min-width: 300px; */
+        min-height: 400px;
+    }
+    }
 
-#settingsMenu > input {
-    background-color: rgba(256,256,256,0.6);
-    border-radius:8px;
+#settingsMenu > input { /* Make them not like buttons */
+    /* background-color: rgba(256,256,256,0.6); */
+    background-color: white;
+    /* border-radius:8px; */
     font-family: 'Kanit', sans-serif;
 }
 
@@ -836,9 +863,9 @@ header>h1 {
     grid-template-rows: 100%;
 }
 
-#statistics, #saveSettings{
-    border-radius: 8px;
-    font-size: min(2vw,3.5vh);
+#statistics, #saveSettings{ /* save button */
+    border-radius: 0.3em;
+    font-size: max(2vw, 3.5vh);
     font-family: 'Kanit', sans-serif;
     background-color: rgba(256,256,256,0.4);
     margin-left: 5%;
@@ -859,11 +886,11 @@ header>h1 {
     opacity: 0.3;
 }
 
-#statistics {
+#statistics { /* stats button */
     grid-row: 1;
     grid-column: 1;
-    border-radius: 8px;
-    font-size: min(2vw,3.5vh);
+    border-radius: 0.3em;
+    font-size: max(2vw, 3.5vh);
     justify-self: center;
     font-family: 'Kanit', sans-serif;
     background-color: rgba(256,256,256,0.4);
@@ -874,66 +901,10 @@ header>h1 {
 }
 
 
-/* ============================================================================
- * Statisitcs Menu
- =========================================================================== */
-
-#statisticsMenu {
-    visibility: hidden;
-    grid-column: 2;
-    grid-row: 2;
-    background-color: rgba(256,256,256,0.4);
-    border-radius: 8px;
-    margin: 2% 5% 5% 2%;
-    border-width: 2px;
-    width:80%;
-    align-items: center;
-    justify-items: center;
-    border-color: black;
-    border-style: solid;
-    justify-self: center;
-    display: grid;
-    grid-template-columns: 15% 50% 20% 15%;
-    grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 10% 12%;
-}
-
-#statisticsTitle {
-    grid-row: 1;
-    grid-column: 2 / span 2;
-    font-size: 4vh;
-}
-
-#statsWork {
-    grid-row: 2;
-    grid-column: 2 / span 2;
-    font-size: 1.5vw;
-}
-
-#statsBreak {
-    grid-row: 3;
-    grid-column: 2 / span 2;
-    font-size: 1.5vw;
-}
-
-#statsCong {
-    grid-row: 4;
-    grid-column: 2 / span 2;
-    font-size: 1.5vw;
-}
-
-#OKbtn-statistics {
-    grid-row: 9;
-    grid-column: 2 / span 2;
-    width: 30%;
-    height: 60%;
-    border-radius: 8px;
-    font-size: 2vh;
-    font-family: 'Kanit', sans-serif;
-}
-
-
-
-#WorkTimeTitle {
+/* Settings: User inputs */
+/* Wide Screen */
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
+#WorkTimeTitle { /* times HTML */
     grid-row: 3;
     grid-column: 2;
     font-size: 1.5vw;
@@ -951,12 +922,12 @@ header>h1 {
     font-size: 1.5vw;
 }
 
-#work-time-number {
+#work-time-number { /* times inputs */
     grid-row: 3;
     grid-column: 3;
     font-size: 1vw;
-    width: 40%;
-    min-width: 60px;
+    width: 3vw;
+    /* min-width: 60px; */
     height: 1vw;
 }
 
@@ -1034,6 +1005,228 @@ header>h1 {
     height:30%;
     width:30%;
 }
+}
+/* High Screen */
+@media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
+#WorkTimeTitle { /* times HTML */
+    grid-row: 3;
+    grid-column: 2;
+    font-size: 2vh;
+}
+
+#ShortBreakTitle {
+    grid-row: 4;
+    grid-column: 2;
+    font-size: 2vh;
+}
+
+#LongBreakTitle {
+    grid-row: 5;
+    grid-column: 2;
+    font-size: 2vh;
+}
+
+#work-time-number { /* times input */
+    grid-row: 3;
+    grid-column: 3;
+    font-size: 1.5vh;
+    width: 40%;
+    /* min-width: 60px; */
+    height: 2vh;
+    width: 3vh;
+    justify-self: left;
+}
+
+#short-break-number {
+    grid-row: 4;
+    grid-column: 3;
+    font-size: 1.5vh;
+    width: 40%;
+    /* min-width: 60px; */
+    height: 2vh;
+    width: 3vh;
+    justify-self: left;
+}
+
+#long-break-number {
+    grid-row: 5;
+    grid-column: 3;
+    font-size: 1.5vh;
+    width: 40%;
+    /* min-width: 60px; */
+    height: 2vh;
+    width: 3vh;
+    justify-self: left;
+}
+#sound-select { /* ring HTML */
+    grid-row: 8;
+    grid-column: 2;
+    font-size: 2vh;
+}
+#sound-selection{ /* ring select */
+    grid-row: 8;
+    grid-column: 3;
+    font-size: 1.5vh;
+    width: 100%;
+    align-self: center;
+    font-family: 'Kanit', sans-serif;
+}
+
+#languageTitle { /* language HTML */
+    grid-row: 7;
+    grid-column: 2;
+    font-size: 2vh;
+}
+
+#language-form { /* language select */
+    grid-row: 7;
+    grid-column: 3;
+    font-size: 1.5vh;
+    width: 100%;
+    min-width: 60px;
+    align-self: center;
+    font-family: 'Kanit', sans-serif;
+}
+
+#LongBreakInterval { /* lbr HTML*/
+    grid-row: 6;
+    grid-column: 2;
+    font-size: 2vh;
+}
+
+#long-break-interval { /* lbr input */
+    grid-row: 6;
+    grid-column: 3;
+    font-size: 1.5vh;
+    width: 40%;
+    /* min-width: 60px; */
+    height: 2vh;
+    width: 2vh;
+    justify-self: left;
+}
+
+#colorblindtitle{ /* cbm HTML */
+    grid-row: 9;
+    grid-column: 2;
+    font-size: 2vh;
+}
+
+#colorblindbox{ /* cbm box */
+    grid-row: 9;
+    grid-column: 3;
+    height:30%;
+    width:30%;
+    justify-self: left;
+}
+}
+
+
+/* ============================================================================
+ * Statisitcs Menu
+ =========================================================================== */
+/* Wide Screen */
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
+#statisticsMenu {
+    visibility: hidden;
+    grid-column: 2;
+    grid-row: 2;
+    background-color: rgba(256,256,256,0.4);
+    border-radius: 8px;
+    margin: 2% 5% 5% 2%;
+    border-width: 2px;
+    width:80%;
+    align-items: center;
+    justify-items: center;
+    border-color: black;
+    border-style: solid;
+    justify-self: center;
+    display: grid;
+    grid-template-columns: 15% 50% 20% 15%;
+    grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 10% 12%;
+}
+}
+/* High Screen */
+@media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
+#statisticsMenu {
+    visibility: hidden;
+    grid-column: 2;
+    grid-row: 2;
+    background-color: rgba(256,256,256,0.4);
+    border-radius: 8px;
+    margin: 2% 5% 5% 2%;
+    border-width: 2px;
+    width:90vw;
+    height:65%;
+    align-items: center;
+    justify-items: center;
+    border-color: black;
+    border-style: solid;
+    justify-self: center;
+    display: grid;
+    grid-template-columns: 15% 50% 20% 15%;
+    grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 10% 12%;
+}
+}
+
+#statisticsTitle {
+    grid-row: 1;
+    grid-column: 2 / span 2;
+    font-size: 4vh;
+}
+
+/* Wide Screen */
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
+#statsWork {
+    grid-row: 2;
+    grid-column: 2 / span 2;
+    font-size: 1.5vw;
+}
+
+#statsBreak {
+    grid-row: 3;
+    grid-column: 2 / span 2;
+    font-size: 1.5vw;
+}
+
+#statsCong {
+    grid-row: 4;
+    grid-column: 2 / span 2;
+    font-size: 1.5vw;
+}
+}
+/* High Screen */
+@media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
+#statsWork {
+    grid-row: 2;
+    grid-column: 2 / span 2;
+    font-size: 2vh;
+}
+
+#statsBreak {
+    grid-row: 3;
+    grid-column: 2 / span 2;
+    font-size: 2vh;
+}
+
+#statsCong {
+    grid-row: 4;
+    grid-column: 2 / span 2;
+    font-size: 2vh;
+}
+}
+
+#OKbtn-statistics {
+    grid-row: 9;
+    grid-column: 2 / span 2;
+    width: 30%;
+    height: 60%;
+    border-radius: 8px;
+    font-size: 2vh;
+    font-family: 'Kanit', sans-serif;
+}
+
+
+
 /* ============================================================================
  * Doge Shop
  =========================================================================== */
