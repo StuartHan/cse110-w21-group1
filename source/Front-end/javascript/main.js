@@ -1226,12 +1226,19 @@ function SwitchToChinese() {
     document.getElementById("switchToLogin").innerHTML = "去登陆";
     document.getElementById("createAcc").innerHTML = "注册";
     // Team
-    document.getElementById("teamsLabel").innerHTML = "组队";
+    document.getElementById("teamsLabel").innerHTML = "小队";
     document.getElementById("invite").innerHTML = "邀请";
     document.getElementById("createTeamButton").innerHTML = "组建";
     document.getElementById("teamsAccountLogin").innerHTML = "登陆";
-    document.getElementById("disableText").innerHTML = "关闭组队";
+    document.getElementById("disableText").innerHTML = "解散";
     // Create team
+    document.getElementById("createTeamTag").innerHTML = "组建小队";
+    document.getElementById("backToTeams").innerHTML = "返回";
+    document.getElementById("teamName").innerHTML = "用户名";
+    document.getElementById("workTeam").innerHTML = "工作时间";
+    document.getElementById("shortTeam").innerHTML = "短休息时间";
+    document.getElementById("longTeam").innerHTML = "长休息时间";
+    document.getElementById("finalizeCreate").innerHTML = "创建队伍";
     // document.getElementById("teamsLabel").innerHTML = "组队";
     //document.getElementById("welcome").innerHTML = "欢迎使用";
     document.getElementById("workText").innerHTML = "工作时段";
@@ -1295,6 +1302,20 @@ function SwitchToEnglish() {
     document.getElementById("default-2").innerHTML = "Big Ben";
     document.getElementById("default-3").innerHTML = "Temple (Low Freq)";
     document.getElementById("colorblindtitle").innerHTML = "Color Blind Mode:";
+    // Team
+    document.getElementById("teamsLabel").innerHTML = "Teams";
+    document.getElementById("invite").innerHTML = "Invite";
+    document.getElementById("createTeamButton").innerHTML = "Create";
+    document.getElementById("teamsAccountLogin").innerHTML = "Login";
+    document.getElementById("disableText").innerHTML = "Disable Teams";
+    // Create team
+    document.getElementById("createTeamTag").innerHTML = "Create Team";
+    document.getElementById("backToTeams").innerHTML = "Back";
+    document.getElementById("teamName").innerHTML = "Name";
+    document.getElementById("workTeam").innerHTML = "Work Time";
+    document.getElementById("shortTeam").innerHTML = "Short Break";
+    document.getElementById("longTeam").innerHTML = "Long Break";
+    document.getElementById("finalizeCreate").innerHTML = "Create";
     // document.getElementById("statistics").innerHTML = "Stats";
     document.getElementById("saveSettings").innerHTML = "Save";
     document.getElementById("statisticsTitle").innerHTML = "Statistics";
