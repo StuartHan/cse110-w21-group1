@@ -464,6 +464,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     else{
         document.getElementById("teamsAccountLogin").innerHTML = "Login";
+        if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
     }
 });
 
@@ -516,7 +517,9 @@ function darkenChosen(){
     document.getElementById('sanfranciscobuy').style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById('dogebuy').style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById('wildjunglebuy').innerHTML = "Owned";
+    if(!english) {document.getElementById('wildjunglebuy').innerHTML = "已拥有";}
     document.getElementById('nightbuy').innerHTML = "Owned";
+    if(!english) {document.getElementById('nightbuy').innerHTML = "已拥有";}
     if (shopitems[0] == 1){
         if (english)
             document.getElementById('aquaticbuy').innerHTML = "Owned";
@@ -1222,6 +1225,14 @@ function SwitchToChinese() {
     document.getElementById("nameText").innerHTML = "用户名";
     document.getElementById("switchToLogin").innerHTML = "去登陆";
     document.getElementById("createAcc").innerHTML = "注册";
+    // Team
+    document.getElementById("teamsLabel").innerHTML = "组队";
+    document.getElementById("invite").innerHTML = "邀请";
+    document.getElementById("createTeamButton").innerHTML = "组建";
+    document.getElementById("teamsAccountLogin").innerHTML = "登陆";
+    document.getElementById("disableText").innerHTML = "关闭组队";
+    // Create team
+    // document.getElementById("teamsLabel").innerHTML = "组队";
     //document.getElementById("welcome").innerHTML = "欢迎使用";
     document.getElementById("workText").innerHTML = "工作时段";
     document.getElementById("ShortBreakText").innerHTML = "较短休息时段";
