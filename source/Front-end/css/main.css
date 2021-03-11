@@ -38,6 +38,9 @@ fieldset {
 /* ============================================================================
  * Login Notification
  =========================================================================== */
+/* Hey There! page */
+/* Wide Screen */
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
 #loginNotification{
     z-index: 4;
     grid-row: 2;
@@ -48,7 +51,7 @@ fieldset {
     border-radius: 8px;
     border-width: 3px;
     height: 40%;
-    width: 60%;
+    width: 70%; /* Revised -Stuart */
     display: grid;
     justify-self: center;
     align-self: center;
@@ -59,24 +62,49 @@ fieldset {
     min-height: 200px;
     min-width: 250px;
 }
+}
+/* High Screen */
+@media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
+#loginNotification{
+    z-index: 4;
+    grid-row: 2;
+    grid-column: 2;
+    background-image: url("./assets/Tomato_je.jpg");
+    background-size: cover;
+    border-style: solid;
+    border-radius: 8px;
+    border-width: 3px;
+    height: 40%;
+    width: 80vw; /* Revised -Stuart */
+    display: grid;
+    justify-self: center;
+    align-self: center;
+    align-items: center;
+    justify-items: center;
+    grid-template-rows: 20% 15% 40% 25%;
+    grid-template-columns: 50% 50%;
+    min-height: 200px;
+    min-width: 250px;
+}
+}
 
-#loginNotification > h2{
+#loginNotification > h2{ /* Hey There! */
     grid-row: 1;
     grid-column: 1 / span 2;
-    font-size: 2vw;
+    font-size: max(1.9vw,2.8vh); /* Revised -Stuart */
 }
-#loginNotification > h3{
+#loginNotification > h3{ /* Looks like you aren't logged in */
     grid-row: 2;
     grid-column: 1 / span 2;
-    font-size: 1vw;
+    font-size: max(.8vw,2vh); /* Revised -Stuart */
 }
-#loginNotification > p{
+#loginNotification > p{ /* Create an account */
     font-size: max(.8vw,2vh);
     grid-row: 4;
     grid-column: 1 / span 2;
     text-decoration: underline;
 }
-#loginCont, #guestCont{
+#loginCont, #guestCont{ /* Login & Continue as Guest */
     font-size: max(1.4vw,2.2vh);
     border-style: solid;
     border-radius: 8px;
@@ -109,7 +137,9 @@ fieldset {
 /* ============================================================================
  * Login Page
  =========================================================================== */
- #loginMain{
+/* Wide Screen */
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
+#loginMain{
     visibility: hidden;
     z-index: 4;
     grid-row: 2;
@@ -120,7 +150,7 @@ fieldset {
     border-radius: 8px;
     border-width: 3px;
     height: 40%;
-    width: 60%;
+    width: 70%; /* Revised -Stuart */
     display: grid;
     justify-self: center;
     align-self: center;
@@ -131,59 +161,87 @@ fieldset {
     min-height: 200px;
     min-width: 250px;
 }
+}
+/* High Screen */
+@media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
+#loginMain{
+    visibility: hidden;
+    z-index: 4;
+    grid-row: 2;
+    grid-column: 2;
+    background-color: rgba(256,256,256,1);
+    background-size: cover;
+    border-style: solid;
+    border-radius: 8px;
+    border-width: 3px;
+    height: 40%;
+    width: 80vw; /* Revised -Stuart */
+    display: grid;
+    justify-self: center;
+    align-self: center;
+    align-items: center;
+    justify-items: center;
+    grid-template-rows: 20% 20% 15% 40%;
+    grid-template-columns: 50% 50%;
+    min-height: 200px;
+    min-width: 250px;
+}
+}
 
-#loginMain > h1{
+#loginMain > h1{ /* Login */
     grid-row: 1;
     grid-column: 1 / span 2;
-    font-size: 2vw;
+    font-size: max(2vw, 4vh); /* Revised -Stuart */
 }
-#usertext{
+#usertext{ /* Username */
     grid-row: 2;
     grid-column: 1;
     justify-self: right;
-    font-size: 1vw;
+    font-size: max(1vw, 2vh); /* Revised -Stuart */
 }
-#passtext{
+#passtext{ /* Password */
     grid-row: 3;
     grid-column: 1;
     justify-self: right;
-    font-size:1vw;
+    font-size: max(1vw, 2vh); /* Revised -Stuart */
 }
-#quitLogin{
+#quitLogin{ /* X */
     grid-row: 1;
     grid-column: 2;
     justify-self: right;
     align-self: start;
     margin-top: 5%;
     margin-right: 5%;
-    font-size:.9vw;
+    font-size: max(1vw, 2vh); /* Revised -Stuart */
     border-style: none;
 }
-#user{
+#user{ /* Username input */
     grid-row: 2;
     grid-column: 2;
     justify-self: left;
     margin-left: 5%;
-    font-size: .8vw;
+    font-size: max(0.8vw, 1.6vh); /* Revised -Stuart */
     width: 60%;
+    height: min(1.5vh, 3vw); /* New -Stuart */
 }
-#pass{
+#pass{ /* Password input */
     grid-row: 3;
     grid-column: 2;
     justify-self: left;
     margin-left: 5%;
-    font-size:.8vw;
+    font-size: max(0.8vw, 1.6vh); /* Revised -Stuart */
     width: 60%;
+    height: min(1.5vh, 3vw); /* New -Stuart */
 }
 #quitLogin:hover{
     opacity: 0.3;
 }
-#proceedLogin,#createAccInstead{
-    width: 60%;
-    height: 20%;
+#proceedLogin,#createAccInstead{ /* Login & Create acccount instead buttons */
+    width: 75%; /* Revised -Stuart */
+    height: 30%; /* Revised -Stuart */
     font-family: 'Kanit', sans-serif;
     grid-row:4;
-    font-size: .7vw;
+    font-size: max(.7vw,1.5vh); /* Revised -Stuart */
 }
 #proceedLogin{
     grid-column: 2;
@@ -196,10 +254,14 @@ fieldset {
     margin-right: 5%;
 }
 
+
+
 /* ============================================================================
  * Create Account
  =========================================================================== */
- #accountCreation{
+/* Wide Screen */
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
+#accountCreation{
     visibility: hidden;
     z-index: 4;
     grid-row: 2;
@@ -210,7 +272,7 @@ fieldset {
     border-radius: 8px;
     border-width: 3px;
     height: 40%;
-    width: 60%;
+    width: 70%; /* Revised -Stuart */
     display: grid;
     justify-self: center;
     align-self: center;
@@ -221,40 +283,67 @@ fieldset {
     min-height: 200px;
     min-width: 250px;
 }
-
-#accountCreation > h1{
-    grid-row: 1;
-    grid-column: 1 / span 2;
-    font-size: 2vw;
+}
+/* High Screen */
+@media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
+#accountCreation{
+    visibility: hidden;
+    z-index: 4;
+    grid-row: 2;
+    grid-column: 2;
+    background-color: rgba(256,256,256,1);
+    background-size: cover;
+    border-style: solid;
+    border-radius: 8px;
+    border-width: 3px;
+    height: 40%;
+    width: 80vw; /* Revised -Stuart */
+    display: grid;
+    justify-self: center;
+    align-self: center;
+    align-items: center;
+    justify-items: center;
+    grid-template-rows: 20% 15% 15% 15% 20%;
+    grid-template-columns: 50% 50%;
+    min-height: 200px;
+    min-width: 250px;
+}
 }
 
-#quitCreate{
+#accountCreation > h1{ /* Create Account */
+    grid-row: 1;
+    grid-column: 1 / span 2;
+    font-size: max(2vw, 4vh); /* Revised -Stuart */
+}
+
+#quitCreate{ /* X */
     grid-row: 1;
     grid-column: 2;
     justify-self: right;
     align-self: start;
     margin-top: 5%;
     margin-right: 5%;
-    font-size:.9vw;
+    font-size: max(.9vw, 1.8vh); /* Revised -Stuart */
     border-style: none;
 }
-
 #quitCreate:hover{
     opacity: 0.3;
 }
 
-#emailtext, #createPassText, #nameText{
+#emailtext, #createPassText, #nameText{ /* 3 inputs' HTNLs */
     grid-column: 1;
-    font-size: 1vw;
+    font-size: max(1vw, 2vh); /* Revised -Stuart */
     justify-self: right;
     margin-right: 5%;
 }
 
-#emailCreate, #passCreate, #nameCreate{
+#emailCreate, #passCreate, #nameCreate{ /* 3 inputs */
     grid-column: 2;
     justify-self: left;
     margin-left: 5%;
-    width: 80%;
+    width: 60%; /* Revised -Stuart */
+    font-size: max(0.8vw, 1.6vh); /* New -Stuart */
+    height: min(1.5vh, 3vw); /* New -Stuart */
 }
 
 #emailtext, #emailCreate{
@@ -269,27 +358,29 @@ fieldset {
     grid-row: 4;
 }
 
-#switchToLogin{
+#switchToLogin{ /* Sign in instead button */
     grid-row: 5;
     grid-column: 1;
     justify-self: right;
     margin-right: 5%;
-    width: 50%;
+    width: 75%; /* Revised -Stuart */
     height: 60%;
-    font-size: min(.7vw,1.5vh);
+    font-size: max(.7vw,1.5vh); /* Revised -Stuart */
     font-family: 'Kanit', sans-serif;
 }
 
-#createAcc{
+#createAcc{ /* Create button */
     grid-row: 5;
     grid-column: 2;
     justify-self: left;
     margin-left: 5%;
-    width: 50%;
+    width: 75%; /* Revised -Stuart */
     height: 60%;
-    font-size: .7vw;
+    font-size: max(.7vw,1.5vh); /* Revised -Stuart */
     font-family: 'Kanit', sans-serif;
 }
+
+
 
 /* ============================================================================
  * Header/Navigation Bar
@@ -303,11 +394,11 @@ fieldset {
     grid-template-rows: 100%;
     background-color: rgba(3,165,89,0.7);
     color: white;
-    text-shadow: 3px 3px black;
+    text-shadow: 0.2vw 0.2vh black; /* Revised - Stuart */
     font-size: max(2vh,3.5vw); /* revised -Stuart */
     align-items: center;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: max(2vw, 2vh); /* Revised -Stuart */
+    border-bottom-right-radius: max(2vw, 2vh); /* Revised -Stuart */
     min-height: 50px;
     width: 100vw; /* New -Stuart */
 }
@@ -398,7 +489,7 @@ header>h1 {
     grid-template-columns: 50% 50%;
     grid-template-rows: 100%;
     align-items: center;
-    justify-items: right;
+    justify-items: center;
     background-color: rgba(256,256,256,0.4);
     border-radius: 10px;
     height:5vh;
@@ -691,7 +782,7 @@ header>h1 {
     background-color: rgba(256,256,256,0.4);
     margin-top: 5%;
     margin-bottom: 5%;
-    border-radius: 15px;
+    border-radius: max(3vw, 3vh); /* Revised -Stuart */
     z-index:1;
 
     width: 75%;
@@ -711,7 +802,7 @@ header>h1 {
     background-color: rgba(256,256,256,0.4);
     margin-top: 5%;
     margin-bottom: 5%;
-    border-radius: 15px;
+    border-radius: max(3vw, 3vh); /* Revised -Stuart */
     z-index:1;
 
     width: 90vw;
@@ -759,7 +850,7 @@ header>h1 {
     padding-right: 30px;
 }
 
-#start-btn {
+#start-btn { /* start button */
     background-color: rgba(256,256,256,0.6);
     border: none;
     border-radius: 5px;
@@ -768,7 +859,7 @@ header>h1 {
     align-self: center;
     transition: 0.2s ease all;
     font-family: 'Kanit', sans-serif;
-    font-size: 2vh;
+    font-size: max(1.5vw, 2vh); /* Revised -Stuart */
     height: 70%;
     width: 30%;
 }
@@ -786,7 +877,7 @@ header>h1 {
 }
 
 #time {
-    font-size: min(6vw,max(3vw,12vh));
+    font-size: max(6vw,8vh); /* Revised -Stuart */
     grid-row: 1;
     grid-column: 1;
     align-self: center;
@@ -803,15 +894,16 @@ header>h1 {
     grid-column: 2;
     grid-row: 2;
     background-color: rgba(256,256,256,0.4);
-    border-radius: 8px;
-    margin: 2% 5% 5% 2%;
+    border-radius: max(3vw, 3vh); /* Revised -Stuart */
+    margin-top: 5%; /* Revised -Stuart */
+    margin-bottom: 5%; /* Revised -Stuart */
     align-items: center;
     justify-items: center;
     display: grid;
     grid-template-columns: 15% 50% 20% 15%;
     grid-template-rows: 8% 10% 10% 10% 10% 10% 10% 10% 10% 12%;
     z-index: 2;
-    width: 80%;
+    width: 75%; /* Revised -Stuart */
     justify-self: center;
     min-width: 300px;
     min-height: 400px;
@@ -819,26 +911,27 @@ header>h1 {
 }
 /* High screen */
 @media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
-    #settingsMenu {
-        visibility: hidden;
-        grid-column: 2;
-        grid-row: 2;
-        background-color: rgba(256,256,256,0.4);
-        border-radius: 8px;
-        margin: 2% 5% 5% 2%;
-        align-items: center;
-        justify-items: center;
-        display: grid;
-        grid-template-columns: 15% 50% 20% 15%;
-        grid-template-rows: 8% 10% 10% 10% 10% 10% 10% 10% 10% 12%;
-        z-index: 2;
-        width: 90vw; 
-        height: 65%;
-        justify-self: center;
-        /* min-width: 300px; */
-        min-height: 400px;
-    }
-    }
+#settingsMenu {
+    visibility: hidden;
+    grid-column: 2;
+    grid-row: 2;
+    background-color: rgba(256,256,256,0.4);
+    border-radius: max(3vw, 3vh); /* Revised -Stuart */
+    margin-top: 5%; /* Revised -Stuart */
+    margin-bottom: 5%; /* Revised -Stuart */
+    align-items: center;
+    justify-items: center;
+    display: grid;
+    grid-template-columns: 15% 50% 20% 15%;
+    grid-template-rows: 8% 10% 10% 10% 10% 10% 10% 10% 10% 12%;
+    z-index: 2;
+    width: 90vw; 
+    height: 75%; /* Revised -Stuart */
+    justify-self: center;
+    /* min-width: 300px; */
+    min-height: 400px;
+}
+}
 
 #settingsMenu > input { /* Make them not like buttons */
     /* background-color: rgba(256,256,256,0.6); */
@@ -1183,18 +1276,19 @@ header>h1 {
 @media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
 #statisticsMenu {
     visibility: hidden;
+    justify-items: center; 
+    justify-self: center; 
+    align-items: center;
     grid-column: 2;
     grid-row: 2;
     background-color: rgba(256,256,256,0.4);
-    border-radius: 8px;
-    margin: 2% 5% 5% 2%;
-    border-width: 2px;
-    width:80%;
-    align-items: center;
-    justify-items: center;
-    border-color: black;
-    border-style: solid;
-    justify-self: center;
+    border-radius: max(3vw, 3vh); /* Revised -Stuart */
+    margin-top: 5%; /* New -Stuart */
+    margin-bottom: 5%; /* New -Stuart */
+    /* border-width: 2px; */
+    width:75%; /* Revised -Stuart */
+    /* border-color: black; */
+    /* border-style: solid; */
     display: grid;
     grid-template-columns: 15% 50% 20% 15%;
     grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 10% 12%;
@@ -1204,19 +1298,20 @@ header>h1 {
 @media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
 #statisticsMenu {
     visibility: hidden;
+    justify-items: center; 
+    justify-self: center; 
+    align-items: center;
     grid-column: 2;
     grid-row: 2;
     background-color: rgba(256,256,256,0.4);
-    border-radius: 8px;
-    margin: 2% 5% 5% 2%;
-    border-width: 2px;
+    border-radius: max(3vw, 3vh); /* Revised -Stuart */
+    margin-top: 5%; /* New -Stuart */
+    margin-bottom: 5%; /* New -Stuart */
+    /* border-width: 2px; */
     width:90vw;
     height:65%;
-    align-items: center;
-    justify-items: center;
-    border-color: black;
-    border-style: solid;
-    justify-self: center;
+    /* border-color: black; */
+    /* border-style: solid; */
     display: grid;
     grid-template-columns: 15% 50% 20% 15%;
     grid-template-rows: 8% 10% 10% 10% 10% 20% 10% 10% 12%;
@@ -1428,7 +1523,7 @@ footer {
     grid-column: 1 / span 3;
     grid-row: 3;
     background-color: rgba(3,165,89,0.6);
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-top-left-radius: max(2vw, 2vh); /* Revised -Stuart */
+    border-top-right-radius: max(2vw, 2vh); /* Revised -Stuart */
     width: 100vw; /* New */
 }

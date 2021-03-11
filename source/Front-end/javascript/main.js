@@ -28,11 +28,29 @@ var loggedIn = false;
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
 
+
+// Open Settings / Gear
 document.getElementById("gear").addEventListener("click", function() { //On click, show settings
     document.getElementById("settingsMenu").style.visibility = "visible";
     document.getElementById("main").style.visibility = "hidden";
+    document.getElementById("statisticsMenu").style.visibility = "hidden";
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
     chooseSoundEffect();
+});
+
+// Open Statistics / Stats
+document.getElementById("stats").addEventListener("click", function() { //On click, show statistics
+    document.getElementById("statisticsMenu").style.visibility = "visible";
+    document.getElementById("main").style.visibility = "hidden";
+    document.getElementById("settingsMenu").style.visibility = "hidden";
+    document.getElementById("dogeCoinMenu").style.visibility = "hidden";
+    showStats();
+});
+// Close Statistics / Stats
+document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
+    document.getElementById("statisticsMenu").style.visibility = "hidden";
+    // document.getElementById("gear").click();
+    document.getElementById("main").style.visibility = "visible";
 });
 
 document.getElementById("sound-selection").addEventListener("onchange", function(){//On click, play corresponding sound
@@ -55,18 +73,6 @@ document.getElementById("colorblindbox").addEventListener("click",function(){
         localStorage.setItem("colorblind","1");
     else
     localStorage.setItem("colorblind","0");
-});
-
-document.getElementById("statistics").addEventListener("click", function() { //On click, show statistics
-    document.getElementById("statisticsMenu").style.visibility = "visible";
-    document.getElementById("settingsMenu").style.visibility = "hidden";
-    document.getElementById("dogeCoinMenu").style.visibility = "hidden";
-    showStats();
-});
-
-document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
-    document.getElementById("statisticsMenu").style.visibility = "hidden";
-    document.getElementById("gear").click()
 });
 
 document.getElementById("saveSettings").addEventListener("click", function() { //On click, hide settings
