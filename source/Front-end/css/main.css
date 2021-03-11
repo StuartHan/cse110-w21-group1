@@ -1,8 +1,8 @@
 /******************************************************************************
  * File Name    : main.css
  * First Created: Feb 14
- * Last  Revised: Mar 2 -- Jiaming Li
- * Curr  Version: 1.2
+ * Last  Revised: Mar 11 -- Yichen Han
+ * Curr  Version: 3.0
  * 
  * Description  : 
  * Variables    : 
@@ -17,8 +17,9 @@
     background-image: url("assets/wildjungle.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    min-width: 500px;
-    min-height: 800px;
+    /* min-width: 500px; */
+    /* min-height: 800px; */
+    overflow: hidden;
 }
 
 #container {
