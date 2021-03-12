@@ -35,7 +35,12 @@
 
 - SwitchToChinese
 - SwitchToEnglish
-
-### function not started yet
 - chooseSoundEffect
 - showStats
+- cypressSetCoin
+
+### function not started yet
+- createUserData
+- createTeam
+- updateUser
+- udpateCoin

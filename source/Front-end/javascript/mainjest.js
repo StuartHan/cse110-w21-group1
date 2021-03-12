@@ -1417,12 +1417,21 @@ module.exports = {
     SwitchToChinese: SwitchToChinese,
     SwitchToEnglish: SwitchToEnglish,
     chooseSoundEffect: chooseSoundEffect,
+    showStats: showStats,
+    cypressSetCoin: cypressSetCoin,
+
+    createUserData: createUserData,
+    createTeam: createTeam,
+    updateUser: updateUser,
+    updateCoin: updateCoin,
 
     workSec: workSec,
     sBrkSec: sBrkSec,
     lBrkSec: lBrkSec,
     currMode: currMode,
     counts: counts,
+    totalWorkMins: totalWorkMins,
+    totalBreakMins, totalBreakMins,
 
     totalSec: totalSec
 }
