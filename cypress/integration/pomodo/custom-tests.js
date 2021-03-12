@@ -1,4 +1,4 @@
-describe('login in Test', () => {
+describe('Login in page Tests', () => {
     beforeEach(() => {
         cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
         cy.get("#loginCont").click();
@@ -52,7 +52,7 @@ describe('login in Test', () => {
 
 
 
-describe('Base Functionality Test', () => {
+describe('Base Functionality Tests', () => {
     beforeEach(() => {
         cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
         cy.get("#guestCont").click();
@@ -113,15 +113,13 @@ describe('Base Functionality Test', () => {
 
 
     it('statistics page is pop up', () => {
-        cy.get("#gear").click();
-        cy.get("#statistics").click();
+        cy.get("#stats").click();
         cy.get("#statisticsMenu").should('be.visible');
 
     });
 
     it('statistics page is hidden', () => {
-        cy.get("#gear").click();
-        cy.get("#statistics").click();
+        cy.get("#stats").click();
         cy.get("#OKbtn-statistics").click();
         cy.get("#statisticsMenu").should('not.be.visible');
 
@@ -134,7 +132,7 @@ describe('Base Functionality Test', () => {
 });
 
 
-describe('Team page pop up', () => {
+describe('Team page Tests', () => {
     beforeEach(() => {
         cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
         cy.get("#guestCont").click();
@@ -223,7 +221,7 @@ describe('Volume Tests', () => {
 
 
 
-describe('time and interval changes Tests', () => {
+describe('Time and break interval changes Tests', () => {
     beforeEach(() => {
         cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
         cy.get("#guestCont").click();
@@ -275,7 +273,7 @@ describe('time and interval changes Tests', () => {
 
 
 
-describe('Language changes', () => {
+describe('Language changes Tests', () => {
     beforeEach(() => {
         cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
         cy.get("#guestCont").click();
@@ -296,7 +294,7 @@ describe('Language changes', () => {
         cy.get("#saveSettings").click();
         cy.get("#workText")
             .then(function($el) {
-                expect($el).to.have.text("工作时段");
+                expect($el).to.have.text("工作");
             })
     });
 
@@ -304,7 +302,7 @@ describe('Language changes', () => {
 });
 
 
-describe('Sound changes', () => {
+describe('Sound changes Tests', () => {
     beforeEach(() => {
         cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
         cy.get("#guestCont").click();
@@ -344,45 +342,48 @@ describe('Sound changes', () => {
 
 });
 
+describe('Coins adding logic Tests', () => {
+
+    it('Add 5 coin each time after finish a work phase', () => {
+        cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
+        cy.window().then(win => win.cypressSetCoin(0));
+        cy.window().then(win => win.setms(10));
+        cy.get("#guestCont").click();
+        cy.get("#gear").click();
+        cy.get('#work-time-number').invoke('val', 1).trigger('input');
+        cy.get("#saveSettings").click();
+        cy.get("#start-btn").click();
+        cy.wait(2000);
+        cy.get("#cointext")
+            .then(function($el) {
+                expect($el).to.have.text("5");
+            })
+    });
 
 
+    it('Add 15 coins each time after reach a long break', () => {
+        cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
+        cy.window().then(win => win.cypressSetCoin(0));
+        cy.window().then(win => win.setms(10));
+        cy.get("#guestCont").click();
+        cy.get("#gear").click();
+        cy.get('#work-time-number').invoke('val', 1).trigger('input');
+        cy.get('#long-break-interval').invoke('val', 0).trigger('input');
+        cy.get("#saveSettings").click();
+        cy.get("#start-btn").click();
+        cy.wait(2000);
+        cy.get("#cointext")
+            .then(function($el) {
+                expect($el).to.have.text("15");
+            })
+    });
 
 
-it('Add 5 coin each time after finish a work phase', () => {
-    cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
-    cy.window().then(win => win.cypressSetCoin(0));
-    cy.get("#guestCont").click();
-    cy.get("#gear").click();
-    cy.get('#work-time-number').invoke('val', 1).trigger('input');
-    cy.get("#saveSettings").click();
-    cy.get("#start-btn").click();
-    cy.wait(2000);
-    cy.get("#cointext")
-        .then(function($el) {
-            expect($el).to.have.text("5");
-        })
 });
 
 
-it('Add 15 coins each time after reach a long break', () => {
-    cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
-    cy.window().then(win => win.cypressSetCoin(0));
-    cy.get("#guestCont").click();
-    cy.get("#gear").click();
-    cy.get('#work-time-number').invoke('val', 1).trigger('input');
-    cy.get('#long-break-interval').invoke('val', 0).trigger('input');
-    cy.get("#saveSettings").click();
-    cy.get("#start-btn").click();
-    cy.wait(2000);
-    cy.get("#cointext")
-        .then(function($el) {
-            expect($el).to.have.text("15");
-        })
-});
 
-
-
-describe('background image preview', () => {
+describe('Background image preview Tests', () => {
     beforeEach(() => {
         cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
         cy.get("#guestCont").click();
@@ -434,7 +435,7 @@ describe('background image preview', () => {
 
 
 
-describe('background image preview color blind mode', () => {
+describe('Background image preview Tests color blind mode', () => {
     beforeEach(() => {
         cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
         cy.get("#guestCont").click();
@@ -492,7 +493,7 @@ describe('background image preview color blind mode', () => {
 
 
 
-describe('buy background images Tests', () => {
+describe('Buy background images Tests', () => {
     beforeEach(() => {
         cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
         cy.get("#guestCont").click();
@@ -618,7 +619,7 @@ describe('buy background images Tests', () => {
 
 
 
-describe('buy background images Tests blind mode', () => {
+describe('Buy background images Tests blind mode', () => {
     beforeEach(() => {
         cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
         cy.get("#guestCont").click();
@@ -677,7 +678,7 @@ describe('buy background images Tests blind mode', () => {
 
 
 
-describe('buy background images Tests insufficient fund', () => {
+describe('Buy background images Tests insufficient fund', () => {
     beforeEach(() => {
         cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
         cy.get("#guestCont").click();
@@ -712,6 +713,89 @@ describe('buy background images Tests insufficient fund', () => {
             });
 
     });
+
+
+});
+
+
+
+
+describe('Stats logic Tests', () => {
+    beforeEach(() => {
+        cy.visit("https://stuarthan.github.io/cse110-w21-group1/");
+        cy.window().then(win => win.setms(10));
+        cy.get("#guestCont").click();
+        cy.get("#gear").click();
+        cy.get('#work-time-number').invoke('val', 1).trigger('input');
+        cy.get('#short-break-number').invoke('val', 1).trigger('input');
+        cy.get('#long-break-number').invoke('val', 1).trigger('input');
+        cy.get('#long-break-interval').invoke('val', 2).trigger('input');
+        cy.get("#saveSettings").click();
+        cy.get("#start-btn").click();
+        cy.wait(2000);
+    });
+
+    it('work time counts properly', () => {
+        cy.get("#stats").click();
+        cy.get("#statsWork")
+            .then(function($el) {
+                expect($el).to.have.text("You have worked 1 mins.");
+            })
+
+    });
+
+    it('short break time couonts properly', () => {
+        cy.get("#start-btn").click();
+        cy.wait(2000);
+        cy.get("#stats").click();
+        cy.get("#statsWork")
+            .then(function($el) {
+                expect($el).to.have.text("You have worked 1 mins.");
+            })
+        cy.get("#statsBreak")
+            .then(function($el) {
+                expect($el).to.have.text("And rested 1 mins.");
+            })
+
+
+    });
+
+
+    it('work time couonts properly another round ', () => {
+        cy.get("#start-btn").click();
+        cy.wait(2000);
+        cy.get("#start-btn").click();
+        cy.wait(2000);
+        cy.get("#stats").click();
+        cy.get("#statsWork")
+            .then(function($el) {
+                expect($el).to.have.text("You have worked 2 mins.");
+            })
+
+    });
+
+
+    it('long break time couonts properly', () => {
+        cy.get("#start-btn").click();
+        cy.wait(2000);
+        cy.get("#start-btn").click();
+        cy.wait(2000);
+        cy.get("#start-btn").click();
+        cy.wait(2000);
+        cy.get("#stats").click();
+        cy.get("#statsWork")
+            .then(function($el) {
+                expect($el).to.have.text("You have worked 2 mins.");
+            })
+        cy.get("#statsBreak")
+            .then(function($el) {
+                expect($el).to.have.text("And rested 2 mins.");
+            })
+
+
+    });
+
+
 
 
 });
