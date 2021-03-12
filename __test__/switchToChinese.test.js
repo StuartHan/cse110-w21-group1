@@ -263,10 +263,10 @@ describe("switchToChinese testing", () => {
 
         // Login- 1st page
         expect(document.getElementById("heytitle").innerHTML).toBe("嗨！");
-        expect(document.getElementById("lookstitle").innerH).toBe("您还未登陆");
-        expect(document.getElementById("guestCont").innerHTM).toBe("访客使用");
-        expect(document.getElementById("loginCont").innerHTM).toBe("登陆");
-        expect(document.getElementById("notifCreate").innerHTM).toBe("创建账号");
+        expect(document.getElementById("lookstitle").innerHTML).toBe("您还未登陆");
+        expect(document.getElementById("guestCont").innerHTML).toBe("访客使用");
+        expect(document.getElementById("loginCont").innerHTML).toBe("登陆");
+        expect(document.getElementById("notifCreate").innerHTML).toBe("创建账号");
         expect(document.getElementById("createTitle").innerHTML).toBe("创建账号");
         // Login - login
         expect(document.getElementById("logintitle").innerHTML).toBe("登陆");
@@ -281,27 +281,27 @@ describe("switchToChinese testing", () => {
         expect(document.getElementById("switchToLogin").innerHTML).toBe("去登陆");
         expect(document.getElementById("createAcc").innerHTML).toBe("注册");
         //document.getElementById("welcome").innerHTML = "欢迎使用");
-        expect(document.getElementById("workText").innerHTML).toBe("工作时段");
-        expect(document.getElementById("ShortBreakText").innerHTML).toBe("较短休息时段");
-        expect(document.getElementById("LongBreakText").innerHTML).toBe("较长休息时段");
+        expect(document.getElementById("workText").innerHTML).toBe("工作");
+        expect(document.getElementById("ShortBreakText").innerHTML).toBe("短休息");
+        expect(document.getElementById("LongBreakText").innerHTML).toBe("长休息");
         expect(document.getElementById("start-btn").innerHTML).toBe("开始计时");
         expect(document.getElementById("settingsTitle").innerHTML).toBe("设置");
-        expect(document.getElementById("WorkTimeTitle").innerHTML).toBe("工作时段时间(分钟)：");
-        expect(document.getElementById("ShortBreakTitle").innerHTML).toBe("较短休息时段(分钟）：");
-        expect(document.getElementById("LongBreakTitle").innerHTML).toBe("较长休息时段(分钟）：");
+        expect(document.getElementById("WorkTimeTitle").innerHTML).toBe("工作时长（分钟）：");
+        expect(document.getElementById("ShortBreakTitle").innerHTML).toBe("短休息时长（分钟）：");
+        expect(document.getElementById("LongBreakTitle").innerHTML).toBe("长休息时长（分钟）：");
         expect(document.getElementById("languageTitle").innerHTML).toBe("语言：");
-        expect(document.getElementById("LongBreakInterval").innerHTML).toBe("较长休息时段区间：");
+        expect(document.getElementById("LongBreakInterval").innerHTML).toBe("每轮工作次数：");
         expect(document.getElementById("sound-select").innerHTML).toBe("铃声：");
-        expect(document.getElementById("Bell").innerHTML).toBe("闹钟");
-        expect(document.getElementById("BigBen").innerHTML).toBe("大本钟");
-        expect(document.getElementById("Temple").innerHTML).toBe("教堂（低频）");
+        expect(document.getElementById("default-1").innerHTML).toBe("闹钟");
+        expect(document.getElementById("default-2").innerHTML).toBe("大本钟");
+        expect(document.getElementById("default-3").innerHTML).toBe("教堂（低频）");
         expect(document.getElementById("colorblindtitle").innerHTML).toBe("色盲模式：");
-        expect(document.getElementById("statistics").innerHTML).toBe("统计");
+        // expect(document.getElementById("stats").innerHTML).toBe("统计");
         expect(document.getElementById("saveSettings").innerHTML).toBe("保存");
         expect(document.getElementById("statisticsTitle").innerHTML).toBe("统计数据");
         expect(document.getElementById("statsCong").innerHTML).toBe("继续加油吧！");
-        expect(alertTime).toBe("请输入1到120的整数。");
-        expect(alertIntv).toBe("请输入1到10的整数");
+        // expect(alertTime).toBe("请输入1到120的整数。");
+        // expect(alertIntv).toBe("请输入1到10的整数");
         // Doge Shop
         expect(document.getElementById("dogeTitle").innerHTML).toBe("Doge 商店");
         expect(document.getElementById("themeTitle").innerHTML).toBe("主题");
