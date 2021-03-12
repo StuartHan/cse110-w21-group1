@@ -1415,6 +1415,7 @@ module.exports = {
     saveTimeSettings: saveTimeSettings,
 
     SwitchToChinese: SwitchToChinese,
+    SwitchToEnglish: SwitchToEnglish,
 
     workSec: workSec,
     sBrkSec: sBrkSec,

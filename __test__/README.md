@@ -33,8 +33,9 @@
 - darkenchosen
 - saveTimeSettings
 
-### function not started yet
-- SwitchToChinese (current)
+- SwitchToChinese
 - SwitchToEnglish
+
+### function not started yet
 - chooseSoundEffect
 - showStats
