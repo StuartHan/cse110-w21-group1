@@ -16,7 +16,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, user-scalable=0">
     <link href="./source/Front-end/css/assets/favicon.ico" rel="icon" />
     <title>PomoTime</title>
     <link rel="stylesheet" href="./source/Front-end/css/main.css">
@@ -29,7 +29,8 @@
         <header id="header">
             <h1>PomoTime</h1>
             <img id="profilepic" src="./source/Front-end/css/assets/basicprofilepic.png">
-            <h2 id="welcome">Welcome Guest!</h2>
+            <h2 id="welcome">Welcome <br/> Guest!</h2>
+            <img id="stats" src="./source/Front-end/css/assets/stats.png">
             <div id="options">
                 <!--<h2>Options</h2> -->
                 <!--<h2 id="stats">Stats</h2> To be implemented later.-->
@@ -142,13 +143,13 @@
                 <option value="Temple" id="default-3">Temple (Low Freq)</option>
             </select>
             <!-- Long break interval -->
-            <h3    id="LongBreakInterval">Long Break Interval:</h3>
+            <h3    id="LongBreakInterval">Work Phases in 1 Round:</h3>
             <input id="long-break-interval" name="long-break-interval" type="text" min="1" max="10" value="4">
             <h3 id="colorblindtitle">Color Blind Mode:</h3>
             <input type="checkbox" id="colorblindbox">
             <div id="settingsButtons">
                 <!-- Statistics button -->
-                <button id="statistics">Stats</button>
+                <!-- <button id="statistics">Stats</button> -->
                 <button id="saveSettings">Save</button>
             </div>
         </span>
@@ -189,8 +190,8 @@
 
         <span id="statisticsMenu">
             <h2 id="statisticsTitle">Stats</h2>
-            <h3 id="statsWork">You have worked 0 mins</h3>
-            <h3 id="statsBreak">And rested 0 mins</h3>
+            <h3 id="statsWork">You have worked 0 mins.</h3>
+            <h3 id="statsBreak">And rested 0 mins.</h3>
             <h3 id="statsCong">Congrats! Keep on moving!</h3>
             <button id="OKbtn-statistics">OK</button>
         </span>
@@ -259,6 +260,5 @@
     </script>
     <script src="./source/Front-end/javascript/main.js"></script>
 </body>
-    <script src="./source/Front-end/javascript/main.js"></script>
 
 </html>
