@@ -1416,6 +1416,7 @@ module.exports = {
 
     SwitchToChinese: SwitchToChinese,
     SwitchToEnglish: SwitchToEnglish,
+    chooseSoundEffect: chooseSoundEffect,
 
     workSec: workSec,
     sBrkSec: sBrkSec,
