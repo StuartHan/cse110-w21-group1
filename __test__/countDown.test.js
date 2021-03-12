@@ -1,6 +1,7 @@
 
 
 
+
 document.body.innerHTML = 
 `
 <head>
@@ -253,81 +254,28 @@ document.body.innerHTML =
 
 
 
-const { updateTable } = require("../source/Front-end/javascript/mainjest.js");
 
-describe("updateTable testing", () => {
-    let counter = document.getElementById("counter");
-    let workPhase = document.getElementById("workPhase");
-    let longBreak = document.getElementById("longBreak");
-    let shortBreak = document.getElementById("shortBreak");
 
-    test("should updateTable, currMode=w, counts=0", () => {
-        let currMode = "w";
-        let counts = 0;
+const { countDown } = require("../source/Front-end/javascript/mainjest.js")
 
-        updateTable();
+describe("countDown testing", () => {
+    test("totalSec = 0, should call autoSwitchMode", () => {
+        expect(1).toBe(1);
+        // ------ TODO: remaining test case: when totalSec is 0, autoSwitch would be called once
+            let mockfunc = jest.fn();
+            autoSwitchMode = mockfunc;
 
-        expect(counter.style.opacity).toBe("0.4");
-        expect(workPhase.style.opacity).toBe("1");
-        expect(longBreak.style.opacity).toBe("0.4");
-        expect(shortBreak.style.opacity).toBe("0.4");
+            totalSec = 0;
+            countDown();
 
-        expect(counter.innerHTML).toBe("4x");
+            expect(document.getElementById("sound-effect").paused).toBe(true);
     });
 
-    test("should updateTable, currMode=w, counts=1", () => {
-        let currMode = "w";
-        let counts = 1;
+    //   test("totalSec = 2, should update HTML content to 00:01", () => {
+    //     totalSec = 2;
 
-        updateTable();
+    //     countDown();
 
-        expect(counter.style.opacity).toBe("0.4");
-        expect(workPhase.style.opacity).toBe("1");
-        expect(longBreak.style.opacity).toBe("0.4");
-        expect(shortBreak.style.opacity).toBe("0.4");
-
-        // expect(counter.innerHTML).toBe("3x");
-    });
-
-    test("should updateTable, currMode=w, counts=2", () => {
-        let currMode = "w";
-        let counts = 2;
-
-        updateTable();
-
-        expect(counter.style.opacity).toBe("0.4");
-        expect(workPhase.style.opacity).toBe("1");
-        expect(longBreak.style.opacity).toBe("0.4");
-        expect(shortBreak.style.opacity).toBe("0.4");
-
-        // expect(counter.innerHTML).toBe("2x");
-    });
-
-    test("should updateTable, currMode=w, counts=3", () => {
-        let currMode = "w";
-        let counts = 3;
-
-        updateTable();
-
-        expect(counter.style.opacity).toBe("0.4");
-        expect(workPhase.style.opacity).toBe("1");
-        expect(longBreak.style.opacity).toBe("0.4");
-        expect(shortBreak.style.opacity).toBe("0.4");
-
-        // expect(counter.innerHTML).toBe("1x");
-    });
-
-    test("should updateTable, currMode=w, counts=4", () => {
-        let currMode = "w";
-        let counts = 4;
-
-        updateTable();
-
-        expect(counter.style.opacity).toBe("0.4");
-        expect(workPhase.style.opacity).toBe("1");
-        expect(longBreak.style.opacity).toBe("0.4");
-        expect(shortBreak.style.opacity).toBe("0.4");
-
-        //     expect(counter.innerHTML).toBe("0x");
-    });
+    //     expect(document.getElementById("time").innerHTML).toBe("00:01");
+    //   });
 });
