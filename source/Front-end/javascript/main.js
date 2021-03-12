@@ -1,12 +1,12 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Mar 2
- * Curr  Version: 2.1
+ * Last  Revised: Mar 10 
+ * Curr  Version: 3.0
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
- * Variables    : 
- * Functions    : 
+ * Variables    : workSec, sBrkSec, lBrkSec, ms, currMode, counts, countsThres, color, language, loggedIn, totalSec
+ * Functions    : setms(thisms), 
  * 
  * Next Feature : 
  *****************************************************************************/
@@ -14,6 +14,9 @@
 var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
 var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
+var ms = 10; // 1000 = 1s
+/* Test function： ms smaller, timer runs faster */
+function setms(thisms) { ms = thisms; }
 
 var currMode = "w"; // current mode. Default is working mode
 var counts = 0; // # of working periods. counts >= countsThres -> long break
@@ -25,14 +28,32 @@ var loggedIn = false;
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
 
+
+// Open Settings / Gear
 document.getElementById("gear").addEventListener("click", function() { //On click, show settings
     document.getElementById("settingsMenu").style.visibility = "visible";
     document.getElementById("main").style.visibility = "hidden";
+    document.getElementById("statisticsMenu").style.visibility = "hidden";
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
     chooseSoundEffect();
 });
 
-document.getElementById("sound-selection").addEventListener("onchange", function(){//On click, play corresponding sound
+// Open Statistics / Stats
+document.getElementById("stats").addEventListener("click", function() { //On click, show statistics
+    document.getElementById("statisticsMenu").style.visibility = "visible";
+    document.getElementById("main").style.visibility = "hidden";
+    document.getElementById("settingsMenu").style.visibility = "hidden";
+    document.getElementById("dogeCoinMenu").style.visibility = "hidden";
+    showStats();
+});
+// Close Statistics / Stats
+document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
+    document.getElementById("statisticsMenu").style.visibility = "hidden";
+    // document.getElementById("gear").click();
+    document.getElementById("main").style.visibility = "visible";
+});
+
+document.getElementById("sound-selection").addEventListener("input", function(){//On click, preview corresponding sound
     if (document.getElementById("sound-selection").value == "Bell"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
         document.getElementById("sound-effect").play();
@@ -54,18 +75,6 @@ document.getElementById("colorblindbox").addEventListener("click",function(){
     localStorage.setItem("colorblind","0");
 });
 
-document.getElementById("statistics").addEventListener("click", function() { //On click, show statistics
-    document.getElementById("statisticsMenu").style.visibility = "visible";
-    document.getElementById("settingsMenu").style.visibility = "hidden";
-    document.getElementById("dogeCoinMenu").style.visibility = "hidden";
-    showStats();
-});
-
-document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
-    document.getElementById("statisticsMenu").style.visibility = "hidden";
-    document.getElementById("gear").click()
-});
-
 document.getElementById("saveSettings").addEventListener("click", function() { //On click, hide settings
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
@@ -80,8 +89,11 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
     loadActive();
 });
 
+
+// Open Doge shop
 document.getElementById("dogecoin").addEventListener("click", function() { //On click, show Doge Store
     document.getElementById("dogeCoinMenu").style.visibility = "visible";
+    document.getElementById("statisticsMenu").style.visibility = "hidden";
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "hidden";
     saveTimeSettings();
@@ -376,7 +388,7 @@ function createTeam(name,worktime,shorttime,longtime,user){
 }
 
 function updateUser(email,name,coins,shopitems,active,colorblind){
-
+    
 }
 
 function updateCoin(user,amount){
@@ -452,6 +464,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     else{
         document.getElementById("teamsAccountLogin").innerHTML = "Login";
+        if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
     }
 });
 
@@ -504,7 +517,9 @@ function darkenChosen(){
     document.getElementById('sanfranciscobuy').style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById('dogebuy').style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById('wildjunglebuy').innerHTML = "Owned";
+    if(!english) {document.getElementById('wildjunglebuy').innerHTML = "已拥有";}
     document.getElementById('nightbuy').innerHTML = "Owned";
+    if(!english) {document.getElementById('nightbuy').innerHTML = "已拥有";}
     if (shopitems[0] == 1){
         if (english)
             document.getElementById('aquaticbuy').innerHTML = "Owned";
@@ -829,7 +844,7 @@ function changeMode() {
     else if (radioMode[1].checked) {
         document.getElementById("time").innerHTML = secToTime(sBrkSec); // time
         totalSec = sBrkSec; // seconds
-        currMode = "s"; // mode
+        currMode = "s"; // mode'
     }
     // Long break mode.
     else {
@@ -869,10 +884,10 @@ function countDown() {
         } else {
             currSec--; // decrease remaining sec by 1
             let currTime = secToTime(currSec);
-            console.log(currTime); // TEST CODE
+            //console.log(currTime); // TEST CODE
             document.getElementById("time").innerHTML = currTime; // reset HTML
         }
-    }, 10); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
+    }, ms); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
 }
 
 
@@ -1210,26 +1225,42 @@ function SwitchToChinese() {
     document.getElementById("nameText").innerHTML = "用户名";
     document.getElementById("switchToLogin").innerHTML = "去登陆";
     document.getElementById("createAcc").innerHTML = "注册";
+    // Team
+    document.getElementById("teamsLabel").innerHTML = "小队";
+    document.getElementById("invite").innerHTML = "邀请";
+    document.getElementById("createTeamButton").innerHTML = "组建";
+    document.getElementById("teamsAccountLogin").innerHTML = "登陆";
+    document.getElementById("disableText").innerHTML = "解散";
+    // Create team
+    document.getElementById("createTeamTag").innerHTML = "组建小队";
+    document.getElementById("backToTeams").innerHTML = "返回";
+    document.getElementById("teamName").innerHTML = "用户名";
+    document.getElementById("workTeam").innerHTML = "工作时间";
+    document.getElementById("shortTeam").innerHTML = "短休息时间";
+    document.getElementById("longTeam").innerHTML = "长休息时间";
+    document.getElementById("finalizeCreate").innerHTML = "创建队伍";
+    // document.getElementById("teamsLabel").innerHTML = "组队";
     //document.getElementById("welcome").innerHTML = "欢迎使用";
-    document.getElementById("workText").innerHTML = "工作时段";
-    document.getElementById("ShortBreakText").innerHTML = "较短休息时段";
-    document.getElementById("LongBreakText").innerHTML = "较长休息时段";
+    document.getElementById("workText").innerHTML = "工作";
+    document.getElementById("ShortBreakText").innerHTML = "短休息";
+    document.getElementById("LongBreakText").innerHTML = "长休息";
     document.getElementById("start-btn").innerHTML = "开始计时";
     document.getElementById("settingsTitle").innerHTML = "设置";
-    document.getElementById("WorkTimeTitle").innerHTML = "工作时段时间(分钟)：";
-    document.getElementById("ShortBreakTitle").innerHTML = "较短休息时段(分钟）：";
-    document.getElementById("LongBreakTitle").innerHTML = "较长休息时段(分钟）：";
+    document.getElementById("WorkTimeTitle").innerHTML = "工作时长（分钟）：";
+    document.getElementById("ShortBreakTitle").innerHTML = "短休息时长（分钟）：";
+    document.getElementById("LongBreakTitle").innerHTML = "长休息时长（分钟）：";
     document.getElementById("languageTitle").innerHTML = "语言：";
-    document.getElementById("LongBreakInterval").innerHTML = "较长休息时段区间：";
+    document.getElementById("LongBreakInterval").innerHTML = "每轮工作次数：";
     document.getElementById("sound-select").innerHTML = "铃声：";
-    document.getElementById("Bell").innerHTML = "闹钟";
-    document.getElementById("BigBen").innerHTML = "大本钟";
-    document.getElementById("Temple").innerHTML = "教堂（低频）";
+    document.getElementById("default-1").innerHTML = "闹钟";
+    document.getElementById("default-2").innerHTML = "大本钟";
+    document.getElementById("default-3").innerHTML = "教堂（低频）";
     document.getElementById("colorblindtitle").innerHTML = "色盲模式：";
-    document.getElementById("statistics").innerHTML = "统计";
+    // document.getElementById("statistics").innerHTML = "统计";
     document.getElementById("saveSettings").innerHTML = "保存";
     document.getElementById("statisticsTitle").innerHTML = "统计数据";
     document.getElementById("statsCong").innerHTML = "继续加油吧！";
+    document.getElementById("OKbtn-statistics").innerHTML = "好";
     alertTime = "请输入1到120的整数。"
     alertIntv = "请输入1到10的整数"
     // Doge Shop
@@ -1265,16 +1296,31 @@ function SwitchToEnglish() {
     document.getElementById("ShortBreakTitle").innerHTML = "Short Break (min):";
     document.getElementById("LongBreakTitle").innerHTML = "Long Break (min):";
     document.getElementById("languageTitle").innerHTML = "Language:";
-    document.getElementById("LongBreakInterval").innerHTML = "Long Break Interval:";
+    document.getElementById("LongBreakInterval").innerHTML = "Work Phases in 1 Round:";
     document.getElementById("sound-select").innerHTML = "Ring: ";
     document.getElementById("default-1").innerHTML = "Bell";
     document.getElementById("default-2").innerHTML = "Big Ben";
     document.getElementById("default-3").innerHTML = "Temple (Low Freq)";
     document.getElementById("colorblindtitle").innerHTML = "Color Blind Mode:";
-    document.getElementById("statistics").innerHTML = "Stats";
+    // Team
+    document.getElementById("teamsLabel").innerHTML = "Teams";
+    document.getElementById("invite").innerHTML = "Invite";
+    document.getElementById("createTeamButton").innerHTML = "Create";
+    document.getElementById("teamsAccountLogin").innerHTML = "Login";
+    document.getElementById("disableText").innerHTML = "Disable Teams";
+    // Create team
+    document.getElementById("createTeamTag").innerHTML = "Create Team";
+    document.getElementById("backToTeams").innerHTML = "Back";
+    document.getElementById("teamName").innerHTML = "Name";
+    document.getElementById("workTeam").innerHTML = "Work Time";
+    document.getElementById("shortTeam").innerHTML = "Short Break";
+    document.getElementById("longTeam").innerHTML = "Long Break";
+    document.getElementById("finalizeCreate").innerHTML = "Create";
+    // document.getElementById("statistics").innerHTML = "Stats";
     document.getElementById("saveSettings").innerHTML = "Save";
     document.getElementById("statisticsTitle").innerHTML = "Statistics";
     document.getElementById("statsCong").innerHTML = "Congrats! Keep on moving!";
+    document.getElementById("OKbtn-statistics").innerHTML = "OK";
     alertTime = "Please enter an integer between 1 and 120.";
     alertIntv = "Please enter an integer between 1 and 10.";
     // Doge Shop
@@ -1300,8 +1346,8 @@ function SwitchToEnglish() {
 
 /* ============================================================================
  * Name         : chooseSoundEffect
- * First Created: March 2 -- Bo Yang
- * Last  Revised: March 2 -- Bo Yang
+ * First Created: March 2  -- Bo Yang
+ * Last  Revised: March 2  -- Bo Yang
  * Revised Times: 1
  * 
  * Description  : Choose which sound effect to use according to user's input
@@ -1329,7 +1375,7 @@ function showStats() {
 
     let statsWork = document.getElementById("statsWork");
     if (english) {
-        statsWork.innerHTML = "You have worked " + totalWorkMins + " mins";
+        statsWork.innerHTML = "You have worked " + totalWorkMins + " mins.";
     }
     else {
         statsWork.innerHTML = "您已工作" + totalWorkMins + "分钟";
@@ -1337,9 +1383,14 @@ function showStats() {
 
     let statsBreak = document.getElementById("statsBreak");
     if (english) {
-        statsBreak.innerHTML = "You have rested " + totalBreakMins + " mins";
+        statsBreak.innerHTML = "And rested " + totalBreakMins + " mins.";
     }
     else {
         statsBreak.innerHTML = "您已休息" + totalBreakMins + "分钟";
     }
+}
+
+function cypressSetCoin(amount){
+    localStorage.setItem("coin",amount);
+    document.getElementById("cointext").innerHTML = amount;
 }
