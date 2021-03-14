@@ -80,18 +80,20 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
 function loadUserSettings(){
     if (localStorage.getItem("username") != null) {
         firebase.auth().signInWithEmailAndPassword(localStorage.getItem("username"),localStorage.getItem("password"))
-    .then((userCredential) => {
-        let user = userCredential.user;
-        document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
-        document.getElementById("loginNotification").style.visibility = "hidden";
-        document.getElementById("greywrapper").style.visibility = "hidden";
-        document.getElementById("teamsAccountLogin").innerHTML = "Logout";
-    }).catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        localStorage.removeItem("username");
-        localStorage.removeItem("password");
-    });
+        .then((userCredential) => {
+            let user = userCredential.user;
+            document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
+            document.getElementById("loginNotification").style.visibility = "hidden";
+            document.getElementById("greywrapper").style.visibility = "hidden";
+            document.getElementById("teamsAccountLogin").innerHTML = "Logout";
+        }).catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            localStorage.removeItem("username");
+            localStorage.removeItem("password");
+            document.getElementById("teamsAccountLogin").innerHTML = "Login";
+            if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
+        });
     }
     else{ //Not logged in
         document.getElementById("teamsAccountLogin").innerHTML = "Login";
@@ -101,20 +103,23 @@ function loadUserSettings(){
 
 document.getElementById("proceedLogin").addEventListener("click", function() { //Login Press
     document.getElementById("invalidLogin").style.visibility = "hidden";
+    document.getElementById("loadingNotif").style.visibility = "visible";
     firebase.auth().signInWithEmailAndPassword(document.getElementById("user").value, document.getElementById("pass").value)
-  .then((userCredential) => {
-    var user = userCredential.user;
-    localStorage.setItem("username", document.getElementById("user").value);
-    localStorage.setItem("password",document.getElementById("pass").value);
-    document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
-    document.getElementById("loginMain").style.visibility = "hidden";
-    document.getElementById("greywrapper").style.visibility = "hidden";
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    document.getElementById("invalidLogin").style.visibility = "visible";
-  });
+    .then((userCredential) => {
+        var user = userCredential.user;
+        localStorage.setItem("username", document.getElementById("user").value);
+        localStorage.setItem("password",document.getElementById("pass").value);
+        document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
+        document.getElementById("loginMain").style.visibility = "hidden";
+        document.getElementById("greywrapper").style.visibility = "hidden";
+        document.getElementById("loadingNotif").style.visibility = "hidden";
+    })
+    .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        document.getElementById("invalidLogin").style.visibility = "visible";
+        document.getElementById("loadingNotif").style.visibility = "hidden";
+    });
 });
 
 document.getElementById("teamsAccountLogin").addEventListener("click", function() { //Login/Logout Button
@@ -155,10 +160,17 @@ function createTeam(name,worktime,shorttime,longtime,user){
 }
 
 function updateUser(email,name,coins,shopitems,active,colorblind){
-    
+    var postData = {
+        author: username,
+        uid: uid,
+        body: body,
+        title: title,
+        starCount: 0,
+        authorPic: picture
+    };
 }
 
-function getUserData(userEmail){
+function getUserData(userEmail){ //Working with GitHub Pages
     database.child("users").child(userEmail).get().then(function(snapshot) {
         if (snapshot.exists()) {
           console.log(snapshot.val());

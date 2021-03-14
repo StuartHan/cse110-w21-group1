@@ -181,11 +181,21 @@ fieldset {
     align-self: center;
     align-items: center;
     justify-items: center;
-    grid-template-rows: 20% 20% 15% 40%;
+    grid-template-rows: 20% 20% 15% 30% 10%;
     grid-template-columns: 50% 50%;
     min-height: 200px;
     min-width: 250px;
 }
+}
+
+#loadingNotif{
+    grid-row: 5;
+    grid-column: 1 / span 2;
+    visibility: hidden;
+    font-size: max(1vw, 2vh);
+    color:black;
+    justify-self: center;
+    align-self: center;
 }
 
 #invalidLogin{
@@ -288,7 +298,7 @@ fieldset {
     align-self: center;
     align-items: center;
     justify-items: center;
-    grid-template-rows: 20% 15% 15% 15% 20%;
+    grid-template-rows: 20% 15% 15% 15% 20% 10%;
     grid-template-columns: 50% 50%;
     min-height: 200px;
     min-width: 250px;
