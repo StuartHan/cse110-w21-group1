@@ -156,7 +156,7 @@ fieldset {
     align-self: center;
     align-items: center;
     justify-items: center;
-    grid-template-rows: 20% 20% 15% 40%;
+    grid-template-rows: 20% 20% 15% 30% 10%;
     grid-template-columns: 50% 50%;
     min-height: 200px;
     min-width: 250px;
@@ -181,11 +181,31 @@ fieldset {
     align-self: center;
     align-items: center;
     justify-items: center;
-    grid-template-rows: 20% 20% 15% 40%;
+    grid-template-rows: 20% 20% 15% 30% 10%;
     grid-template-columns: 50% 50%;
     min-height: 200px;
     min-width: 250px;
 }
+}
+
+#loadingNotif{
+    grid-row: 5;
+    grid-column: 1 / span 2;
+    visibility: hidden;
+    font-size: max(1vw, 2vh);
+    color:black;
+    justify-self: center;
+    align-self: center;
+}
+
+#invalidLogin{
+    grid-row: 5;
+    grid-column: 1 / span 2;
+    visibility: hidden;
+    font-size: max(1vw, 2vh);
+    color:red;
+    justify-self: center;
+    align-self: center;
 }
 
 #loginMain > h1{ /* Login */
@@ -278,7 +298,7 @@ fieldset {
     align-self: center;
     align-items: center;
     justify-items: center;
-    grid-template-rows: 20% 15% 15% 15% 20%;
+    grid-template-rows: 20% 15% 15% 15% 20% 10%;
     grid-template-columns: 50% 50%;
     min-height: 200px;
     min-width: 250px;
@@ -303,7 +323,7 @@ fieldset {
     align-self: center;
     align-items: center;
     justify-items: center;
-    grid-template-rows: 20% 15% 15% 15% 20%;
+    grid-template-rows: 20% 15% 15% 15% 20% 10%;
     grid-template-columns: 50% 50%;
     min-height: 200px;
     min-width: 250px;
@@ -380,7 +400,15 @@ fieldset {
     font-family: 'Kanit', sans-serif;
 }
 
-
+#createError{
+    grid-row: 6;
+    color:red;
+    grid-column: 1 / span 2;
+    justify-self: center;
+    font-size: max(.7vw,1.5vh);
+    align-self: center;
+    visibility: hidden;
+}
 
 /* ============================================================================
  * Header/Navigation Bar
@@ -549,6 +577,7 @@ header>h1 {
     background-color: rgba(256,256,256,1); /* Revised -Stuart */
     /* margin-top:5%; */ /* Revised -Stuart */
     margin-left: 5%;
+    margin-top: 3%;
     border-radius: 10px;
     height: 40%;
     width: 60%;
@@ -569,6 +598,7 @@ header>h1 {
     background-color: rgba(256,256,256,1); /* Revised -Stuart */
     /* margin-top:5%; */ /* Revised -Stuart */
     margin-left: 5%;
+    margin-top: 3%;
     border-radius: 10px;
     height: 40%;
     width: 100%; /* Revised -Stuart */
@@ -675,6 +705,7 @@ header>h1 {
     background-color: rgba(256,256,256,1); /* Revised -Stuart */
     /* margin-top:5%; */ /* Revised -Stuart */
     margin-left: 5%;
+    margin-top: 3%;
     border-radius: 10px;
     height: 40%;
     width: 60%;
@@ -694,6 +725,7 @@ header>h1 {
     grid-column: 1;
     background-color: rgba(256,256,256,1); /* Revised -Stuart */
     /* margin-top:5%; */ /* Revised -Stuart */
+    margin-top: 3%;
     margin-left: 5%;
     border-radius: 10px;
     height: 40%;
