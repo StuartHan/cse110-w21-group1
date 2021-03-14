@@ -1,23 +1,24 @@
 /******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
- * Last  Revised: Mar 10 
+ * Last  Revised: Mar 14 
  * Curr  Version: 3.0
  * 
- * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
- * Description in CN: (改变模式) -> 启用计数器 -> 倒数 -> 自动改变模式 -> 改变模式
- * Variables    : workSec, sBrkSec, lBrkSec, ms, currMode, counts, countsThres, color, language, loggedIn, totalSec
- * Functions    : setms(thisms), 
- * 
- * Next Feature : 
+ * INDEX:
+ * #1 Global Variables
+ * #2 User information load/store
+ * #3 Teams feature create/invite/remove
+ * #4 Open/Close menus, settings, store, etc.
+ * #5 Doge Store
+ * #6 Login Page/Create Account
  *****************************************************************************/
 
-
-//Global Variables
+//#1 Global Variables
 var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
 var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
 var ms = 10; // 1000 = 1s
+
 /* Test function： ms smaller, timer runs faster */
 function setms(thisms) { ms = thisms; }
 
@@ -47,7 +48,7 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
  var totalLBrkCount = 0;
 
 /* ============================================================================
- * Name         : DOMContentLoaded
+ * Name         : DOMContentLoaded (#1)
  * First Created: March 2 -- Suk Chan (Kevin) Lee
  * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
  * 
@@ -78,6 +79,19 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
     darkenChosen();
 });
 
+// #2 User information load/store
+/* ============================================================================
+ * Name         : loadUserSettings()
+ * First Created: March 10 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
+ * Revised Times: 3
+ * 
+ * Description  : If logged in, load user settings into local storage and change
+ *      button innerHTML accordingly.
+ * Description in CN: 
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
 function loadUserSettings(){
     if (localStorage.getItem("username") != null) {
         firebase.auth().signInWithEmailAndPassword(localStorage.getItem("username"),localStorage.getItem("password"))
@@ -102,6 +116,18 @@ function loadUserSettings(){
     }
 }
 
+/* ============================================================================
+ * Name         : proceedLogin Event Listener
+ * First Created: March 10 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
+ * Revised Times: 3
+ * 
+ * Description  : If login is valid, log in user and load settings into local storage.
+ *      If invalid, throw error message onto interface.
+ * Description in CN: 
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
 document.getElementById("proceedLogin").addEventListener("click", function() { //Login Press
     document.getElementById("invalidLogin").style.visibility = "hidden";
     document.getElementById("loadingNotif").style.visibility = "visible";
@@ -123,6 +149,69 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
     });
 });
 
+/* ============================================================================
+ * Name         : createUserData(email,name,coins,shopitems,active,colorblind)
+ * First Created: March 10 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
+ * Revised Times: 1
+ * 
+ * Description  : Helper function to create user data in Google Firebase Auth
+ * Description in CN: 
+ * Parameter    : email - email of user
+ *                name - name of user
+ *                coins - amount of coins user has
+ *                shopitems - items user has already bought
+ *                active - active background
+ *                colorblind - if user has enabled colorblind mode
+ * Return       : N/A
+ =========================================================================== */
+ function createUserData(email,name,coins,shopitems,active,colorblind){
+    firebase.database().ref('users/'+email).set({
+        username: name,
+        coin: coins,
+        shopitems: shopitems,
+        active: active,
+        colorblind: colorblind,
+        teams: {}
+    });
+}
+
+/* ============================================================================
+ * Name         : getUserData(userEmail)
+ * First Created: March 10 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
+ * Revised Times: 1
+ * 
+ * Description  : Helper function to get user data in Google Firebase Auth
+ * Description in CN: 
+ * Parameter    : userEmail - email of user
+ * Return       : N/A
+ =========================================================================== */
+function getUserData(userEmail){ //Working with GitHub Pages
+    database.child("users").child(userEmail).get().then(function(snapshot) {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+        }
+        else {
+          console.log("No data available");
+        }
+      }).catch(function(error) {
+        console.error(error);
+    });
+}
+
+//#3 Teams Feature
+/* ============================================================================
+ * Name         : teamsAccountLogin Event Listener
+ * First Created: March 10 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
+ * Revised Times: 1
+ * 
+ * Description  : Logout user if logged in, otherwise direct to login screen.
+ * Description in CN: 
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
 document.getElementById("teamsAccountLogin").addEventListener("click", function() { //Login/Logout Button
     if (loggedIn){//Logout Operation, DON'T remove accessibility settings
         document.getElementById("welcome").innerHTML = "Welcome Guest!";
@@ -138,28 +227,48 @@ document.getElementById("teamsAccountLogin").addEventListener("click", function(
     }
 });
 
-function createUserData(email,name,coins,shopitems,active,colorblind){
-    firebase.database().ref('users/'+email).set({
-        username: name,
-        coin: coins,
-        shopitems: shopitems,
-        active: active,
-        colorblind: colorblind,
-        teams: {}
-    });
 
-}
 
+/* ============================================================================
+ * Name         : createTeam(name,worktime,shorttime,longtime,user)
+ * First Created: March 10 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
+ * Revised Times: 1
+ * 
+ * Description  : Helper function to create team data in Google Firebase Auth
+ * Description in CN: 
+ * Parameter    : name - name of team
+ *                worktime - work time length of team
+ *                shorttime - short break time length of team
+ *                longtime - long break time length of team
+ *                user - users in team
+ * Return       : N/A
+ =========================================================================== */
 function createTeam(name,worktime,shorttime,longtime,user){
     firebase.database().ref('teams/'+name).set({
         worktime: worktime,
         shorttime: shorttime,
         longtime: longtime,
-        admins: {user1: user},
+        admins: {user1: user}, //Person who created team is admin
         users: {user1: user}
     });
 }
 
+/* ============================================================================
+ * Name         : createTeam(name,worktime,shorttime,longtime,user)
+ * First Created: March 10 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
+ * Revised Times: 1
+ * 
+ * Description  : Helper function to create team data in Google Firebase Auth
+ * Description in CN: 
+ * Parameter    : name - name of team
+ *                worktime - work time length of team
+ *                shorttime - short break time length of team
+ *                longtime - long break time length of team
+ *                user - users in team
+ * Return       : N/A
+ =========================================================================== */
 function updateUser(email,name,coins,shopitems,active,colorblind){
     var postData = {
         author: username,
@@ -171,24 +280,12 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
     };
 }
 
-function getUserData(userEmail){ //Working with GitHub Pages
-    database.child("users").child(userEmail).get().then(function(snapshot) {
-        if (snapshot.exists()) {
-          console.log(snapshot.val());
-        }
-        else {
-          console.log("No data available");
-        }
-      }).catch(function(error) {
-        console.error(error);
-    });
-}
-
 function updateCoin(user,amount){
     let string = '/users/' + user +'/coin'
     firebase.database().ref().update({string : amount})
 }
 
+// #4 Open/Close menus, settings, store, etc.
 
 // Open Settings / Gear
 document.getElementById("gear").addEventListener("click", function() { //On click, show settings
@@ -215,6 +312,7 @@ document.getElementById("OKbtn-statistics").addEventListener("click", function()
     document.getElementById("main").style.visibility = "visible";
 });
 
+//Choose sound
 document.getElementById("sound-selection").addEventListener("input", function(){//On click, preview corresponding sound
     if (document.getElementById("sound-selection").value == "Bell"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
@@ -230,6 +328,7 @@ document.getElementById("sound-selection").addEventListener("input", function(){
     }
 });
 
+//Select colorblind option
 document.getElementById("colorblindbox").addEventListener("click",function(){
     if (document.getElementById("colorblindbox").checked)
         localStorage.setItem("colorblind","1");
@@ -237,6 +336,7 @@ document.getElementById("colorblindbox").addEventListener("click",function(){
     localStorage.setItem("colorblind","0");
 });
 
+//Save and load Settings info
 document.getElementById("saveSettings").addEventListener("click", function() { //On click, hide settings
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
@@ -252,6 +352,7 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
 });
 
 
+// #5 Doge Shop
 // Open Doge shop
 document.getElementById("dogecoin").addEventListener("click", function() { //On click, show Doge Store
     document.getElementById("dogeCoinMenu").style.visibility = "visible";
@@ -261,7 +362,8 @@ document.getElementById("dogecoin").addEventListener("click", function() { //On 
     saveTimeSettings();
 });
 
-document.getElementById("dogeSave").addEventListener("click", function() { //On click, hide Doge Store
+//On click, hide Doge Store
+document.getElementById("dogeSave").addEventListener("click", function() {
     document.getElementById("insufficientText").style.visibility = "hidden";
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
@@ -269,7 +371,8 @@ document.getElementById("dogeSave").addEventListener("click", function() { //On 
     darkenChosen();
 });
 
-document.getElementById("wildjungle").addEventListener("click", function() { //On click, preview the Jungle Theme
+//On click, preview the Jungle Theme
+document.getElementById("wildjungle").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
         document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbwildjungle.jpg")';
@@ -278,7 +381,8 @@ document.getElementById("wildjungle").addEventListener("click", function() { //O
     turnLight();
 });
 
-document.getElementById("wildjunglebuy").addEventListener("click", function() { //On click, switch to Jungle Theme
+//On click, switch to Jungle Theme
+document.getElementById("wildjunglebuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     setActive(0);
     if (document.getElementById("colorblindbox").checked)
@@ -289,7 +393,8 @@ document.getElementById("wildjunglebuy").addEventListener("click", function() { 
     darkenChosen();
 });
 
-document.getElementById("night").addEventListener("click", function() { //On click, preview night Theme
+//On click, preview night Theme
+document.getElementById("night").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
         document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbnight.jpg")';
@@ -298,7 +403,8 @@ document.getElementById("night").addEventListener("click", function() { //On cli
     turnLight();
 });
 
-document.getElementById("nightbuy").addEventListener("click", function() { //On click, switch to night Theme
+//On click, switch to night Theme
+document.getElementById("nightbuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     setActive(1);
     if (document.getElementById("colorblindbox").checked)
@@ -309,7 +415,8 @@ document.getElementById("nightbuy").addEventListener("click", function() { //On 
     darkenChosen();
 });
 
-document.getElementById("aquatic").addEventListener("click", function() {//On click, preview Aquatic Theme
+//On click, preview Aquatic Theme
+document.getElementById("aquatic").addEventListener("click", function() {
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
         document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbaquatic.jpg")';
@@ -318,7 +425,8 @@ document.getElementById("aquatic").addEventListener("click", function() {//On cl
     turnLight();
 });
 
-document.getElementById("aquaticbuy").addEventListener("click", function() { //On click, switch to Aquatic Theme if enough coins
+//On click, switch to Aquatic Theme if enough coins
+document.getElementById("aquaticbuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[0] == '1'){
         if (document.getElementById("colorblindbox").checked)
@@ -344,7 +452,8 @@ document.getElementById("aquaticbuy").addEventListener("click", function() { //O
     darkenChosen();
 });
 
-document.getElementById("sanfrancisco").addEventListener("click", function() { //On click, preview San Francisco Theme
+//On click, preview San Francisco Theme
+document.getElementById("sanfrancisco").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
         document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbsanfrancisco.jpg")';
@@ -353,7 +462,8 @@ document.getElementById("sanfrancisco").addEventListener("click", function() { /
     turnLight();
 });
 
-document.getElementById("sanfranciscobuy").addEventListener("click", function() { //On click, switch to San Francisco Theme if enough coins
+//On click, switch to San Francisco Theme if enough coins
+document.getElementById("sanfranciscobuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[1] == '1'){
         if (document.getElementById("colorblindbox").checked)
@@ -379,7 +489,8 @@ document.getElementById("sanfranciscobuy").addEventListener("click", function() 
     darkenChosen();
 });
 
-document.getElementById("dogeland").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+//On click, preview Doge Theme
+document.getElementById("dogeland").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
         document.getElementById("body").style.backgroundImage = 'url("source/Front-end/css/assets/cbgod.jpg")';
@@ -388,7 +499,8 @@ document.getElementById("dogeland").addEventListener("click", function() { //On 
     turnLight();
 });
 
-document.getElementById("dogebuy").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+//On click, switch to Doge Theme if enough coins
+document.getElementById("dogebuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[2] == '1'){
         if (document.getElementById("colorblindbox").checked)
@@ -412,17 +524,21 @@ document.getElementById("dogebuy").addEventListener("click", function() { //On c
     darkenChosen();
 });
 
-document.getElementById("guestCont").addEventListener("click", function() { //Continue as guest
+//#6 Login Page/Create Account
+//Continue as guest
+document.getElementById("guestCont").addEventListener("click", function() {
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("greywrapper").style.visibility = "hidden";
 });
 
-document.getElementById("loginCont").addEventListener("click", function() { //Continue to login pagee
+//Continue to login page
+document.getElementById("loginCont").addEventListener("click", function() { 
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("loginMain").style.visibility = "visible";
 });
 
-document.getElementById("quitLogin").addEventListener("click", function() { //Quit Login Page
+//Quit Login Page
+document.getElementById("quitLogin").addEventListener("click", function() { 
     document.getElementById("loginMain").style.visibility = "hidden";
     document.getElementById("greywrapper").style.visibility = "hidden";
     document.getElementById("invalidLogin").style.visibility = "hidden";
@@ -498,10 +614,7 @@ document.getElementById("switchToLogin").addEventListener("click", function() { 
 });
 
 document.getElementById("profilepic").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    //if (document.getElementById("teams").style.visibility == "hidden")
         document.getElementById("teams").style.visibility = "visible";
-    //else if (document.getElementById("teams").style.visibility == "visible")
-    //    document.getElementById("teams").style.visibility = "hidden";
 });
 
 document.getElementById("teamsExit").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
@@ -542,64 +655,7 @@ function incrementCoin(amount){
     document.getElementById("cointext").innerHTML = newNum;
 }
 
-/* ============================================================================
- * Name         : DOMContentLoaded
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : When the DOM Content is loaded, if it is a user's first time visiting
- *                the website, load in the coin, shopitems, and active localStorage items.
- *                Otherwise, load the most recently used background and coins.
- * Description in CN: 加载DOM内容后，如果这是用户第一次访问网站，加载硬币，购物物品和有效的本地存储
- *                    物品。否则，加载最近使用的背景和硬币。
- =========================================================================== */
-window.addEventListener('DOMContentLoaded', () => {
-    window.localStorage.removeItem("visited");
-    if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
-        window.localStorage.setItem('coin', "900");
-        window.localStorage.setItem('shopitems', "000"); //Bit based indexing
-        window.localStorage.setItem('active', "10000");
-        window.localStorage.setItem('colorblind', "0");
-        document.getElementById("cointext").innerHTML = "900";
-        window.localStorage.setItem('visited',"true");
-    }
-    else{
-        document.getElementById("cointext").innerHTML = window.localStorage.getItem('coin');
-        if (localStorage.getItem("colorblind") == "1")
-            document.getElementById("colorblindbox").checked = true;
-        if (localStorage.getItem("visited") == "true"){
-            document.getElementById("loginNotification").style.visibility = "hidden";
-            document.getElementById("greywrapper").style.visibility = "hidden";
-        }
-    }
-    /*let items = window.localStorage.getItem('shopitems');
-    if (items[0] == 1)
-        document.getElementById('aquaticcost').innerHTML = "Owned";
-    if (items[1] == 1)
-        document.getElementById('sanfranciscocost').innerHTML = "Owned";
-    if (items[2] == 1)
-        document.getElementById('dogecost').innerHTML = "Owned";*/
-    loadActive();
-    darkenChosen();
-    if (localStorage.getItem("username") != null) {
-        firebase.auth().signInWithEmailAndPassword(localStorage.getItem("username"),localStorage.getItem("password"))
-    .then((userCredential) => {
-        var user = userCredential.user;
-        document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
-        document.getElementById("loginNotification").style.visibility = "hidden";
-        document.getElementById("greywrapper").style.visibility = "hidden";
-        document.getElementById("teamsAccountLogin").innerHTML = "Logout";
-    });
-    }
-    else{
-        document.getElementById("teamsAccountLogin").innerHTML = "Login";
-        if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
-    }
-});
-
-/* ============================================================================
-=======
+/* ==========================================================================
  * Name         : loadActive()
  * First Created: March 2 -- Suk Chan (Kevin) Lee
  * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
