@@ -12,6 +12,7 @@
  * #5 Doge Store
  * #6 Login Page/Create Account
  * #7 Timer functions/helper functions
+ * #8 UI Helper functions
  *****************************************************************************/
 
 //#1 Global Variables
@@ -201,6 +202,109 @@ function getUserData(userEmail){ //Working with GitHub Pages
     });
 }
 
+function updateUser(email,name,coins,shopitems,active,colorblind){
+    var postData = {
+        author: username,
+        uid: uid,
+        body: body,
+        title: title,
+        starCount: 0,
+        authorPic: picture
+    };
+}
+
+/* ============================================================================
+ * Name         : createAcc Event Listener
+ * First Created: March 10 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
+ * Revised Times: 1
+ * 
+ * Description  : Helper function to create user data in Google Firebase Auth and
+ *      store data in Google Realtime database.
+ *      Restrictions currently are that passwords >= 8 characters, names are <= 15
+ *      characters, and correct email format.
+ * Description in CN: 
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
+ document.getElementById("createAcc").addEventListener("click", function() { //Create User
+    if ((String)(document.getElementById("emailCreate").value).includes("@") && (String)(document.getElementById("emailCreate").value).includes(".")
+    && (String)(document.getElementById("nameCreate").value).length <= 15 && (String)(document.getElementById("passCreate").value).length >= 8){
+        document.getElementById("createError").style.visibility = "hidden";
+        firebase.auth().createUserWithEmailAndPassword(
+            document.getElementById("emailCreate").value, document.getElementById("passCreate").value)
+        .then((userCredential) => {
+            var user = userCredential.user;
+            user.updateProfile({
+                displayName: document.getElementById("nameCreate").value
+            });
+            createUserData(
+                document.getElementById("emailCreate").value,
+                document.getElementById("nameCreate").value,
+                localStorage.getElementById('coin'),
+                localStorage.getElementById('shopitems'),
+                localStorage.getElementById('active'),
+                localStorage.getElementById('colorblind'),
+            );
+            localStorage.setItem("username", document.getElementById("emailCreate").value);
+            localStorage.setItem("password",document.getElementById("passCreate").value);
+            document.getElementById("welcome").innerHTML = "Welcome "+document.getElementById("nameCreate").value+"!";
+            //if (language == "CN") {document.getElementById("welcome").innerHTML = "欢迎使用， "+document.getElementById("nameCreate").value+"!";} // change language 
+            document.getElementById("greywrapper").style.visibility = "hidden";
+            document.getElementById("accountCreation").style.visibility = "hidden";
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ..
+        });
+    }
+    else if (!(String)(document.getElementById("emailCreate").value).includes("@") || !(String)(document.getElementById("emailCreate").value).includes(".")){
+        document.getElementById("createError").innerHTML = "Invalid Email";
+        document.getElementById("createError").style.visibility = "visible";
+    }
+    else if ((String)(document.getElementById("nameCreate").value).length > 15) {
+        document.getElementById("createError").innerHTML = "Names must be at most 15 characters";
+        document.getElementById("createError").style.visibility = "visible";
+    }
+    else if ((String)(document.getElementById("passCreate").value).length < 8) {
+        document.getElementById("createError").innerHTML = "Password must be at least 8 characters";
+        document.getElementById("createError").style.visibility = "visible";
+    }
+});
+
+function updateCoin(user,amount){
+    let string = '/users/' + user +'/coin'
+    firebase.database().ref().update({string : amount})
+}
+
+//On click, close create account window
+document.getElementById("quitCreate").addEventListener("click", function() {
+    document.getElementById("greywrapper").style.visibility = "hidden";
+    document.getElementById("accountCreation").style.visibility = "hidden";
+    document.getElementById("createError").style.visibility = "hidden";
+});
+
+//On click, open main account login window
+document.getElementById("notifCreate").addEventListener("click", function() { 
+    document.getElementById("loginNotification").style.visibility = "hidden";
+    document.getElementById("accountCreation").style.visibility = "visible";
+});
+
+//On click, open create account window
+document.getElementById("createAccInstead").addEventListener("click", function() { 
+    document.getElementById("loginMain").style.visibility = "hidden";
+    document.getElementById("accountCreation").style.visibility = "visible";
+    document.getElementById("invalidLogin").style.visibility = "hidden";
+});
+
+//On click, open login account window
+document.getElementById("switchToLogin").addEventListener("click", function() { 
+    document.getElementById("loginMain").style.visibility = "visible";
+    document.getElementById("accountCreation").style.visibility = "hidden";
+    document.getElementById("createError").style.visibility = "hidden";
+});
+
 //#3 Teams Feature
 /* ============================================================================
  * Name         : teamsAccountLogin Event Listener
@@ -270,21 +374,34 @@ function createTeam(name,worktime,shorttime,longtime,user){
  *                user - users in team
  * Return       : N/A
  =========================================================================== */
-function updateUser(email,name,coins,shopitems,active,colorblind){
-    var postData = {
-        author: username,
-        uid: uid,
-        body: body,
-        title: title,
-        starCount: 0,
-        authorPic: picture
-    };
-}
 
-function updateCoin(user,amount){
-    let string = '/users/' + user +'/coin'
-    firebase.database().ref().update({string : amount})
-}
+//On click, open teams account window
+document.getElementById("profilepic").addEventListener("click", function() { 
+        document.getElementById("teams").style.visibility = "visible";
+});
+
+//On click, close teams account window
+document.getElementById("teamsExit").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "hidden";
+});
+
+//On click, close create team window
+document.getElementById("quitCreateTeam").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("createTeam").style.visibility = "hidden";
+});
+
+//On click, open create team window
+document.getElementById("createTeamButton").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("createTeam").style.visibility = "visible";
+});
+
+//On click, go back to teams window
+document.getElementById("backToTeams").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "visible";
+    document.getElementById("createTeam").style.visibility = "hidden";
+});
 
 // #4 Open/Close menus, settings, store, etc.
 
@@ -549,113 +666,6 @@ document.getElementById("quitLogin").addEventListener("click", function() {
     document.getElementById("loginMain").style.visibility = "hidden";
     document.getElementById("greywrapper").style.visibility = "hidden";
     document.getElementById("invalidLogin").style.visibility = "hidden";
-});
-
-/* ============================================================================
- * Name         : createAcc Event Listener
- * First Created: March 10 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
- * Revised Times: 1
- * 
- * Description  : Helper function to create team data in Google Firebase Auth
- * Description in CN: 
- * Parameter    : name - name of team
- *                worktime - work time length of team
- *                shorttime - short break time length of team
- *                longtime - long break time length of team
- *                user - users in team
- * Return       : N/A
- =========================================================================== */
-document.getElementById("createAcc").addEventListener("click", function() { //Create User
-    if ((String)(document.getElementById("emailCreate").value).includes("@") && (String)(document.getElementById("emailCreate").value).includes(".")
-    && (String)(document.getElementById("nameCreate").value).length <= 15 && (String)(document.getElementById("passCreate").value).length >= 8){
-        document.getElementById("createError").style.visibility = "hidden";
-        firebase.auth().createUserWithEmailAndPassword(
-            document.getElementById("emailCreate").value, document.getElementById("passCreate").value)
-        .then((userCredential) => {
-            var user = userCredential.user;
-            user.updateProfile({
-                displayName: document.getElementById("nameCreate").value
-            });
-            createUserData(
-                document.getElementById("emailCreate").value,
-                document.getElementById("nameCreate").value,
-                localStorage.getElementById('coin'),
-                localStorage.getElementById('shopitems'),
-                localStorage.getElementById('active'),
-                localStorage.getElementById('colorblind'),
-            );
-            localStorage.setItem("username", document.getElementById("emailCreate").value);
-            localStorage.setItem("password",document.getElementById("passCreate").value);
-            document.getElementById("welcome").innerHTML = "Welcome "+document.getElementById("nameCreate").value+"!";
-            //if (language == "CN") {document.getElementById("welcome").innerHTML = "欢迎使用， "+document.getElementById("nameCreate").value+"!";} // change language 
-            document.getElementById("greywrapper").style.visibility = "hidden";
-            document.getElementById("accountCreation").style.visibility = "hidden";
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ..
-        });
-    }
-    else if (!(String)(document.getElementById("emailCreate").value).includes("@") || !(String)(document.getElementById("emailCreate").value).includes(".")){
-        document.getElementById("createError").innerHTML = "Invalid Email";
-        document.getElementById("createError").style.visibility = "visible";
-    }
-    else if ((String)(document.getElementById("nameCreate").value).length > 15) {
-        document.getElementById("createError").innerHTML = "Names must be at most 15 characters";
-        document.getElementById("createError").style.visibility = "visible";
-    }
-    else if ((String)(document.getElementById("passCreate").value).length < 8) {
-        document.getElementById("createError").innerHTML = "Password must be at least 8 characters";
-        document.getElementById("createError").style.visibility = "visible";
-    }
-});
-
-document.getElementById("quitCreate").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    document.getElementById("greywrapper").style.visibility = "hidden";
-    document.getElementById("accountCreation").style.visibility = "hidden";
-    document.getElementById("createError").style.visibility = "hidden";
-});
-
-document.getElementById("notifCreate").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    document.getElementById("loginNotification").style.visibility = "hidden";
-    document.getElementById("accountCreation").style.visibility = "visible";
-});
-
-document.getElementById("createAccInstead").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    document.getElementById("loginMain").style.visibility = "hidden";
-    document.getElementById("accountCreation").style.visibility = "visible";
-    document.getElementById("invalidLogin").style.visibility = "hidden";
-});
-
-document.getElementById("switchToLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    document.getElementById("loginMain").style.visibility = "visible";
-    document.getElementById("accountCreation").style.visibility = "hidden";
-    document.getElementById("createError").style.visibility = "hidden";
-});
-
-document.getElementById("profilepic").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-        document.getElementById("teams").style.visibility = "visible";
-});
-
-document.getElementById("teamsExit").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    document.getElementById("teams").style.visibility = "hidden";
-});
-
-document.getElementById("quitCreateTeam").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    document.getElementById("teams").style.visibility = "hidden";
-    document.getElementById("createTeam").style.visibility = "hidden";
-});
-
-document.getElementById("createTeamButton").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    document.getElementById("teams").style.visibility = "hidden";
-    document.getElementById("createTeam").style.visibility = "visible";
-});
-
-document.getElementById("backToTeams").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    document.getElementById("teams").style.visibility = "visible";
-    document.getElementById("createTeam").style.visibility = "hidden";
 });
 
 /* ============================================================================
@@ -1202,6 +1212,8 @@ function timeToSec(currTime) {
     return (minInt * 60 + secInt);
 }
 
+
+// #8 UI Helper functions
 /* ============================================================================
  * Name         : drainColor()
  * First Created: Feb 15 -- Suk Chan Lee
@@ -1327,10 +1339,17 @@ document.getElementById("long-break-interval").addEventListener("input", functio
     }
 });
 
-
-/* --------------------------------------------------------------------------
- * Read & update Settings
- --------------------------------------------------------------------------- */
+/* ============================================================================
+ * Name         : saveTimeSettings()
+ * First Created: Mar 5  -- Yichen Han
+ * Last  Revised: Mar 5  -- Yichen Han
+ * Revised Times: 1
+ * 
+ * Description  : Save time settings and update them to local Storage.
+ * Description in CN
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
 function saveTimeSettings() {
     //Work & Break time
     // get values
@@ -1486,6 +1505,16 @@ function SwitchToChinese() {
     document.getElementById("insufficientText").innerHTML = "金币不足";
 }
 
+/* ============================================================================
+ * Name         : SwitchToEnglish()
+ * First Created: Feb 27 -- Jiaming Li
+ * Last  Revised: Mar 5  -- Yichen Han -- Add new translations
+ * Revised Times: 3
+ * 
+ * Description  : Switch the language of content based on the option selected
+ * Discrip in CN: 根据选择的选项切换内容的语言
+ * Type         : Helper Function.
+ =========================================================================== */
 function SwitchToEnglish() {
     language = "EN";
     storage["language"] = "EN";
@@ -1573,7 +1602,16 @@ function chooseSoundEffect(){
     
 }
 
-
+/* ============================================================================
+ * Name         : showStats()
+ * First Created: March 2  -- Bo Yang
+ * Last  Revised: March 2  -- Bo Yang
+ * Revised Times: 1
+ * 
+ * Description  : Show the statistics window
+ * Description in CN：
+ * Type         : Helper Function.
+ =========================================================================== */
 function showStats() {
     let english = document.getElementById("language-form").value == "English";
 
