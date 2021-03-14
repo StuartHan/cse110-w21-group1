@@ -12,6 +12,8 @@
  * Next Feature : 
  *****************************************************************************/
 
+
+//Global Variables
 var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
 var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
@@ -28,6 +30,152 @@ var loggedIn = false;
 
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
+
+/* ============================================================================
+ * First Created: Mar 2  -- Yichen Han
+ * Last  Revised: Mar 2  -- Yichen Han
+ * Revised Times: 1
+ * 
+ * Description  : Variables shown in Statistics.
+ * Discrip in CN: 统计窗口中展示的变量。
+ * Type         : Global Variables.
+ =========================================================================== */
+ var totalWorkMins  = 0;
+ var totalBreakMins = 0;
+ var totalWorkCount = 0;
+ var totalSBrkCount = 0;
+ var totalLBrkCount = 0;
+
+/* ============================================================================
+ * Name         : DOMContentLoaded
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * 
+ * Description  : When the DOM Content is loaded, if it is a user's first time visiting
+ *                the website, load in the coin, shopitems, and active localStorage items.
+ *                Otherwise, load the most recently used background and coins.
+ =========================================================================== */
+ window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
+        window.localStorage.setItem('coin', "900");
+        window.localStorage.setItem('shopitems', "000"); //Bit based indexing
+        window.localStorage.setItem('active', "10000");
+        window.localStorage.setItem('colorblind', "0");
+        document.getElementById("cointext").innerHTML = "900";
+        window.localStorage.setItem('visited',"true");
+    }
+    else{
+        document.getElementById("cointext").innerHTML = window.localStorage.getItem('coin');
+        if (localStorage.getItem("colorblind") == "1")
+            document.getElementById("colorblindbox").checked = true;
+        if (localStorage.getItem("visited") == "true"){
+            document.getElementById("loginNotification").style.visibility = "hidden";
+            document.getElementById("greywrapper").style.visibility = "hidden";
+        }
+    }
+    loadUserSettings();
+    loadActive();
+    darkenChosen();
+});
+
+function loadUserSettings(){
+    if (localStorage.getItem("username") != null) {
+        firebase.auth().signInWithEmailAndPassword(localStorage.getItem("username"),localStorage.getItem("password"))
+    .then((userCredential) => {
+        let user = userCredential.user;
+        document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
+        document.getElementById("loginNotification").style.visibility = "hidden";
+        document.getElementById("greywrapper").style.visibility = "hidden";
+        document.getElementById("teamsAccountLogin").innerHTML = "Logout";
+    }).catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        localStorage.removeItem("username");
+        localStorage.removeItem("password");
+    });
+    }
+    else{ //Not logged in
+        document.getElementById("teamsAccountLogin").innerHTML = "Login";
+        if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
+    }
+}
+
+document.getElementById("proceedLogin").addEventListener("click", function() { //Login Press
+    document.getElementById("invalidLogin").style.visibility = "hidden";
+    firebase.auth().signInWithEmailAndPassword(document.getElementById("user").value, document.getElementById("pass").value)
+  .then((userCredential) => {
+    var user = userCredential.user;
+    localStorage.setItem("username", document.getElementById("user").value);
+    localStorage.setItem("password",document.getElementById("pass").value);
+    document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
+    document.getElementById("loginMain").style.visibility = "hidden";
+    document.getElementById("greywrapper").style.visibility = "hidden";
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    document.getElementById("invalidLogin").style.visibility = "visible";
+  });
+});
+
+document.getElementById("teamsAccountLogin").addEventListener("click", function() { //Login/Logout Button
+    if (loggedIn){//Logout Operation, DON'T remove accessibility settings
+        document.getElementById("welcome").innerHTML = "Welcome Guest!";
+        document.getElementById("teamsAccountLogin").innerHTML = "Login";
+        localStorage.setItem("coin","0")//Remove coins
+        localStorage.removeItem("username");
+        localStorage.removeItem("password");
+        //Stop GET requests
+    }
+    else{
+        document.getElementById("loginMain").style.visibility = "visible";
+        document.getElementById("teams").style.visibility = "hidden";
+    }
+});
+
+function createUserData(email,name,coins,shopitems,active,colorblind){
+    firebase.database().ref('users/'+email).set({
+        username: name,
+        coin: coins,
+        shopitems: shopitems,
+        active: active,
+        colorblind: colorblind,
+        teams: {}
+    });
+
+}
+
+function createTeam(name,worktime,shorttime,longtime,user){
+    firebase.database().ref('teams/'+name).set({
+        worktime: worktime,
+        shorttime: shorttime,
+        longtime: longtime,
+        admins: {user1: user},
+        users: {user1: user}
+    });
+}
+
+function updateUser(email,name,coins,shopitems,active,colorblind){
+    
+}
+
+function getUserData(userEmail){
+    database.child("users").child(userEmail).get().then(function(snapshot) {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+        }
+        else {
+          console.log("No data available");
+        }
+      }).catch(function(error) {
+        console.error(error);
+    });
+}
+
+function updateCoin(user,amount){
+    let string = '/users/' + user +'/coin'
+    firebase.database().ref().update({string : amount})
+}
 
 
 // Open Settings / Gear
@@ -47,6 +195,7 @@ document.getElementById("stats").addEventListener("click", function() { //On cli
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
     showStats();
 });
+
 // Close Statistics / Stats
 document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
     document.getElementById("statisticsMenu").style.visibility = "hidden";
@@ -251,54 +400,72 @@ document.getElementById("dogebuy").addEventListener("click", function() { //On c
     darkenChosen();
 });
 
-document.getElementById("guestCont").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+document.getElementById("guestCont").addEventListener("click", function() { //Continue as guest
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("greywrapper").style.visibility = "hidden";
 });
 
-document.getElementById("loginCont").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+document.getElementById("loginCont").addEventListener("click", function() { //Continue to login pagee
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("loginMain").style.visibility = "visible";
 });
 
-document.getElementById("quitLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
+document.getElementById("quitLogin").addEventListener("click", function() { //Quit Login Page
     document.getElementById("loginMain").style.visibility = "hidden";
     document.getElementById("greywrapper").style.visibility = "hidden";
+    document.getElementById("invalidLogin").style.visibility = "hidden";
 });
 
-document.getElementById("createAcc").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    firebase.auth().createUserWithEmailAndPassword(
-        document.getElementById("emailCreate").value, document.getElementById("passCreate").value)
-  .then((userCredential) => {
-    var user = userCredential.user;
-    user.updateProfile({
-        displayName: document.getElementById("nameCreate").value
-    });
-    createUserData(
-        document.getElementById("emailCreate").value,
-        document.getElementById("nameCreate").value,
-        localStorage.getElementById('coin'),
-        localStorage.getElementById('shopitems'),
-        localStorage.getElementById('active'),
-        localStorage.getElementById('colorblind'),
-    );
-    localStorage.setItem("username", document.getElementById("emailCreate").value);
-    localStorage.setItem("password",document.getElementById("passCreate").value);
-    document.getElementById("welcome").innerHTML = "Welcome "+document.getElementById("nameCreate").value+"!";
-    //if (language == "CN") {document.getElementById("welcome").innerHTML = "欢迎使用， "+document.getElementById("nameCreate").value+"!";} // change language 
-    document.getElementById("greywrapper").style.visibility = "hidden";
-    document.getElementById("accountCreation").style.visibility = "hidden";
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // ..
-  });
+document.getElementById("createAcc").addEventListener("click", function() { //Create User
+    if ((String)(document.getElementById("emailCreate").value).includes("@") && (String)(document.getElementById("emailCreate").value).includes(".")
+    && (String)(document.getElementById("nameCreate").value).length <= 15 && (String)(document.getElementById("passCreate").value).length >= 8){
+        document.getElementById("createError").style.visibility = "hidden";
+        firebase.auth().createUserWithEmailAndPassword(
+            document.getElementById("emailCreate").value, document.getElementById("passCreate").value)
+        .then((userCredential) => {
+            var user = userCredential.user;
+            user.updateProfile({
+                displayName: document.getElementById("nameCreate").value
+            });
+            createUserData(
+                document.getElementById("emailCreate").value,
+                document.getElementById("nameCreate").value,
+                localStorage.getElementById('coin'),
+                localStorage.getElementById('shopitems'),
+                localStorage.getElementById('active'),
+                localStorage.getElementById('colorblind'),
+            );
+            localStorage.setItem("username", document.getElementById("emailCreate").value);
+            localStorage.setItem("password",document.getElementById("passCreate").value);
+            document.getElementById("welcome").innerHTML = "Welcome "+document.getElementById("nameCreate").value+"!";
+            //if (language == "CN") {document.getElementById("welcome").innerHTML = "欢迎使用， "+document.getElementById("nameCreate").value+"!";} // change language 
+            document.getElementById("greywrapper").style.visibility = "hidden";
+            document.getElementById("accountCreation").style.visibility = "hidden";
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ..
+        });
+    }
+    else if (!(String)(document.getElementById("emailCreate").value).includes("@") || !(String)(document.getElementById("emailCreate").value).includes(".")){
+        document.getElementById("createError").innerHTML = "Invalid Email";
+        document.getElementById("createError").style.visibility = "visible";
+    }
+    else if ((String)(document.getElementById("nameCreate").value).length > 15) {
+        document.getElementById("createError").innerHTML = "Names must be at most 15 characters";
+        document.getElementById("createError").style.visibility = "visible";
+    }
+    else if ((String)(document.getElementById("passCreate").value).length < 8) {
+        document.getElementById("createError").innerHTML = "Password must be at least 8 characters";
+        document.getElementById("createError").style.visibility = "visible";
+    }
 });
 
 document.getElementById("quitCreate").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("greywrapper").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "hidden";
+    document.getElementById("createError").style.visibility = "hidden";
 });
 
 document.getElementById("notifCreate").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
@@ -309,11 +476,13 @@ document.getElementById("notifCreate").addEventListener("click", function() { //
 document.getElementById("createAccInstead").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("loginMain").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "visible";
+    document.getElementById("invalidLogin").style.visibility = "hidden";
 });
 
 document.getElementById("switchToLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("loginMain").style.visibility = "visible";
     document.getElementById("accountCreation").style.visibility = "hidden";
+    document.getElementById("createError").style.visibility = "hidden";
 });
 
 document.getElementById("profilepic").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
@@ -341,61 +510,6 @@ document.getElementById("backToTeams").addEventListener("click", function() { //
     document.getElementById("teams").style.visibility = "visible";
     document.getElementById("createTeam").style.visibility = "hidden";
 });
-
-document.getElementById("proceedLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    firebase.auth().signInWithEmailAndPassword(document.getElementById("user").value, document.getElementById("pass").value)
-  .then((userCredential) => {
-    var user = userCredential.user;
-    localStorage.setItem("username", document.getElementById("user").value);
-    localStorage.setItem("password",document.getElementById("pass").value);
-    document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
-    document.getElementById("loginMain").style.visibility = "hidden";
-    document.getElementById("greywrapper").style.visibility = "hidden";
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-  });
-});
-
-document.getElementById("teamsAccountLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
-    if (loggedIn){//Logout Operation
-    }
-    else{
-        document.getElementById("loginMain").style.visibility = "visible";
-        document.getElementById("teams").style.visibility = "hidden";
-    }
-});
-
-function createUserData(email,name,coins,shopitems,active,colorblind){
-    firebase.database().ref('users/'+email).set({
-        username: name,
-        coin: coins,
-        shopitems: shopitems,
-        active: active,
-        colorblind: colorblind,
-        teams: {}
-    });
-}
-
-function createTeam(name,worktime,shorttime,longtime,user){
-    firebase.database().ref('teams/'+name).set({
-        worktime: worktime,
-        shorttime: shorttime,
-        longtime: longtime,
-        admins: {user1: user},
-        users: {user1: user}
-    });
-}
-
-function updateUser(email,name,coins,shopitems,active,colorblind){
-    
-}
-
-function updateCoin(user,amount){
-    let string = '/users/' + user +'/coin'
-    firebase.database().ref().update({string : amount})
-}
 
 /* ============================================================================
  * Name         : incrementCoin(amount)
@@ -473,6 +587,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ============================================================================
+=======
  * Name         : loadActive()
  * First Created: March 2 -- Suk Chan (Kevin) Lee
  * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
@@ -646,25 +761,6 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
     else
         source.src = "source/Front-end/css/assets/volume-level-3.svg";
 });
-
-
-
-/* ============================================================================
- * First Created: Mar 2  -- Yichen Han
- * Last  Revised: Mar 2  -- Yichen Han
- * Revised Times: 1
- * 
- * Description  : Variables shown in Statistics.
- * Discrip in CN: 统计窗口中展示的变量。
- * Type         : Global Variables.
- =========================================================================== */
-var totalWorkMins  = 0;
-var totalBreakMins = 0;
-var totalWorkCount = 0;
-var totalSBrkCount = 0;
-var totalLBrkCount = 0;
-
-
 
 /* ============================================================================
  * First Created: Mar 2  -- Yichen Han
@@ -970,9 +1066,6 @@ function autoSwitchMode() {
     changeMode(); // deligate changeMode() to change totalSec & HTML
 }
 
-
-
-
 /* ============================================================================
  * Name         : secToTime(int)
  * First Created: Feb 14 -- Yichen Han
@@ -1001,8 +1094,6 @@ function secToTime(currSec) {
     return (minStr + ":" + secStr); // concate "min:sec"
 }
 
-
-
 /* ============================================================================
  * Name         : timeToSec(String)
  * First Created: Feb 14 -- Yichen Han
@@ -1024,8 +1115,6 @@ function timeToSec(currTime) {
 
     return (minInt * 60 + secInt);
 }
-
-
 
 /* ============================================================================
  * Name         : drainColor()
@@ -1157,9 +1246,7 @@ document.getElementById("long-break-interval").addEventListener("input", functio
  * Read & update Settings
  --------------------------------------------------------------------------- */
 function saveTimeSettings() {
-    /* ------------------------------------------------------------------------
-     * Work & Braks time
-     ----------------------------------------------------------------------- */
+    //Work & Break time
     // get values
     let worknumber = document.getElementById("work-time-number").value;
     let shortBreaknumber = document.getElementById("short-break-number").value;
@@ -1204,9 +1291,7 @@ function saveTimeSettings() {
     document.getElementById("time").innerHTML = secToTime(totalSec);
 
 
-    /* ------------------------------------------------------------------------
-     * Long break interval
-     ----------------------------------------------------------------------- */
+    //Long break interval
     countsThres = document.getElementById("long-break-interval").value;
     // edge case 0 -> 1
     if (countsThres == 0) {
@@ -1216,10 +1301,7 @@ function saveTimeSettings() {
     document.getElementById("counter").innerHTML 
     = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
 
-
-    /* ------------------------------------------------------------------------
-     * Local Storage
-     ----------------------------------------------------------------------- */
+    //Local Storage
     storage["workSec"] = workSec;
     storage["sBrkSec"] = sBrkSec;
     storage["lBrkSec"] = lBrkSec;
