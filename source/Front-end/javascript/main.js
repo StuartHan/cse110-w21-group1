@@ -86,6 +86,11 @@ function loadUserSettings(){
         document.getElementById("loginNotification").style.visibility = "hidden";
         document.getElementById("greywrapper").style.visibility = "hidden";
         document.getElementById("teamsAccountLogin").innerHTML = "Logout";
+    }).catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        localStorage.removeItem("username");
+        localStorage.removeItem("password");
     });
     }
     else{ //Not logged in
@@ -136,6 +141,7 @@ function createUserData(email,name,coins,shopitems,active,colorblind){
         colorblind: colorblind,
         teams: {}
     });
+
 }
 
 function createTeam(name,worktime,shorttime,longtime,user){
