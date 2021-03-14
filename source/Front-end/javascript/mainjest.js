@@ -11,6 +11,8 @@
  * Next Feature : 
  *****************************************************************************/
 
+
+//Global Variables
 var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
 var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
@@ -27,6 +29,71 @@ var loggedIn = false;
 
 var totalSec = workSec; // default starting mode is working mode
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
+
+/* ============================================================================
+ * First Created: Mar 2  -- Yichen Han
+ * Last  Revised: Mar 2  -- Yichen Han
+ * Revised Times: 1
+ * 
+ * Description  : Variables shown in Statistics.
+ * Discrip in CN: 统计窗口中展示的变量。
+ * Type         : Global Variables.
+ =========================================================================== */
+ var totalWorkMins  = 0;
+ var totalBreakMins = 0;
+ var totalWorkCount = 0;
+ var totalSBrkCount = 0;
+ var totalLBrkCount = 0;
+
+/* ============================================================================
+ * Name         : DOMContentLoaded
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : When the DOM Content is loaded, if it is a user's first time visiting
+ *                the website, load in the coin, shopitems, and active localStorage items.
+ *                Otherwise, load the most recently used background and coins.
+ =========================================================================== */
+ window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
+        window.localStorage.setItem('coin', "900");
+        window.localStorage.setItem('shopitems', "000"); //Bit based indexing
+        window.localStorage.setItem('active', "10000");
+        window.localStorage.setItem('colorblind', "0");
+        document.getElementById("cointext").innerHTML = "900";
+        window.localStorage.setItem('visited',"true");
+    }
+    else{
+        document.getElementById("cointext").innerHTML = window.localStorage.getItem('coin');
+        if (localStorage.getItem("colorblind") == "1")
+            document.getElementById("colorblindbox").checked = true;
+        if (localStorage.getItem("visited") == "true"){
+            document.getElementById("loginNotification").style.visibility = "hidden";
+            document.getElementById("greywrapper").style.visibility = "hidden";
+        }
+    }
+    loadUserSettings();
+    loadActive();
+    darkenChosen();
+});
+
+function loadUserSettings(){
+    if (localStorage.getItem("username") != null) {
+        firebase.auth().signInWithEmailAndPassword(localStorage.getItem("username"),localStorage.getItem("password"))
+    .then((userCredential) => {
+        var user = userCredential.user;
+        document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
+        document.getElementById("loginNotification").style.visibility = "hidden";
+        document.getElementById("greywrapper").style.visibility = "hidden";
+        document.getElementById("teamsAccountLogin").innerHTML = "Logout";
+    });
+    }
+    else{
+        document.getElementById("teamsAccountLogin").innerHTML = "Login";
+        if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
+    }
+}
 
 
 // Open Settings / Gear
@@ -415,60 +482,6 @@ function incrementCoin(amount){
 }
 
 /* ============================================================================
- * Name         : DOMContentLoaded
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : When the DOM Content is loaded, if it is a user's first time visiting
- *                the website, load in the coin, shopitems, and active localStorage items.
- *                Otherwise, load the most recently used background and coins.
- =========================================================================== */
-window.addEventListener('DOMContentLoaded', () => {
-    window.localStorage.removeItem("visited");
-    if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
-        window.localStorage.setItem('coin', "900");
-        window.localStorage.setItem('shopitems', "000"); //Bit based indexing
-        window.localStorage.setItem('active', "10000");
-        window.localStorage.setItem('colorblind', "0");
-        document.getElementById("cointext").innerHTML = "900";
-        window.localStorage.setItem('visited',"true");
-    }
-    else{
-        document.getElementById("cointext").innerHTML = window.localStorage.getItem('coin');
-        if (localStorage.getItem("colorblind") == "1")
-            document.getElementById("colorblindbox").checked = true;
-        if (localStorage.getItem("visited") == "true"){
-            document.getElementById("loginNotification").style.visibility = "hidden";
-            document.getElementById("greywrapper").style.visibility = "hidden";
-        }
-    }
-    /*let items = window.localStorage.getItem('shopitems');
-    if (items[0] == 1)
-        document.getElementById('aquaticcost').innerHTML = "Owned";
-    if (items[1] == 1)
-        document.getElementById('sanfranciscocost').innerHTML = "Owned";
-    if (items[2] == 1)
-        document.getElementById('dogecost').innerHTML = "Owned";*/
-    loadActive();
-    darkenChosen();
-    if (localStorage.getItem("username") != null) {
-        firebase.auth().signInWithEmailAndPassword(localStorage.getItem("username"),localStorage.getItem("password"))
-    .then((userCredential) => {
-        var user = userCredential.user;
-        document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
-        document.getElementById("loginNotification").style.visibility = "hidden";
-        document.getElementById("greywrapper").style.visibility = "hidden";
-        document.getElementById("teamsAccountLogin").innerHTML = "Logout";
-    });
-    }
-    else{
-        document.getElementById("teamsAccountLogin").innerHTML = "Login";
-        if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
-    }
-});
-
-/* ============================================================================
  * Name         : loadActive()
  * First Created: March 2 -- Suk Chan (Kevin) Lee
  * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
@@ -638,25 +651,6 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
     else
         source.src = "source/Front-end/css/assets/volume-level-3.svg";
 });
-
-
-
-/* ============================================================================
- * First Created: Mar 2  -- Yichen Han
- * Last  Revised: Mar 2  -- Yichen Han
- * Revised Times: 1
- * 
- * Description  : Variables shown in Statistics.
- * Discrip in CN: 统计窗口中展示的变量。
- * Type         : Global Variables.
- =========================================================================== */
-var totalWorkMins  = 0;
-var totalBreakMins = 0;
-var totalWorkCount = 0;
-var totalSBrkCount = 0;
-var totalLBrkCount = 0;
-
-
 
 /* ============================================================================
  * First Created: Mar 2  -- Yichen Han
@@ -942,9 +936,6 @@ function autoSwitchMode() {
     changeMode(); // deligate changeMode() to change totalSec & HTML
 }
 
-
-
-
 /* ============================================================================
  * Name         : secToTime(int)
  * First Created: Feb 14 -- Yichen Han
@@ -972,8 +963,6 @@ function secToTime(currSec) {
     return (minStr + ":" + secStr); // concate "min:sec"
 }
 
-
-
 /* ============================================================================
  * Name         : timeToSec(String)
  * First Created: Feb 14 -- Yichen Han
@@ -994,8 +983,6 @@ function timeToSec(currTime) {
 
     return (minInt * 60 + secInt);
 }
-
-
 
 /* ============================================================================
  * Name         : drainColor()
@@ -1123,9 +1110,7 @@ document.getElementById("long-break-interval").addEventListener("input", functio
  * Read & update Settings
  --------------------------------------------------------------------------- */
 function saveTimeSettings() {
-    /* ------------------------------------------------------------------------
-     * Work & Braks time
-     ----------------------------------------------------------------------- */
+    //Work & Break time
     // get values
     let worknumber = document.getElementById("work-time-number").value;
     let shortBreaknumber = document.getElementById("short-break-number").value;
@@ -1170,9 +1155,7 @@ function saveTimeSettings() {
     document.getElementById("time").innerHTML = secToTime(totalSec);
 
 
-    /* ------------------------------------------------------------------------
-     * Long break interval
-     ----------------------------------------------------------------------- */
+    //Long break interval
     countsThres = document.getElementById("long-break-interval").value;
     // edge case 0 -> 1
     if (countsThres == 0) {
@@ -1182,10 +1165,7 @@ function saveTimeSettings() {
     document.getElementById("counter").innerHTML 
     = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
 
-
-    /* ------------------------------------------------------------------------
-     * Local Storage
-     ----------------------------------------------------------------------- */
+    //Local Storage
     storage["workSec"] = workSec;
     storage["sBrkSec"] = sBrkSec;
     storage["lBrkSec"] = lBrkSec;
@@ -1395,6 +1375,8 @@ function cypressSetCoin(amount){
     document.getElementById("cointext").innerHTML = amount;
 }
 
+
+
 // export all functions
 module.exports = {
     runCounter: runCounter,
@@ -1426,12 +1408,7 @@ module.exports = {
     updateCoin: updateCoin,
 
     workSec: workSec,
-    sBrkSec: sBrkSec,
-    lBrkSec: lBrkSec,
-    currMode: currMode,
-    counts: counts,
-    totalWorkMins: totalWorkMins,
-    totalBreakMins, totalBreakMins,
-
-    totalSec: totalSec
+    totalSec: totalSec,
+    sBrkSec : sBrkSec,
+    lBrkSec : lBrkSec
 }
