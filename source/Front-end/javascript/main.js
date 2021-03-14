@@ -5,6 +5,7 @@
  * Curr  Version: 3.0
  * 
  * Description  : (changeMode) -> runCounter -> countDown -> autoSwitchMode -> changeMode
+ * Description in CN: (改变模式) -> 启用计数器 -> 倒数 -> 自动改变模式 -> 改变模式
  * Variables    : workSec, sBrkSec, lBrkSec, ms, currMode, counts, countsThres, color, language, loggedIn, totalSec
  * Functions    : setms(thisms), 
  * 
@@ -529,6 +530,7 @@ document.getElementById("backToTeams").addEventListener("click", function() { //
  * Revised Times: 0
  * 
  * Description  : Volume Slider controls. Change image and sound accordingly.
+ * Description in CN: 音量滑块控件。相应地更改图像和声音
  * Parameter    : amount, the amount to increase coin inventory by.
  * Return       : N/A
  =========================================================================== */
@@ -541,12 +543,70 @@ function incrementCoin(amount){
 }
 
 /* ============================================================================
+ * Name         : DOMContentLoaded
+ * First Created: March 2 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
+ * Revised Times: 0
+ * 
+ * Description  : When the DOM Content is loaded, if it is a user's first time visiting
+ *                the website, load in the coin, shopitems, and active localStorage items.
+ *                Otherwise, load the most recently used background and coins.
+ * Description in CN: 加载DOM内容后，如果这是用户第一次访问网站，加载硬币，购物物品和有效的本地存储
+ *                    物品。否则，加载最近使用的背景和硬币。
+ =========================================================================== */
+window.addEventListener('DOMContentLoaded', () => {
+    window.localStorage.removeItem("visited");
+    if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
+        window.localStorage.setItem('coin', "900");
+        window.localStorage.setItem('shopitems', "000"); //Bit based indexing
+        window.localStorage.setItem('active', "10000");
+        window.localStorage.setItem('colorblind', "0");
+        document.getElementById("cointext").innerHTML = "900";
+        window.localStorage.setItem('visited',"true");
+    }
+    else{
+        document.getElementById("cointext").innerHTML = window.localStorage.getItem('coin');
+        if (localStorage.getItem("colorblind") == "1")
+            document.getElementById("colorblindbox").checked = true;
+        if (localStorage.getItem("visited") == "true"){
+            document.getElementById("loginNotification").style.visibility = "hidden";
+            document.getElementById("greywrapper").style.visibility = "hidden";
+        }
+    }
+    /*let items = window.localStorage.getItem('shopitems');
+    if (items[0] == 1)
+        document.getElementById('aquaticcost').innerHTML = "Owned";
+    if (items[1] == 1)
+        document.getElementById('sanfranciscocost').innerHTML = "Owned";
+    if (items[2] == 1)
+        document.getElementById('dogecost').innerHTML = "Owned";*/
+    loadActive();
+    darkenChosen();
+    if (localStorage.getItem("username") != null) {
+        firebase.auth().signInWithEmailAndPassword(localStorage.getItem("username"),localStorage.getItem("password"))
+    .then((userCredential) => {
+        var user = userCredential.user;
+        document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
+        document.getElementById("loginNotification").style.visibility = "hidden";
+        document.getElementById("greywrapper").style.visibility = "hidden";
+        document.getElementById("teamsAccountLogin").innerHTML = "Logout";
+    });
+    }
+    else{
+        document.getElementById("teamsAccountLogin").innerHTML = "Login";
+        if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
+    }
+});
+
+/* ============================================================================
+=======
  * Name         : loadActive()
  * First Created: March 2 -- Suk Chan (Kevin) Lee
  * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
  * Revised Times: 0
  * 
  * Description  : Load the last selected theme
+ * Description in CN： 加载最近选择的主题
  * Parameter    : N/A
  * Return       : N/A
  =========================================================================== */
@@ -576,6 +636,7 @@ function loadActive(){
  * Revised Times: 0
  * 
  * Description  : Darken the last selected theme's button
+ * Description in CN： 使上一个选定主题的按钮变暗
  * Parameter    : N/A
  * Return       : N/A
  =========================================================================== */
@@ -672,6 +733,7 @@ function darkenChosen(){
  * Revised Times: 0
  * 
  * Description  : Set the index to 1 in shopitems in localStorage
+ * Description in CN：在本地存储的可购物品中将指标设置为1
  * Parameter    : index, index to turn to 1
  * Return       : N/A
  =========================================================================== */
@@ -694,6 +756,7 @@ function setShopItems(index){
  * Revised Times: 0
  * 
  * Description  : Volume Slider controls. Change image and sound accordingly.
+ * Description in CN：音量滑块控件。相应地更改图像和声音。
  * Parameter    : N/A
  * Return       : N/A
  =========================================================================== */
@@ -790,6 +853,7 @@ saveTimeSettings();
  * Revised Times: 0
  * 
  * Description  : Set header + main + footer to white and opaque settings.
+ * Description in CN：将页眉+主+页脚设置为白色及模糊。
  * Parameter    : N/A
  * Return       : N/A
  =========================================================================== */
@@ -807,6 +871,7 @@ function turnLight(){
  * Revised Times: 0
  * 
  * Description  : Set header + main + footer to grey and opaque settings.
+ * Description in CN：将页眉+主+页脚设置为灰色及模糊。
  * Parameter    : N/A
  * Return       : N/A
  =========================================================================== */
@@ -824,6 +889,7 @@ function turnDark(){
  * Revised Times: 0
  * 
  * Description  : Set active index to 1 and all else to 0
+ * Description in CN：将有效指标设置为1，其他所有设置为0
  * Parameter    : index, indice to turn to 1
  * Return       : N/A
  =========================================================================== */
@@ -847,6 +913,9 @@ function setActive(index){
  * Description  : Listen to button, if clicked, call runCounter().
  *                runCounter() increase counts if now is working mode. 
  *                Then deligate countDown()
+ * Discrip in CN: 监听按钮，如果单击，则调用runCounter（）。
+ *                runCounter（）如果现在处于工作模式，则增加计数。
+ *                然后使用countDown（）
  * Type         : Manager Function.
  * Parameter    : N/A. But need to listen radios.
  * Return       : N/A.
@@ -876,6 +945,9 @@ function runCounter() {
  * Description  : Listen mode radios. If another radio is checked, call
  *                changeMode() to change time(HTML), seconds(int), mode(Str).
  *                changeMode() can also be called by autoSwitchMode().
+ * Discrip in CN: 监听模式的单选框。如果另一个单选框被选择，请调用
+ *                changeMode（）来改变time（HTML），seconds（int），mode（Str）。
+ *                changeMode（）也可以由autoSwitchMode（）调用。
  * Type         : Major Function.
  * Parameter    : N/A. But need to listen radios.
  * Return       : N/A.
@@ -921,6 +993,10 @@ function changeMode() {
  *                Call secToTime(int) to change sec into time.
  *                Reset time HTML (-1 per sec).
  *                When finished, deligate autoSwitchMode() to switch mode.
+ * Discrip in CN: 倒数计时器启动时调用。每秒降低1秒。
+ *                调用secToTime（int）将sec更改为时间。
+ *                重置时间HTML（每秒-1）。
+ *                完成后，将autoSwitchMode（）设置为切换模式。
  * Type         : Major Function.
  * Parameter    : N/A. But need var totalSec.
  * Return       : N/A. But change HTML.
@@ -958,6 +1034,13 @@ function countDown() {
  *                If   current mode is short break / long break,
  *                Then enter working mode.
  *                Finally deligate changeMode() to change totalSec & HTML.
+ * Discrip in CN: 如果当前模式有效且计数小于countsThres，
+ *                进入短暂休息模式。
+ *                如果当前模式正在运行且计数大于等于countsThres，
+ *                进入长时间休息模式并清除计数。
+ *                如果当前模式是短暂或者长时间休息，
+ *                进入工作模式。
+ *                最后使用changeMode（）更改totalSec和HTML。
  * Type         : Major Function.
  * Parameter    : N/A. But need var currMode.
  * Return       : N/A.
@@ -1002,6 +1085,7 @@ function autoSwitchMode() {
  * Revised Times: 1
  * 
  * Description  : Take in seconds, change it to time. Eg: 120 -> "02:00"
+ * Discrip in CN: 秒为单位，将其更改为时间。例如：120更改为“ 02:00”
  * Type         : Helper Function.
  * Parameter    : int   : how many seconds. Eg: 120
  * Return       : String: time.             Eg: "02:00"
@@ -1029,6 +1113,7 @@ function secToTime(currSec) {
  * Revised Times: 1
  * 
  * Description  : Take in time, change it to seconds. Eg: "02:00" -> 120
+ * Discrip in CN: 输入时间，将其更改为秒。例如：“ 02:00”变为 120
  * Type         : Helper Function.
  * Parameter    : String: time.             Eg: "02:00"
  * Return       : int   : how many seconds. Eg: 120
@@ -1050,6 +1135,7 @@ function timeToSec(currTime) {
  * Revised Times: 0
  * 
  * Description  : Take the color out of the page
+ * Discrip in CN: 将页面颜色抹除
  * Type         : Helper Function.
  =========================================================================== */
 function drainColor() {
@@ -1069,6 +1155,7 @@ function drainColor() {
 * Revised Times: 0
 * 
 * Description  : Put the color back in the page.
+* Discrip in CN: 将颜色填入页面中。
 * Type         : Helper Function.
 =========================================================================== */
 function fillColor() {
@@ -1086,6 +1173,7 @@ function fillColor() {
  * Revised Times: 3
  * 
  * Description  : Set the table below the clock when timer tuns
+ * Discrip in CN: 计时器开始时，将表格设置在时钟下方
  * Type         : Helper Function.
  =========================================================================== */
 function updateTable() {
@@ -1114,6 +1202,7 @@ function updateTable() {
  * Revised Times: 4
  * 
  * Description  : Update vars and HTMLs according to Settings
+ * Discrip in CN: 根据设置更新var和HTML
  * Type         : Major Function.
  =========================================================================== */
 /* --------------------------------------------------------------------------
@@ -1240,6 +1329,7 @@ function saveTimeSettings() {
  * Revised Times: 3
  * 
  * Description  : Switch the language of content based on the option selected
+ * Discrip in CN: 根据选择的选项切换内容的语言
  * Type         : Helper Function.
  =========================================================================== */
 function SwitchToChinese() {
@@ -1390,6 +1480,7 @@ function SwitchToEnglish() {
  * Revised Times: 1
  * 
  * Description  : Choose which sound effect to use according to user's input
+ * Description in CN： 根据用户输入选择要使用的音效
  * Type         : Helper Function.
  =========================================================================== */
 function chooseSoundEffect(){
