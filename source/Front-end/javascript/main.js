@@ -11,6 +11,7 @@
  * #4 Open/Close menus, settings, store, etc.
  * #5 Doge Store
  * #6 Login Page/Create Account
+ * #7 Timer functions/helper functions
  *****************************************************************************/
 
 //#1 Global Variables
@@ -524,6 +525,12 @@ document.getElementById("dogebuy").addEventListener("click", function() {
     darkenChosen();
 });
 
+//Cypress function to test coins
+function cypressSetCoin(amount){
+    localStorage.setItem("coin",amount);
+    document.getElementById("cointext").innerHTML = amount;
+}
+
 //#6 Login Page/Create Account
 //Continue as guest
 document.getElementById("guestCont").addEventListener("click", function() {
@@ -544,6 +551,21 @@ document.getElementById("quitLogin").addEventListener("click", function() {
     document.getElementById("invalidLogin").style.visibility = "hidden";
 });
 
+/* ============================================================================
+ * Name         : createAcc Event Listener
+ * First Created: March 10 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
+ * Revised Times: 1
+ * 
+ * Description  : Helper function to create team data in Google Firebase Auth
+ * Description in CN: 
+ * Parameter    : name - name of team
+ *                worktime - work time length of team
+ *                shorttime - short break time length of team
+ *                longtime - long break time length of team
+ *                user - users in team
+ * Return       : N/A
+ =========================================================================== */
 document.getElementById("createAcc").addEventListener("click", function() { //Create User
     if ((String)(document.getElementById("emailCreate").value).includes("@") && (String)(document.getElementById("emailCreate").value).includes(".")
     && (String)(document.getElementById("nameCreate").value).length <= 15 && (String)(document.getElementById("passCreate").value).length >= 8){
@@ -877,8 +899,6 @@ else{
 }
 saveTimeSettings();
 
-
-
 /* ============================================================================
  * First Created: Mar 8  -- Yichen Han
  * Last  Revised: Mar 8  -- Yichen Han
@@ -899,8 +919,6 @@ saveTimeSettings();
         SwitchToEnglish();
     }
 }
-
-
 
 /* ============================================================================
  * Name         : turnLight()
@@ -960,6 +978,8 @@ function setActive(index){
     localStorage.setItem('active',string);
 }
 
+
+//#7 Timer functions/helper functions
 /* ============================================================================
  * Name         : runCounter()
  * First Created: Feb 14 -- Yichen Han
@@ -989,8 +1009,6 @@ function runCounter() {
     }
     countDown();
 }
-
-
 
 /* ============================================================================
  * Name         : changeMode()
@@ -1574,9 +1592,4 @@ function showStats() {
     else {
         statsBreak.innerHTML = "您已休息" + totalBreakMins + "分钟";
     }
-}
-
-function cypressSetCoin(amount){
-    localStorage.setItem("coin",amount);
-    document.getElementById("cointext").innerHTML = amount;
 }
