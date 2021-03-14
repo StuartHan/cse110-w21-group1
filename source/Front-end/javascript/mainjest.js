@@ -1410,5 +1410,8 @@ module.exports = {
     workSec: workSec,
     totalSec: totalSec,
     sBrkSec : sBrkSec,
-    lBrkSec : lBrkSec
+    lBrkSec : lBrkSec,
+
+    totalWorkMins: totalWorkMins,
+    totalBreakMins: totalBreakMins,
 }

@@ -255,7 +255,7 @@ document.body.innerHTML =
 const { showStats, totalWorkMins, totalBreakMins } = require("../source/Front-end/javascript/mainjest.js");
 
 
-describe("shosSTats testing", () => {
+describe("shosStats testing", () => {
     test("when language-form is english", () => {
 
         // testing setting
