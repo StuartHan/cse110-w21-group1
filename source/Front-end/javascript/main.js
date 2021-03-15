@@ -22,6 +22,11 @@ var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro
 var ms = 10; // 1000 = 1s
 
 /* Test function： ms smaller, timer runs faster */
+/**
+ * @date 2021-03-15
+ * @param {any} thisms
+ * @returns {any}
+ */
 function setms(thisms) { ms = thisms; }
 
 var currMode = "w"; // current mode. Default is working mode
@@ -32,6 +37,12 @@ var language = "EN";
 var loggedIn = false;
 
 var totalSec = workSec; // default starting mode is working mode
+
+/**
+ * @date 2021-03-15
+ * @param {any} "time"
+ * @returns {any}
+ */
 document.getElementById("time").innerHTML = secToTime(workSec); //On load
 
 /* ============================================================================
@@ -49,15 +60,16 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
  var totalSBrkCount = 0;
  var totalLBrkCount = 0;
 
-/* ============================================================================
- * Name         : DOMContentLoaded (#1)
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * 
- * Description  : When the DOM Content is loaded, if it is a user's first time visiting
- *                the website, load in the coin, shopitems, and active localStorage items.
- *                Otherwise, load the most recently used background and coins.
- =========================================================================== */
+/**
+ * When the DOM Content is loaded, if it is a user's first time visiting
+ * the website, load in the coin, shopitems, and active localStorage items.
+ * Otherwise, load the most recently used background and coins.
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} 'DOMContentLoaded'
+ * @param {any} (
+ * @returns {any}
+ */
  window.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
         window.localStorage.setItem('coin', "900");
@@ -82,19 +94,14 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
 });
 
 // #2 User information load/store
-/* ============================================================================
- * Name         : loadUserSettings()
- * First Created: March 10 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
- * Revised Times: 3
- * 
- * Description  : If logged in, load user settings into local storage and change
- *      button innerHTML accordingly.
- * Description in CN: 
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
-function loadUserSettings(){
+/**
+ * If logged in, load user settings into local storage and change
+ * button innerHTML accordingly.
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
+ function loadUserSettings(){
     if (localStorage.getItem("username") != null) {
         firebase.auth().signInWithEmailAndPassword(localStorage.getItem("username"),localStorage.getItem("password"))
         .then((userCredential) => {
@@ -118,18 +125,14 @@ function loadUserSettings(){
     }
 }
 
-/* ============================================================================
- * Name         : proceedLogin Event Listener
- * First Created: March 10 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
- * Revised Times: 3
- * 
- * Description  : If login is valid, log in user and load settings into local storage.
- *      If invalid, throw error message onto interface.
- * Description in CN: 
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * If login is valid, log in user and load settings into local storage.
+ * If invalid, throw error message onto interface.
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} "proceedLogin"
+ * @returns {any}
+ */
 document.getElementById("proceedLogin").addEventListener("click", function() { //Login Press
     document.getElementById("invalidLogin").style.visibility = "hidden";
     document.getElementById("loadingNotif").style.visibility = "visible";
@@ -150,23 +153,19 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
         document.getElementById("loadingNotif").style.visibility = "hidden";
     });
 });
-
-/* ============================================================================
- * Name         : createUserData(email,name,coins,shopitems,active,colorblind)
- * First Created: March 10 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
- * Revised Times: 1
- * 
- * Description  : Helper function to create user data in Google Firebase Auth
- * Description in CN: 
- * Parameter    : email - email of user
- *                name - name of user
- *                coins - amount of coins user has
- *                shopitems - items user has already bought
- *                active - active background
- *                colorblind - if user has enabled colorblind mode
- * Return       : N/A
- =========================================================================== */
+ 
+ /**
+  * Helper function to create user data in Google Firebase Auth
+  * @author Suk Chan (Kevin) Lee
+  * @date 2021-03-15
+  * @param {any} email email of user
+  * @param {any} name name of user
+  * @param {any} coins amount of coins user has
+  * @param {any} shopitems items user has already bought
+  * @param {any} active active background
+  * @param {any} colorblind if user has enabled colorblind mode
+  * @returns {any}
+  */
  function createUserData(email,name,coins,shopitems,active,colorblind){
     firebase.database().ref('users/'+email).set({
         username: name,
@@ -178,17 +177,13 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
     });
 }
 
-/* ============================================================================
- * Name         : getUserData(userEmail)
- * First Created: March 10 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
- * Revised Times: 1
- * 
- * Description  : Helper function to get user data in Google Firebase Auth
- * Description in CN: 
- * Parameter    : userEmail - email of user
- * Return       : N/A
- =========================================================================== */
+/**
+ * Helper function to get user data in Google Firebase Auth
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} userEmail email of user
+ * @returns {any}
+ */
 function getUserData(userEmail){ //Working with GitHub Pages
     database.child("users").child(userEmail).get().then(function(snapshot) {
         if (snapshot.exists()) {
@@ -202,6 +197,17 @@ function getUserData(userEmail){ //Working with GitHub Pages
     });
 }
 
+/**
+ * 描述
+ * @date 2021-03-15
+ * @param {any} email
+ * @param {any} name
+ * @param {any} coins
+ * @param {any} shopitems
+ * @param {any} active
+ * @param {any} colorblind
+ * @returns {any}
+ */
 function updateUser(email,name,coins,shopitems,active,colorblind){
     var postData = {
         author: username,
@@ -227,6 +233,16 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
  * Parameter    : N/A
  * Return       : N/A
  =========================================================================== */
+/**
+ * Helper function to create user data in Google Firebase Auth and
+ * store data in Google Realtime database.
+ * Restrictions currently are that passwords >= 8 characters, names are <= 15
+ * characters, and correct email format.
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} "createAcc"
+ * @returns {any}
+ */
  document.getElementById("createAcc").addEventListener("click", function() { //Create User
     if ((String)(document.getElementById("emailCreate").value).includes("@") && (String)(document.getElementById("emailCreate").value).includes(".")
     && (String)(document.getElementById("nameCreate").value).length <= 15 && (String)(document.getElementById("passCreate").value).length >= 8){
@@ -273,32 +289,58 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
     }
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} user
+ * @param {any} amount
+ * @returns {any}
+ */
 function updateCoin(user,amount){
     let string = '/users/' + user +'/coin'
     firebase.database().ref().update({string : amount})
 }
 
-//On click, close create account window
+/**
+ * On click, close create account window
+ * @date 2021-03-15
+ * @param {any} "quitCreate"
+ * @returns {any}
+ */
 document.getElementById("quitCreate").addEventListener("click", function() {
     document.getElementById("greywrapper").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "hidden";
     document.getElementById("createError").style.visibility = "hidden";
 });
 
-//On click, open main account login window
+/**
+ * On click, open main account login window
+ * @date 2021-03-15
+ * @param {any} "notifCreate"
+ * @returns {any}
+ */
 document.getElementById("notifCreate").addEventListener("click", function() { 
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "visible";
 });
 
-//On click, open create account window
+/**
+ * On click, open create account window
+ * @date 2021-03-15
+ * @param {any} "createAccInstead"
+ * @returns {any}
+ */
 document.getElementById("createAccInstead").addEventListener("click", function() { 
     document.getElementById("loginMain").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "visible";
     document.getElementById("invalidLogin").style.visibility = "hidden";
 });
 
-//On click, open login account window
+/**
+ * On click, open login account window
+ * @date 2021-03-15
+ * @param {any} "switchToLogin"
+ * @returns {any}
+ */
 document.getElementById("switchToLogin").addEventListener("click", function() { 
     document.getElementById("loginMain").style.visibility = "visible";
     document.getElementById("accountCreation").style.visibility = "hidden";
@@ -306,17 +348,13 @@ document.getElementById("switchToLogin").addEventListener("click", function() {
 });
 
 //#3 Teams Feature
-/* ============================================================================
- * Name         : teamsAccountLogin Event Listener
- * First Created: March 10 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
- * Revised Times: 1
- * 
- * Description  : Logout user if logged in, otherwise direct to login screen.
- * Description in CN: 
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Logout user if logged in, otherwise direct to login screen.
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} "teamsAccountLogin"
+ * @returns {any}
+ */
 document.getElementById("teamsAccountLogin").addEventListener("click", function() { //Login/Logout Button
     if (loggedIn){//Logout Operation, DON'T remove accessibility settings
         document.getElementById("welcome").innerHTML = "Welcome Guest!";
@@ -332,23 +370,16 @@ document.getElementById("teamsAccountLogin").addEventListener("click", function(
     }
 });
 
-
-
-/* ============================================================================
- * Name         : createTeam(name,worktime,shorttime,longtime,user)
- * First Created: March 10 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
- * Revised Times: 1
- * 
- * Description  : Helper function to create team data in Google Firebase Auth
- * Description in CN: 
- * Parameter    : name - name of team
- *                worktime - work time length of team
- *                shorttime - short break time length of team
- *                longtime - long break time length of team
- *                user - users in team
- * Return       : N/A
- =========================================================================== */
+/**
+ * Helper function to create team data in Google Firebase Auth
+ * @date 2021-03-15
+ * @param {any} name name of team
+ * @param {any} worktime work time length of team
+ * @param {any} shorttime short break time length of team
+ * @param {any} longtime long break time length of team
+ * @param {any} user users in team
+ * @returns {any}
+ */
 function createTeam(name,worktime,shorttime,longtime,user){
     firebase.database().ref('teams/'+name).set({
         worktime: worktime,
@@ -359,53 +390,66 @@ function createTeam(name,worktime,shorttime,longtime,user){
     });
 }
 
-/* ============================================================================
- * Name         : createTeam(name,worktime,shorttime,longtime,user)
- * First Created: March 10 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
- * Revised Times: 1
- * 
- * Description  : Helper function to create team data in Google Firebase Auth
- * Description in CN: 
- * Parameter    : name - name of team
- *                worktime - work time length of team
- *                shorttime - short break time length of team
- *                longtime - long break time length of team
- *                user - users in team
- * Return       : N/A
- =========================================================================== */
-
-//On click, open teams account window
+/**
+ * On click, open teams account window
+ * @date 2021-03-15
+ * @param {any} "profilepic"
+ * @returns {any}
+ */
 document.getElementById("profilepic").addEventListener("click", function() { 
         document.getElementById("teams").style.visibility = "visible";
 });
 
-//On click, close teams account window
+/**
+ * On click, close teams account window
+ * @date 2021-03-15
+ * @param {any} "teamsExit"
+ * @returns {any}
+ */
 document.getElementById("teamsExit").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
 });
 
-//On click, close create team window
+/**
+ * On click, close create team window
+ * @date 2021-03-15
+ * @param {any} "quitCreateTeam"
+ * @returns {any}
+ */
 document.getElementById("quitCreateTeam").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("createTeam").style.visibility = "hidden";
 });
 
-//On click, open create team window
+/**
+ * On click, open create team window
+ * @date 2021-03-15
+ * @param {any} "createTeamButton"
+ * @returns {any}
+ */
 document.getElementById("createTeamButton").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("createTeam").style.visibility = "visible";
 });
 
-//On click, go back to teams window
+/**
+ * On click, go back to teams window
+ * @date 2021-03-15
+ * @param {any} "backToTeams"
+ * @returns {any}
+ */
 document.getElementById("backToTeams").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "visible";
     document.getElementById("createTeam").style.visibility = "hidden";
 });
 
 // #4 Open/Close menus, settings, store, etc.
-
-// Open Settings / Gear
+/**
+ * Open Settings / Gear
+ * @date 2021-03-15
+ * @param {any} "gear"
+ * @returns {any}
+ */
 document.getElementById("gear").addEventListener("click", function() { //On click, show settings
     document.getElementById("settingsMenu").style.visibility = "visible";
     document.getElementById("main").style.visibility = "hidden";
@@ -414,7 +458,12 @@ document.getElementById("gear").addEventListener("click", function() { //On clic
     chooseSoundEffect();
 });
 
-// Open Statistics / Stats
+/**
+ * Open Statistics / Stats
+ * @date 2021-03-15
+ * @param {any} "stats"
+ * @returns {any}
+ */
 document.getElementById("stats").addEventListener("click", function() { //On click, show statistics
     document.getElementById("statisticsMenu").style.visibility = "visible";
     document.getElementById("main").style.visibility = "hidden";
@@ -423,14 +472,24 @@ document.getElementById("stats").addEventListener("click", function() { //On cli
     showStats();
 });
 
-// Close Statistics / Stats
+/**
+ * Close Statistics / Stats
+ * @date 2021-03-15
+ * @param {any} "OKbtn-statistics"
+ * @returns {any}
+ */
 document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
     document.getElementById("statisticsMenu").style.visibility = "hidden";
     // document.getElementById("gear").click();
     document.getElementById("main").style.visibility = "visible";
 });
 
-//Choose sound
+/**
+ * Choose sound
+ * @date 2021-03-15
+ * @param {any} "sound-selection"
+ * @returns {any}
+ */
 document.getElementById("sound-selection").addEventListener("input", function(){//On click, preview corresponding sound
     if (document.getElementById("sound-selection").value == "Bell"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
@@ -446,7 +505,12 @@ document.getElementById("sound-selection").addEventListener("input", function(){
     }
 });
 
-//Select colorblind option
+/**
+ * Select colorblind option
+ * @date 2021-03-15
+ * @param {any} "colorblindbox"
+ * @returns {any}
+ */
 document.getElementById("colorblindbox").addEventListener("click",function(){
     if (document.getElementById("colorblindbox").checked)
         localStorage.setItem("colorblind","1");
@@ -454,7 +518,12 @@ document.getElementById("colorblindbox").addEventListener("click",function(){
     localStorage.setItem("colorblind","0");
 });
 
-//Save and load Settings info
+/**
+ * Save and load Settings info
+ * @date 2021-03-15
+ * @param {any} "saveSettings"
+ * @returns {any}
+ */
 document.getElementById("saveSettings").addEventListener("click", function() { //On click, hide settings
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
@@ -471,7 +540,12 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
 
 
 // #5 Doge Shop
-// Open Doge shop
+/**
+ * Open Doge shop
+ * @date 2021-03-15
+ * @param {any} "dogecoin"
+ * @returns {any}
+ */
 document.getElementById("dogecoin").addEventListener("click", function() { //On click, show Doge Store
     document.getElementById("dogeCoinMenu").style.visibility = "visible";
     document.getElementById("statisticsMenu").style.visibility = "hidden";
@@ -480,7 +554,12 @@ document.getElementById("dogecoin").addEventListener("click", function() { //On 
     saveTimeSettings();
 });
 
-//On click, hide Doge Store
+/**
+ * On click, hide Doge Store
+ * @date 2021-03-15
+ * @param {any} "dogeSave"
+ * @returns {any}
+ */
 document.getElementById("dogeSave").addEventListener("click", function() {
     document.getElementById("insufficientText").style.visibility = "hidden";
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
@@ -489,7 +568,12 @@ document.getElementById("dogeSave").addEventListener("click", function() {
     darkenChosen();
 });
 
-//On click, preview the Jungle Theme
+/**
+ * On click, preview the Jungle Theme
+ * @date 2021-03-15
+ * @param {any} "wildjungle"
+ * @returns {any}
+ */
 document.getElementById("wildjungle").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -499,7 +583,12 @@ document.getElementById("wildjungle").addEventListener("click", function() {
     turnLight();
 });
 
-//On click, switch to Jungle Theme
+/**
+ * On click, switch to Jungle Theme
+ * @date 2021-03-15
+ * @param {any} "wildjunglebuy"
+ * @returns {any}
+ */
 document.getElementById("wildjunglebuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     setActive(0);
@@ -511,7 +600,12 @@ document.getElementById("wildjunglebuy").addEventListener("click", function() {
     darkenChosen();
 });
 
-//On click, preview night Theme
+/**
+ * On click, preview night Theme
+ * @date 2021-03-15
+ * @param {any} "night"
+ * @returns {any}
+ */
 document.getElementById("night").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -521,7 +615,12 @@ document.getElementById("night").addEventListener("click", function() {
     turnLight();
 });
 
-//On click, switch to night Theme
+/**
+ * On click, switch to night Theme
+ * @date 2021-03-15
+ * @param {any} "nightbuy"
+ * @returns {any}
+ */
 document.getElementById("nightbuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     setActive(1);
@@ -533,7 +632,12 @@ document.getElementById("nightbuy").addEventListener("click", function() {
     darkenChosen();
 });
 
-//On click, preview Aquatic Theme
+/**
+ * On click, preview Aquatic Theme
+ * @date 2021-03-15
+ * @param {any} "aquatic"
+ * @returns {any}
+ */
 document.getElementById("aquatic").addEventListener("click", function() {
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -543,7 +647,12 @@ document.getElementById("aquatic").addEventListener("click", function() {
     turnLight();
 });
 
-//On click, switch to Aquatic Theme if enough coins
+/**
+ * On click, switch to Aquatic Theme if enough coins
+ * @date 2021-03-15
+ * @param {any} "aquaticbuy"
+ * @returns {any}
+ */
 document.getElementById("aquaticbuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[0] == '1'){
@@ -570,7 +679,12 @@ document.getElementById("aquaticbuy").addEventListener("click", function() {
     darkenChosen();
 });
 
-//On click, preview San Francisco Theme
+/**
+ * On click, preview San Francisco Theme
+ * @date 2021-03-15
+ * @param {any} "sanfrancisco"
+ * @returns {any}
+ */
 document.getElementById("sanfrancisco").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -580,7 +694,12 @@ document.getElementById("sanfrancisco").addEventListener("click", function() {
     turnLight();
 });
 
-//On click, switch to San Francisco Theme if enough coins
+/**
+ * On click, switch to San Francisco Theme if enough coins
+ * @date 2021-03-15
+ * @param {any} "sanfranciscobuy"
+ * @returns {any}
+ */
 document.getElementById("sanfranciscobuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[1] == '1'){
@@ -607,7 +726,12 @@ document.getElementById("sanfranciscobuy").addEventListener("click", function() 
     darkenChosen();
 });
 
-//On click, preview Doge Theme
+/**
+ * On click, preview Doge Theme
+ * @date 2021-03-15
+ * @param {any} "dogeland"
+ * @returns {any}
+ */
 document.getElementById("dogeland").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -617,7 +741,12 @@ document.getElementById("dogeland").addEventListener("click", function() {
     turnLight();
 });
 
-//On click, switch to Doge Theme if enough coins
+/**
+ * On click, switch to Doge Theme if enough coins
+ * @date 2021-03-15
+ * @param {any} "dogebuy"
+ * @returns {any}
+ */
 document.getElementById("dogebuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[2] == '1'){
@@ -642,43 +771,60 @@ document.getElementById("dogebuy").addEventListener("click", function() {
     darkenChosen();
 });
 
-//Cypress function to test coins
+/**
+ * Cypress function to test coins
+ * @date 2021-03-15
+ * @param {any} amount
+ * @returns {any}
+ */
 function cypressSetCoin(amount){
     localStorage.setItem("coin",amount);
     document.getElementById("cointext").innerHTML = amount;
 }
 
 //#6 Login Page/Create Account
-//Continue as guest
+/**
+ * Continue as guest
+ * @date 2021-03-15
+ * @param {any} "guestCont"
+ * @returns {any}
+ */
 document.getElementById("guestCont").addEventListener("click", function() {
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("greywrapper").style.visibility = "hidden";
 });
 
-//Continue to login page
+/**
+ * Continue to login page
+ * @date 2021-03-15
+ * @param {any} "loginCont"
+ * @returns {any}
+ */
 document.getElementById("loginCont").addEventListener("click", function() { 
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("loginMain").style.visibility = "visible";
 });
 
-//Quit Login Page
+/**
+ * Quit Login Page
+ * @date 2021-03-15
+ * @param {any} "quitLogin"
+ * @returns {any}
+ */
 document.getElementById("quitLogin").addEventListener("click", function() { 
     document.getElementById("loginMain").style.visibility = "hidden";
     document.getElementById("greywrapper").style.visibility = "hidden";
     document.getElementById("invalidLogin").style.visibility = "hidden";
 });
 
-/* ============================================================================
- * Name         : incrementCoin(amount)
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Volume Slider controls. Change image and sound accordingly.
- * Description in CN: 音量滑块控件。相应地更改图像和声音
- * Parameter    : amount, the amount to increase coin inventory by.
- * Return       : N/A
- =========================================================================== */
+/**
+ * Volume Slider controls. Change image and sound accordingly.
+ * 音量滑块控件。相应地更改图像和声音
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} amount the amount to increase coin inventory by.
+ * @returns {any}
+ */
 function incrementCoin(amount){
     let newNum = (parseInt(localStorage.getItem("coin"))+amount).toString();
     localStorage.setItem("coin",newNum);
@@ -687,17 +833,12 @@ function incrementCoin(amount){
     document.getElementById("cointext").innerHTML = newNum;
 }
 
-/* ==========================================================================
- * Name         : loadActive()
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Load the last selected theme
- * Description in CN： 加载最近选择的主题
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Load the last selected theme
+ * 加载最近选择的主题
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function loadActive(){
     let active = window.localStorage.getItem('active');
     if (active[0] == 1){
@@ -717,17 +858,13 @@ function loadActive(){
     }
 }
 
-/* ============================================================================
- * Name         : darkenChosen()
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Darken the last selected theme's button
- * Description in CN： 使上一个选定主题的按钮变暗
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Darken the last selected theme's button
+ * 使上一个选定主题的按钮变暗
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function darkenChosen(){
     let active = window.localStorage.getItem('active');
     let shopitems = window.localStorage.getItem('shopitems');
@@ -814,17 +951,14 @@ function darkenChosen(){
     }
 }
 
-/* ============================================================================
- * Name         : setShopItems(index)
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Set the index to 1 in shopitems in localStorage
- * Description in CN：在本地存储的可购物品中将指标设置为1
- * Parameter    : index, index to turn to 1
- * Return       : N/A
- =========================================================================== */
+/**
+ * Set the index to 1 in shopitems in localStorage
+ * 在本地存储的可购物品中将指标设置为1
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} index
+ * @returns {any}
+ */
 function setShopItems(index){
     let shopitems = window.localStorage.getItem('shopitems');
     let temp = "";
@@ -837,17 +971,14 @@ function setShopItems(index){
     window.localStorage.setItem('shopitems',temp);
 }
 
-/* ============================================================================
- * Name         : Volume Slider
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Volume Slider controls. Change image and sound accordingly.
- * Description in CN：音量滑块控件。相应地更改图像和声音。
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Volume Slider controls. Change image and sound accordingly.
+ * 音量滑块控件。相应地更改图像和声音。
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} "volume-slider"
+ * @returns {any}
+ */
 document.getElementById("volume-slider").addEventListener("click", function() { //Alter volume
     let source = document.getElementById("volume-pic");
     let volume = document.getElementById("volume-slider").value;
@@ -930,17 +1061,13 @@ saveTimeSettings();
     }
 }
 
-/* ============================================================================
- * Name         : turnLight()
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Set header + main + footer to white and opaque settings.
- * Description in CN：将页眉+主+页脚设置为白色及模糊。
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Set header + main + footer to white and opaque settings.
+ * 将页眉+主+页脚设置为白色及模糊。
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function turnLight(){
     document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById("main").style.backgroundColor = "rgba(256,256,256,0.4)";
@@ -948,17 +1075,13 @@ function turnLight(){
     color = "rgba(256,256,256,0.4)";
 }
 
-/* ============================================================================
- * Name         : turnDark()
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Set header + main + footer to grey and opaque settings.
- * Description in CN：将页眉+主+页脚设置为灰色及模糊。
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Set header + main + footer to grey and opaque settings.
+ * 将页眉+主+页脚设置为灰色及模糊。
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function turnDark(){
     document.getElementById("header").style.backgroundColor = "rgba(102,102,102,0.4)";
     document.getElementById("main").style.backgroundColor = "rgba(102,102,102,0.4)";
@@ -966,17 +1089,14 @@ function turnDark(){
     color = "rgba(102,102,102,0.4)";
 }
 
-/* ============================================================================
- * Name         : setActive(index)
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Set active index to 1 and all else to 0
- * Description in CN：将有效指标设置为1，其他所有设置为0
- * Parameter    : index, indice to turn to 1
- * Return       : N/A
- =========================================================================== */
+/**
+ * Set active index to 1 and all else to 0
+ * 将有效指标设置为1，其他所有设置为0
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} index indice to turn to 1
+ * @returns {any}
+ */
 function setActive(index){
     let string = ""
     for (let int = 0; int < 5; int++){
@@ -990,25 +1110,17 @@ function setActive(index){
 
 
 //#7 Timer functions/helper functions
-/* ============================================================================
- * Name         : runCounter()
- * First Created: Feb 14 -- Yichen Han
- * Last  Revised: Feb 15 -- Yichen Han
- * Revised Times: 2
- * 
- * Description  : Listen to button, if clicked, call runCounter().
- *                runCounter() increase counts if now is working mode. 
- *                Then deligate countDown()
- * Discrip in CN: 监听按钮，如果单击，则调用runCounter（）。
- *                runCounter（）如果现在处于工作模式，则增加计数。
- *                然后使用countDown（）
- * Type         : Manager Function.
- * Parameter    : N/A. But need to listen radios.
- * Return       : N/A.
- =========================================================================== */
 var startBtn = document.getElementById("start-btn"); // button
 startBtn.addEventListener("click", runCounter); // listen & call runCounter
 
+/**
+ * Listen to button, if clicked, call runCounter().
+ * unCounter() increase counts if now is working mode. 
+ * Then deligate countDown()
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function runCounter() {
     // If now's working mode, increase counts by 1.
     updateTable();
@@ -1020,27 +1132,22 @@ function runCounter() {
     countDown();
 }
 
-/* ============================================================================
- * Name         : changeMode()
- * First Created: Feb 15 -- Yichen Han
- * Last  Revised: Feb 15 -- Yichen Han
- * Revised Times: 1
- * 
- * Description  : Listen mode radios. If another radio is checked, call
- *                changeMode() to change time(HTML), seconds(int), mode(Str).
- *                changeMode() can also be called by autoSwitchMode().
- * Discrip in CN: 监听模式的单选框。如果另一个单选框被选择，请调用
- *                changeMode（）来改变time（HTML），seconds（int），mode（Str）。
- *                changeMode（）也可以由autoSwitchMode（）调用。
- * Type         : Major Function.
- * Parameter    : N/A. But need to listen radios.
- * Return       : N/A.
- =========================================================================== */
 // Listen fieldset, if radio is reckected, call changeMode()
 var modeSelect = document.getElementById("mode-selection"); // fieldset
 modeSelect.addEventListener("input", changeMode); // listener
 var radioMode = document.getElementsByName("radio-mode"); // radios
 
+/**
+ * Listen mode radios. If another radio is checked, call
+ * changeMode() to change time(HTML), seconds(int), mode(Str).
+ * changeMode() can also be called by autoSwitchMode().
+ * 监听模式的单选框。如果另一个单选框被选择，请调用
+ * changeMode（）来改变time（HTML），seconds（int），mode（Str）。
+ * changeMode（）也可以由autoSwitchMode（）调用。
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function changeMode() {
     // Find which radio is checked. Then reset time, seconds, and mode.
     // Working mode.
@@ -1067,24 +1174,19 @@ function changeMode() {
 
 
 
-/* ============================================================================
- * Name         : countDown()
- * First Created: Feb 14 -- Yichen Han
- * Last  Revised: Feb 15 -- Yichen Han
- * Revised Times: 2
- * 
- * Description  : Called when countdown timer starts. Decrease 1 sec per sec.
- *                Call secToTime(int) to change sec into time.
- *                Reset time HTML (-1 per sec).
- *                When finished, deligate autoSwitchMode() to switch mode.
- * Discrip in CN: 倒数计时器启动时调用。每秒降低1秒。
- *                调用secToTime（int）将sec更改为时间。
- *                重置时间HTML（每秒-1）。
- *                完成后，将autoSwitchMode（）设置为切换模式。
- * Type         : Major Function.
- * Parameter    : N/A. But need var totalSec.
- * Return       : N/A. But change HTML.
- =========================================================================== */
+/**
+ * Called when countdown timer starts. Decrease 1 sec per sec.
+ * Call secToTime(int) to change sec into time.
+ * Reset time HTML (-1 per sec).
+ * When finished, deligate autoSwitchMode() to switch mode.
+ * 倒数计时器启动时调用。每秒降低1秒。
+ * 调用secToTime（int）将sec更改为时间。
+ * 重置时间HTML（每秒-1）。
+ * 完成后，将autoSwitchMode（）设置为切换模式。
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function countDown() {
     startBtn.disabled = true; // disable start button
     let currSec = totalSec; // will count down from totalSec
@@ -1103,32 +1205,25 @@ function countDown() {
     }, ms); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
 }
 
-
-
-/* ============================================================================
- * Name         : autoSwitchMode()
- * First Created: Feb 15 -- Yichen Han
- * Last  Revised: Mar 2  -- Yichen Han, add statistics
- * Revised Times: 2
- * 
- * Description  : If   current mode is working & counts < countsThres, 
- *                Then enter short break mode.
- *                If   current mode is working & count >= countsThres,
- *                Then enter long break mode   & clear count.
- *                If   current mode is short break / long break,
- *                Then enter working mode.
- *                Finally deligate changeMode() to change totalSec & HTML.
- * Discrip in CN: 如果当前模式有效且计数小于countsThres，
- *                进入短暂休息模式。
- *                如果当前模式正在运行且计数大于等于countsThres，
- *                进入长时间休息模式并清除计数。
- *                如果当前模式是短暂或者长时间休息，
- *                进入工作模式。
- *                最后使用changeMode（）更改totalSec和HTML。
- * Type         : Major Function.
- * Parameter    : N/A. But need var currMode.
- * Return       : N/A.
- =========================================================================== */
+/**
+ * If   current mode is working & counts < countsThres, 
+ * Then enter short break mode.
+ * If   current mode is working & count >= countsThres,
+ * Then enter long break mode   & clear count.
+ * If   current mode is short break / long break,
+ * Then enter working mode.
+ * Finally deligate changeMode() to change totalSec & HTML.
+ * 如果当前模式有效且计数小于countsThres，
+ * 进入短暂休息模式。
+ * 如果当前模式正在运行且计数大于等于countsThres，
+ * 进入长时间休息模式并清除计数。
+ * 如果当前模式是短暂或者长时间休息，
+ * 进入工作模式。
+ * 最后使用changeMode（）更改totalSec和HTML。
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function autoSwitchMode() {
     // Now: working mode
     if (currMode == "w") {
@@ -1162,18 +1257,14 @@ function autoSwitchMode() {
     changeMode(); // deligate changeMode() to change totalSec & HTML
 }
 
-/* ============================================================================
- * Name         : secToTime(int)
- * First Created: Feb 14 -- Yichen Han
- * Last  Revised: Feb 14 -- Yichen Han
- * Revised Times: 1
- * 
- * Description  : Take in seconds, change it to time. Eg: 120 -> "02:00"
- * Discrip in CN: 秒为单位，将其更改为时间。例如：120更改为“ 02:00”
- * Type         : Helper Function.
- * Parameter    : int   : how many seconds. Eg: 120
- * Return       : String: time.             Eg: "02:00"
- =========================================================================== */
+/**
+ * Take in seconds, change it to time. Eg: 120 -> "02:00"
+ * 秒为单位，将其更改为时间。例如：120更改为“ 02:00”
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @param {int} currSec
+ * @returns {String}
+ */
 function secToTime(currSec) {
     let minInt = parseInt(currSec / 60); // minite in int
     let minStr = "" + minInt; // minite in str
@@ -1190,18 +1281,14 @@ function secToTime(currSec) {
     return (minStr + ":" + secStr); // concate "min:sec"
 }
 
-/* ============================================================================
- * Name         : timeToSec(String)
- * First Created: Feb 14 -- Yichen Han
- * Last  Revised: Feb 14 -- Yichen Han
- * Revised Times: 1
- * 
- * Description  : Take in time, change it to seconds. Eg: "02:00" -> 120
- * Discrip in CN: 输入时间，将其更改为秒。例如：“ 02:00”变为 120
- * Type         : Helper Function.
- * Parameter    : String: time.             Eg: "02:00"
- * Return       : int   : how many seconds. Eg: 120
- =========================================================================== */
+/**
+ * Take in time, change it to seconds. Eg: "02:00" -> 120
+ * 输入时间，将其更改为秒。例如：“ 02:00”变为 120
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @param {String} currTime time
+ * @returns {int}
+ */
 function timeToSec(currTime) {
     let minStr = currTime.substr(0, 2);
     let minInt = parseInt(minStr);
@@ -1212,18 +1299,14 @@ function timeToSec(currTime) {
     return (minInt * 60 + secInt);
 }
 
-
 // #8 UI Helper functions
-/* ============================================================================
- * Name         : drainColor()
- * First Created: Feb 15 -- Suk Chan Lee
- * Last  Revised: Feb 15 -- Suk Chan Lee
- * Revised Times: 0
- * 
- * Description  : Take the color out of the page
- * Discrip in CN: 将页面颜色抹除
- * Type         : Helper Function.
- =========================================================================== */
+/**
+ * Take the color out of the page
+ * 将页面颜色抹除
+ * @author Suk Chan Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function drainColor() {
     document.getElementById("header").style.backgroundColor = "grey";
     document.getElementById("header").style.color = "black";
@@ -1232,18 +1315,13 @@ function drainColor() {
     document.getElementById("gear").src = "./source/Front-end/css/assets/gearblack.png";
 }
 
-
-
-/* ============================================================================
-* Name         : fillColor()
-* First Created: Feb 15 -- Suk Chan Lee
-* Last  Revised: Feb 15 -- Suk Chan Lee
-* Revised Times: 0
-* 
-* Description  : Put the color back in the page.
-* Discrip in CN: 将颜色填入页面中。
-* Type         : Helper Function.
-=========================================================================== */
+/**
+ * Put the color back in the page.
+ * Discrip in CN: 将颜色填入页面中。
+ * @author Suk Chan Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function fillColor() {
     document.getElementById("header").style.backgroundColor = color;
     document.getElementById("header").style.color = "white";
@@ -1252,16 +1330,13 @@ function fillColor() {
     document.getElementById("gear").src = "./source/Front-end/css/assets/Geartransparent.png";
 }
 
-/* ============================================================================
- * Name         : updateTable()
- * First Created: Feb 15 -- Suk Chan Lee
- * Last  Revised: Feb 26 -- Yichen Han, update counter logic again
- * Revised Times: 3
- * 
- * Description  : Set the table below the clock when timer tuns
- * Discrip in CN: 计时器开始时，将表格设置在时钟下方
- * Type         : Helper Function.
- =========================================================================== */
+/**
+ * Set the table below the clock when timer tuns
+ * 计时器开始时，将表格设置在时钟下方
+ * @author Suk Chan Lee, Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function updateTable() {
     document.getElementById("counter").style.opacity = 0.4;
     if (currMode == "w") {
@@ -1281,16 +1356,6 @@ function updateTable() {
     = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
 }
 
-/* ============================================================================
- * Name         : saveTimeSettings()
- * First Created: Feb 23 -- Jiaming Li
- * Last  Revised: Mar 2  -- Yichen Han add local storage & updates input check: edge case = 0
- * Revised Times: 4
- * 
- * Description  : Update vars and HTMLs according to Settings
- * Discrip in CN: 根据设置更新var和HTML
- * Type         : Major Function.
- =========================================================================== */
 /* --------------------------------------------------------------------------
  * Check the range of input values
  --------------------------------------------------------------------------- */
@@ -1299,7 +1364,12 @@ var regex=/^[0-9]+$/; // RegEx
 var alertTime = "Please enter an integer between 1 and 120.";
 var alertIntv = "Please enter an integer between 1 and 10."
 
-// Work phase (min)
+/**
+ * Work phase (min)
+ * @date 2021-03-15
+ * @param {any} "work-time-number"
+ * @returns {any}
+ */
 document.getElementById("work-time-number").addEventListener("input", function() {
     let worknumber = document.getElementById("work-time-number").value;
     if ((worknumber != "" && !worknumber.match(regex)) // RegEx: "" or int
@@ -1309,7 +1379,12 @@ document.getElementById("work-time-number").addEventListener("input", function()
     }
 });
 
-// Short break (min)
+/**
+ * Short break (min)
+ * @date 2021-03-15
+ * @param {any} "short-break-number"
+ * @returns {any}
+ */
 document.getElementById("short-break-number").addEventListener("input", function() {
     let shortBreaknumber = document.getElementById("short-break-number").value;
     if ((shortBreaknumber != "" && !shortBreaknumber.match(regex)) // RegEx: "" or int
@@ -1319,7 +1394,12 @@ document.getElementById("short-break-number").addEventListener("input", function
     }
 });
 
-// Long break (min)
+/**
+ * Long break (min)
+ * @date 2021-03-15
+ * @param {any} "long-break-number"
+ * @returns {any}
+ */
 document.getElementById("long-break-number").addEventListener("input", function() {
     let longBreaknumber = document.getElementById("long-break-number").value;
     if ((longBreaknumber != "" && !longBreaknumber.match(regex)) // RegEx: "" or int
@@ -1329,7 +1409,12 @@ document.getElementById("long-break-number").addEventListener("input", function(
     }
 });
 
-// Long break interval
+/**
+ * Long break interval
+ * @date 2021-03-15
+ * @param {any} "long-break-interval"
+ * @returns {any}
+ */
 document.getElementById("long-break-interval").addEventListener("input", function() {
     let longBreakinterval = document.getElementById("long-break-interval").value;
     if ((longBreakinterval != "" && !longBreakinterval.match(regex)) // RegEx: "" or int
@@ -1339,17 +1424,13 @@ document.getElementById("long-break-interval").addEventListener("input", functio
     }
 });
 
-/* ============================================================================
- * Name         : saveTimeSettings()
- * First Created: Mar 5  -- Yichen Han
- * Last  Revised: Mar 5  -- Yichen Han
- * Revised Times: 1
- * 
- * Description  : Save time settings and update them to local Storage.
- * Description in CN
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Save time settings and update them to local Storage.
+ * 根据设置更新var和HTML
+ * @author Yichen Han, Jiaming Li
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function saveTimeSettings() {
     //Work & Break time
     // get values
@@ -1415,16 +1496,13 @@ function saveTimeSettings() {
 
 
 
-/* ============================================================================
- * Name         : SwitchToLanguage
- * First Created: Feb 27 -- Jiaming Li
- * Last  Revised: Mar 5  -- Yichen Han -- Add new translations
- * Revised Times: 3
- * 
- * Description  : Switch the language of content based on the option selected
- * Discrip in CN: 根据选择的选项切换内容的语言
- * Type         : Helper Function.
- =========================================================================== */
+/**
+ * Switch the language of content based on the option selected
+ * 根据选择的选项切换内容的语言
+ * @author Jiaming Li, Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function SwitchToChinese() {
     language = "CN";
     storage["language"] = "CN";
@@ -1505,16 +1583,13 @@ function SwitchToChinese() {
     document.getElementById("insufficientText").innerHTML = "金币不足";
 }
 
-/* ============================================================================
- * Name         : SwitchToEnglish()
- * First Created: Feb 27 -- Jiaming Li
- * Last  Revised: Mar 5  -- Yichen Han -- Add new translations
- * Revised Times: 3
- * 
- * Description  : Switch the language of content based on the option selected
- * Discrip in CN: 根据选择的选项切换内容的语言
- * Type         : Helper Function.
- =========================================================================== */
+/**
+ * Switch the language of content based on the option selected
+ * 根据选择的选项切换内容的语言
+ * @author Jiaming Li, Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function SwitchToEnglish() {
     language = "EN";
     storage["language"] = "EN";
@@ -1575,17 +1650,13 @@ function SwitchToEnglish() {
     document.getElementById("insufficientText").innerHTML = "Insufficient Funds";
 }
 
-
-/* ============================================================================
- * Name         : chooseSoundEffect
- * First Created: March 2  -- Bo Yang
- * Last  Revised: March 2  -- Bo Yang
- * Revised Times: 1
- * 
- * Description  : Choose which sound effect to use according to user's input
- * Description in CN： 根据用户输入选择要使用的音效
- * Type         : Helper Function.
- =========================================================================== */
+/**
+ * Choose which sound effect to use according to user's input
+ * 根据用户输入选择要使用的音效
+ * @author Bo Yang
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function chooseSoundEffect(){
     if(document.getElementById("sound-selection").value == "Bell"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
@@ -1602,16 +1673,12 @@ function chooseSoundEffect(){
     
 }
 
-/* ============================================================================
- * Name         : showStats()
- * First Created: March 2  -- Bo Yang
- * Last  Revised: March 2  -- Bo Yang
- * Revised Times: 1
- * 
- * Description  : Show the statistics window
- * Description in CN：
- * Type         : Helper Function.
- =========================================================================== */
+/**
+ * Show the statistics window
+ * @author Bo Yang
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function showStats() {
     let english = document.getElementById("language-form").value == "English";
 
