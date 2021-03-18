@@ -88,6 +88,7 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
  * @returns {any}
  */
  window.addEventListener('DOMContentLoaded', () => {
+    loadUserSettings();
     if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
         window.localStorage.setItem('coin', "0");
         window.localStorage.setItem('shopitems', "000"); //Bit based indexing
@@ -105,7 +106,6 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
             document.getElementById("greywrapper").style.visibility = "hidden";
         }
     }
-    loadUserSettings();
     loadActive();
     darkenChosen();
 });
@@ -129,14 +129,14 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
             document.getElementById("greywrapper").style.visibility = "hidden";
             document.getElementById("teamsAccountLogin").innerHTML = "Logout";
             getUserData(localStorage.getItem("username"));
-        })/*.catch((error) => {
+        }).catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
             localStorage.removeItem("username");
             localStorage.removeItem("password");
             document.getElementById("teamsAccountLogin").innerHTML = "Login";
             if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
-        })*/;
+        });
     }
     else{ //Not logged in
         document.getElementById("teamsAccountLogin").innerHTML = "Login";
@@ -213,7 +213,11 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
 function getUserData(userEmail){ //Working with GitHub Pages
     firebase.database().ref().child("users").child(userEmail.substring(0,userEmail.indexOf("."))).get().then(function(snapshot) {
         if (snapshot.exists()) {
-          console.log(snapshot.val());
+          localStorage.setItem("coin",snapshot.val().coin);
+          localStorage.setItem("name",snapshot.val().username);
+          localStorage.setItem("shopitems",snapshot.val().shopitems);
+          localStorage.setItem("active",snapshot.val().active);
+          localStorage.setItem("colorblind",snapshot.val().colorblind);
         }
         else {
           console.log("No data available");
@@ -221,7 +225,6 @@ function getUserData(userEmail){ //Working with GitHub Pages
       }).catch(function(error) {
         console.error(error);
     });
-    console.log("executed");
 }
 
 /**
