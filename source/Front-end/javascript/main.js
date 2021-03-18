@@ -1191,7 +1191,7 @@ function setActive(index){
         else
             string += "0";
     }
-    localStorage.setItem('active',string);
+    localStorage.setItem('active', string);
 }
 
 
