@@ -1,4 +1,32 @@
-/******************************************************************************
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/******************************************************************************
  * File Name    : main.js
  * First Created: Feb 14
  * Last  Revised: Mar 14 
@@ -235,7 +263,7 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
  * 
  * Description  : Helper function to create user data in Google Firebase Auth and
  *      store data in Google Realtime database.
- *      Restrictions currently are that passwords >= 8 characters, names are <= 15
+ *      Restrictions currently are that passwords >= 8 characters, names are &lt;= 15
  *      characters, and correct email format.
  * Description in CN: 可在Google Firebase Auth中创建用户数据并将数据存储在Google Realtime
  *                    数据库中的辅助功能
@@ -246,7 +274,7 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
 /**
  * Helper function to create user data in Google Firebase Auth and
  * store data in Google Realtime database.
- * Restrictions currently are that passwords >= 8 characters, names are <= 15
+ * Restrictions currently are that passwords >= 8 characters, names are &lt;= 15
  * characters, and correct email format.
  * 可在Google Firebase Auth中创建用户数据并将数据存储在Google Realtime
  * 数据库中的辅助功能当前的限制是密码大于等于8个字符，名称小于等于15字符，以及正确的电子邮件
@@ -257,8 +285,8 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
  * @returns {any}
  */
  document.getElementById("createAcc").addEventListener("click", function() { //Create User
-    if ((String)(document.getElementById("emailCreate").value).includes("@") && (String)(document.getElementById("emailCreate").value).includes(".")
-    && (String)(document.getElementById("nameCreate").value).length <= 15 && (String)(document.getElementById("passCreate").value).length >= 8){
+    if ((String)(document.getElementById("emailCreate").value).includes("@") &amp;&amp; (String)(document.getElementById("emailCreate").value).includes(".")
+    &amp;&amp; (String)(document.getElementById("nameCreate").value).length &lt;= 15 &amp;&amp; (String)(document.getElementById("passCreate").value).length >= 8){
         document.getElementById("createError").style.visibility = "hidden";
         firebase.auth().createUserWithEmailAndPassword(
             document.getElementById("emailCreate").value, document.getElementById("passCreate").value)
@@ -296,7 +324,7 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
         document.getElementById("createError").innerHTML = "Names must be at most 15 characters";
         document.getElementById("createError").style.visibility = "visible";
     }
-    else if ((String)(document.getElementById("passCreate").value).length < 8) {
+    else if ((String)(document.getElementById("passCreate").value).length &lt; 8) {
         document.getElementById("createError").innerHTML = "Password must be at least 8 characters";
         document.getElementById("createError").style.visibility = "visible";
     }
@@ -1008,7 +1036,7 @@ function darkenChosen(){
 function setShopItems(index){
     let shopitems = window.localStorage.getItem('shopitems');
     let temp = "";
-    for (let i = 0; i < shopitems.length; i++){
+    for (let i = 0; i &lt; shopitems.length; i++){
         if (i == index)
             temp += "1"
         else
@@ -1031,9 +1059,9 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
     document.getElementById("sound-effect").volume = volume / 100;
     if (volume == 0)
         source.src = "source/Front-end/css/assets/volume-level-0.svg";
-    else if (volume > 0 && volume < 33)
+    else if (volume > 0 &amp;&amp; volume &lt; 33)
         source.src = "source/Front-end/css/assets/volume-level-1.svg";
-    else if (volume > 33 && volume < 66)
+    else if (volume > 33 &amp;&amp; volume &lt; 66)
         source.src = "source/Front-end/css/assets/volume-level-2.svg";
     else
         source.src = "source/Front-end/css/assets/volume-level-3.svg";
@@ -1145,19 +1173,19 @@ function turnDark(){
  */
 function setActive(index){
     let string = ""
-    for (let int = 0; int < 5; int++){
+    for (let int = 0; int &lt; 5; int++){
         if (int == index)
             string += "1";
         else
             string += "0";
     }
-    localStorage.setItem('active', string);
+    localStorage.setItem('active',string);
 }
 
 
 //#7 Timer functions/helper functions
 var startBtn = document.getElementById("start-btn"); // button
-startBtn.addEventListener("click", runCounter); // listen & call runCounter
+startBtn.addEventListener("click", runCounter); // listen &amp; call runCounter
 
 /**
  * Listen to button, if clicked, call runCounter().
@@ -1255,13 +1283,13 @@ function countDown() {
 }
 
 /**
- * If   current mode is working & counts < countsThres, 
+ * If   current mode is working &amp; counts &lt; countsThres, 
  * Then enter short break mode.
- * If   current mode is working & count >= countsThres,
- * Then enter long break mode   & clear count.
+ * If   current mode is working &amp; count >= countsThres,
+ * Then enter long break mode   &amp; clear count.
  * If   current mode is short break / long break,
  * Then enter working mode.
- * Finally deligate changeMode() to change totalSec & HTML.
+ * Finally deligate changeMode() to change totalSec &amp; HTML.
  * 如果当前模式有效且计数小于countsThres，
  * 进入短暂休息模式。
  * 如果当前模式正在运行且计数大于等于countsThres，
@@ -1278,8 +1306,8 @@ function autoSwitchMode() {
     if (currMode == "w") {
         totalWorkMins += (workSec / 60); // Statistics
         totalWorkCount ++;               // Statistics
-        // count < countsThres. Next: short break mode
-        if (counts < countsThres) {
+        // count &lt; countsThres. Next: short break mode
+        if (counts &lt; countsThres) {
             document.getElementById("radio-shortBreak-mode").checked = true;
             incrementCoin(5); //5 coin reward
         }
@@ -1303,7 +1331,7 @@ function autoSwitchMode() {
         }
         document.getElementById("radio-working-mode").checked = true;
     }
-    changeMode(); // deligate changeMode() to change totalSec & HTML
+    changeMode(); // deligate changeMode() to change totalSec &amp; HTML
 }
 
 /**
@@ -1317,14 +1345,14 @@ function autoSwitchMode() {
 function secToTime(currSec) {
     let minInt = parseInt(currSec / 60); // minite in int
     let minStr = "" + minInt; // minite in str
-    // If minInt < 10, add 0 before minStr. Eg: 1 -> 01
-    if (minInt < 10) {
+    // If minInt &lt; 10, add 0 before minStr. Eg: 1 -> 01
+    if (minInt &lt; 10) {
         minStr = "0" + minStr;
     }
     let secInt = currSec % 60; // second in int
     let secStr = "" + secInt; // second in str
-    // If secInt < 10, add 0 before secStr. Eg: 1 -> 01
-    if (secInt < 10) {
+    // If secInt &lt; 10, add 0 before secStr. Eg: 1 -> 01
+    if (secInt &lt; 10) {
         secStr = "0" + secStr;
     }
     return (minStr + ":" + secStr); // concate "min:sec"
@@ -1392,11 +1420,11 @@ function updateTable() {
         document.getElementById("workPhase").style.opacity = 1;
         document.getElementById("longBreak").style.opacity = 0.4;
         document.getElementById("shortBreak").style.opacity = 0.4;
-    } else if (counts < 4 && currMode == "s") {
+    } else if (counts &lt; 4 &amp;&amp; currMode == "s") {
         document.getElementById("workPhase").style.opacity = 0.4;
         document.getElementById("longBreak").style.opacity = 0.4;
         document.getElementById("shortBreak").style.opacity = 1;
-    } else if (counts == 0 && currMode == "l") {
+    } else if (counts == 0 &amp;&amp; currMode == "l") {
         document.getElementById("workPhase").style.opacity = 0.4;
         document.getElementById("longBreak").style.opacity = 1;
         document.getElementById("shortBreak").style.opacity = 0.4;
@@ -1422,8 +1450,8 @@ var alertIntv = "Please enter an integer between 1 and 10."
  */
 document.getElementById("work-time-number").addEventListener("input", function() {
     let worknumber = document.getElementById("work-time-number").value;
-    if ((worknumber != "" && !worknumber.match(regex)) // RegEx: "" or int
-    ||  !(worknumber >= 0 && worknumber <= 120)) {     // Range: 0~120
+    if ((worknumber != "" &amp;&amp; !worknumber.match(regex)) // RegEx: "" or int
+    ||  !(worknumber >= 0 &amp;&amp; worknumber &lt;= 120)) {     // Range: 0~120
         alert(alertTime);
         document.getElementById("work-time-number").value = workSec / 60;
     }
@@ -1438,8 +1466,8 @@ document.getElementById("work-time-number").addEventListener("input", function()
  */
 document.getElementById("short-break-number").addEventListener("input", function() {
     let shortBreaknumber = document.getElementById("short-break-number").value;
-    if ((shortBreaknumber != "" && !shortBreaknumber.match(regex)) // RegEx: "" or int
-    ||  !(shortBreaknumber >= 0 && shortBreaknumber <= 120)) {     // Range: 0~120
+    if ((shortBreaknumber != "" &amp;&amp; !shortBreaknumber.match(regex)) // RegEx: "" or int
+    ||  !(shortBreaknumber >= 0 &amp;&amp; shortBreaknumber &lt;= 120)) {     // Range: 0~120
         alert(alertTime);
         document.getElementById("short-break-number").value = sBrkSec / 60;
     }
@@ -1454,8 +1482,8 @@ document.getElementById("short-break-number").addEventListener("input", function
  */
 document.getElementById("long-break-number").addEventListener("input", function() {
     let longBreaknumber = document.getElementById("long-break-number").value;
-    if ((longBreaknumber != "" && !longBreaknumber.match(regex)) // RegEx: "" or int
-    ||  !(longBreaknumber >= 0 && longBreaknumber <= 120)) {     // Range: 0~120
+    if ((longBreaknumber != "" &amp;&amp; !longBreaknumber.match(regex)) // RegEx: "" or int
+    ||  !(longBreaknumber >= 0 &amp;&amp; longBreaknumber &lt;= 120)) {     // Range: 0~120
         alert(alertTime);
         document.getElementById("long-break-number").value = lBrkSec / 60;
     }
@@ -1470,8 +1498,8 @@ document.getElementById("long-break-number").addEventListener("input", function(
  */
 document.getElementById("long-break-interval").addEventListener("input", function() {
     let longBreakinterval = document.getElementById("long-break-interval").value;
-    if ((longBreakinterval != "" && !longBreakinterval.match(regex)) // RegEx: "" or int
-    ||  !(longBreakinterval >= 0 && longBreakinterval <= 10)) {      // Range: 0~10
+    if ((longBreakinterval != "" &amp;&amp; !longBreakinterval.match(regex)) // RegEx: "" or int
+    ||  !(longBreakinterval >= 0 &amp;&amp; longBreakinterval &lt;= 10)) {      // Range: 0~10
         alert(alertIntv);
         document.getElementById("long-break-interval").value = countsThres;
     }
@@ -1485,7 +1513,7 @@ document.getElementById("long-break-interval").addEventListener("input", functio
  * @returns {any}
  */
 function saveTimeSettings() {
-    //Work & Break time
+    //Work &amp; Break time
     // get values
     let worknumber = document.getElementById("work-time-number").value;
     let shortBreaknumber = document.getElementById("short-break-number").value;
@@ -1752,3 +1780,26 @@ function showStats() {
         statsBreak.innerHTML = "您已休息" + totalBreakMins + "分钟";
     }
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#autoSwitchMode">autoSwitchMode</a></li><li><a href="global.html#changeMode">changeMode</a></li><li><a href="global.html#chooseSoundEffect">chooseSoundEffect</a></li><li><a href="global.html#countDown">countDown</a></li><li><a href="global.html#createTeam">createTeam</a></li><li><a href="global.html#createUserData">createUserData</a></li><li><a href="global.html#cypressSetCoin">cypressSetCoin</a></li><li><a href="global.html#darkenChosen">darkenChosen</a></li><li><a href="global.html#drainColor">drainColor</a></li><li><a href="global.html#fillColor">fillColor</a></li><li><a href="global.html#getUserData">getUserData</a></li><li><a href="global.html#incrementCoin">incrementCoin</a></li><li><a href="global.html#loadActive">loadActive</a></li><li><a href="global.html#loadUserSettings">loadUserSettings</a></li><li><a href="global.html#runCounter">runCounter</a></li><li><a href="global.html#saveTimeSettings">saveTimeSettings</a></li><li><a href="global.html#secToTime">secToTime</a></li><li><a href="global.html#setActive">setActive</a></li><li><a href="global.html#setms">setms</a></li><li><a href="global.html#setShopItems">setShopItems</a></li><li><a href="global.html#showStats">showStats</a></li><li><a href="global.html#SwitchToChinese">SwitchToChinese</a></li><li><a href="global.html#SwitchToEnglish">SwitchToEnglish</a></li><li><a href="global.html#timeToSec">timeToSec</a></li><li><a href="global.html#turnDark">turnDark</a></li><li><a href="global.html#turnLight">turnLight</a></li><li><a href="global.html#updateCoin">updateCoin</a></li><li><a href="global.html#updateTable">updateTable</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#.innerHTML">.innerHTML</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Mar 18 2021 17:29:03 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

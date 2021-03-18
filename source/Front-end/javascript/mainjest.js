@@ -16,7 +16,7 @@
 var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
 var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
-var ms = 10; // 1000 = 1s
+var ms = 1000; // 1000 = 1s
 /* Test function： ms smaller, timer runs faster */
 function setms(thisms) { ms = thisms; }
 
@@ -45,16 +45,16 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
  var totalSBrkCount = 0;
  var totalLBrkCount = 0;
 
-/* ============================================================================
- * Name         : DOMContentLoaded
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : When the DOM Content is loaded, if it is a user's first time visiting
- *                the website, load in the coin, shopitems, and active localStorage items.
- *                Otherwise, load the most recently used background and coins.
- =========================================================================== */
+/**
+ * When the DOM Content is loaded, if it is a user's first time visiting
+ * the website, load in the coin, shopitems, and active localStorage items.
+ * Otherwise, load the most recently used background and coins.
+  * @author Suk Chan (Kevin) Lee
+  * @date 2021-03-15
+  * @param {any} 'DOMContentLoaded'
+  * @param {any} (
+  * @returns {any}
+  */
  window.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
         window.localStorage.setItem('coin', "900");
@@ -78,6 +78,10 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
     darkenChosen();
 });
 
+/**
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function loadUserSettings(){
     if (localStorage.getItem("username") != null) {
         firebase.auth().signInWithEmailAndPassword(localStorage.getItem("username"),localStorage.getItem("password"))
@@ -95,8 +99,12 @@ function loadUserSettings(){
     }
 }
 
-
-// Open Settings / Gear
+/**
+ * Open Settings / Gear
+ * @date 2021-03-15
+ * @param {any} "gear"
+ * @returns {any}
+ */
 document.getElementById("gear").addEventListener("click", function() { //On click, show settings
     document.getElementById("settingsMenu").style.visibility = "visible";
     document.getElementById("main").style.visibility = "hidden";
@@ -105,7 +113,12 @@ document.getElementById("gear").addEventListener("click", function() { //On clic
     chooseSoundEffect();
 });
 
-// Open Statistics / Stats
+/**
+ * Open Statistics / Stats
+ * @date 2021-03-15
+ * @param {any} "stats"
+ * @returns {any}
+ */
 document.getElementById("stats").addEventListener("click", function() { //On click, show statistics
     document.getElementById("statisticsMenu").style.visibility = "visible";
     document.getElementById("main").style.visibility = "hidden";
@@ -113,13 +126,24 @@ document.getElementById("stats").addEventListener("click", function() { //On cli
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
     showStats();
 });
-// Close Statistics / Stats
+
+/**
+ * Close Statistics / Stats
+ * @date 2021-03-15
+ * @param {any} "OKbtn-statistics"
+ * @returns {any}
+ */
 document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
     document.getElementById("statisticsMenu").style.visibility = "hidden";
     // document.getElementById("gear").click();
     document.getElementById("main").style.visibility = "visible";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "sound-selection"
+ * @returns {any}
+ */
 document.getElementById("sound-selection").addEventListener("input", function(){//On click, preview corresponding sound
     if (document.getElementById("sound-selection").value == "Bell"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
@@ -135,6 +159,11 @@ document.getElementById("sound-selection").addEventListener("input", function(){
     }
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "colorblindbox"
+ * @returns {any}
+ */
 document.getElementById("colorblindbox").addEventListener("click",function(){
     if (document.getElementById("colorblindbox").checked)
         localStorage.setItem("colorblind","1");
@@ -142,6 +171,11 @@ document.getElementById("colorblindbox").addEventListener("click",function(){
     localStorage.setItem("colorblind","0");
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "saveSettings"
+ * @returns {any}
+ */
 document.getElementById("saveSettings").addEventListener("click", function() { //On click, hide settings
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
@@ -156,8 +190,12 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
     loadActive();
 });
 
-
-// Open Doge shop
+/**
+ * Open Doge shop
+ * @date 2021-03-15
+ * @param {any} "dogecoin"
+ * @returns {any}
+ */
 document.getElementById("dogecoin").addEventListener("click", function() { //On click, show Doge Store
     document.getElementById("dogeCoinMenu").style.visibility = "visible";
     document.getElementById("statisticsMenu").style.visibility = "hidden";
@@ -166,6 +204,11 @@ document.getElementById("dogecoin").addEventListener("click", function() { //On 
     saveTimeSettings();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "dogeSave"
+ * @returns {any}
+ */
 document.getElementById("dogeSave").addEventListener("click", function() { //On click, hide Doge Store
     document.getElementById("insufficientText").style.visibility = "hidden";
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
@@ -174,6 +217,11 @@ document.getElementById("dogeSave").addEventListener("click", function() { //On 
     darkenChosen();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "wildjungle"
+ * @returns {any}
+ */
 document.getElementById("wildjungle").addEventListener("click", function() { //On click, preview the Jungle Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -183,6 +231,11 @@ document.getElementById("wildjungle").addEventListener("click", function() { //O
     turnLight();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "wildjunglebuy"
+ * @returns {any}
+ */
 document.getElementById("wildjunglebuy").addEventListener("click", function() { //On click, switch to Jungle Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
     setActive(0);
@@ -194,6 +247,11 @@ document.getElementById("wildjunglebuy").addEventListener("click", function() { 
     darkenChosen();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "night"
+ * @returns {any}
+ */
 document.getElementById("night").addEventListener("click", function() { //On click, preview night Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -203,6 +261,11 @@ document.getElementById("night").addEventListener("click", function() { //On cli
     turnLight();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "nightbuy"
+ * @returns {any}
+ */
 document.getElementById("nightbuy").addEventListener("click", function() { //On click, switch to night Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
     setActive(1);
@@ -214,6 +277,11 @@ document.getElementById("nightbuy").addEventListener("click", function() { //On 
     darkenChosen();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "aquatic"
+ * @returns {any}
+ */
 document.getElementById("aquatic").addEventListener("click", function() {//On click, preview Aquatic Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -223,6 +291,11 @@ document.getElementById("aquatic").addEventListener("click", function() {//On cl
     turnLight();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "aquaticbuy"
+ * @returns {any}
+ */
 document.getElementById("aquaticbuy").addEventListener("click", function() { //On click, switch to Aquatic Theme if enough coins
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[0] == '1'){
@@ -249,6 +322,11 @@ document.getElementById("aquaticbuy").addEventListener("click", function() { //O
     darkenChosen();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "sanfrancisco"
+ * @returns {any}
+ */
 document.getElementById("sanfrancisco").addEventListener("click", function() { //On click, preview San Francisco Theme
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -258,6 +336,11 @@ document.getElementById("sanfrancisco").addEventListener("click", function() { /
     turnLight();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "sanfranciscobuy"
+ * @returns {any}
+ */
 document.getElementById("sanfranciscobuy").addEventListener("click", function() { //On click, switch to San Francisco Theme if enough coins
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[1] == '1'){
@@ -284,6 +367,11 @@ document.getElementById("sanfranciscobuy").addEventListener("click", function() 
     darkenChosen();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "dogeland"
+ * @returns {any}
+ */
 document.getElementById("dogeland").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -293,6 +381,11 @@ document.getElementById("dogeland").addEventListener("click", function() { //On 
     turnLight();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "dogebuy"
+ * @returns {any}
+ */
 document.getElementById("dogebuy").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[2] == '1'){
@@ -317,21 +410,41 @@ document.getElementById("dogebuy").addEventListener("click", function() { //On c
     darkenChosen();
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "guestCont"
+ * @returns {any}
+ */
 document.getElementById("guestCont").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("greywrapper").style.visibility = "hidden";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "loginCont"
+ * @returns {any}
+ */
 document.getElementById("loginCont").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("loginMain").style.visibility = "visible";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "quitLogin"
+ * @returns {any}
+ */
 document.getElementById("quitLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("loginMain").style.visibility = "hidden";
     document.getElementById("greywrapper").style.visibility = "hidden";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "createAcc"
+ * @returns {any}
+ */
 document.getElementById("createAcc").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     firebase.auth().createUserWithEmailAndPassword(
         document.getElementById("emailCreate").value, document.getElementById("passCreate").value)
@@ -362,26 +475,51 @@ document.getElementById("createAcc").addEventListener("click", function() { //On
   });
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "quitCreate"
+ * @returns {any}
+ */
 document.getElementById("quitCreate").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("greywrapper").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "hidden";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "notifCreate"
+ * @returns {any}
+ */
 document.getElementById("notifCreate").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "visible";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "createAccInstead"
+ * @returns {any}
+ */
 document.getElementById("createAccInstead").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("loginMain").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "visible";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "switchToLogin"
+ * @returns {any}
+ */
 document.getElementById("switchToLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("loginMain").style.visibility = "visible";
     document.getElementById("accountCreation").style.visibility = "hidden";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "profilepic"
+ * @returns {any}
+ */
 document.getElementById("profilepic").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     //if (document.getElementById("teams").style.visibility == "hidden")
         document.getElementById("teams").style.visibility = "visible";
@@ -389,25 +527,50 @@ document.getElementById("profilepic").addEventListener("click", function() { //O
     //    document.getElementById("teams").style.visibility = "hidden";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "teamsExit"
+ * @returns {any}
+ */
 document.getElementById("teamsExit").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("teams").style.visibility = "hidden";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "quitCreateTeam"
+ * @returns {any}
+ */
 document.getElementById("quitCreateTeam").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("createTeam").style.visibility = "hidden";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "createTeamButton"
+ * @returns {any}
+ */
 document.getElementById("createTeamButton").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("createTeam").style.visibility = "visible";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "backToTeams"
+ * @returns {any}
+ */
 document.getElementById("backToTeams").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     document.getElementById("teams").style.visibility = "visible";
     document.getElementById("createTeam").style.visibility = "hidden";
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "proceedLogin"
+ * @returns {any}
+ */
 document.getElementById("proceedLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     firebase.auth().signInWithEmailAndPassword(document.getElementById("user").value, document.getElementById("pass").value)
   .then((userCredential) => {
@@ -424,6 +587,11 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
   });
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} "teamsAccountLogin"
+ * @returns {any}
+ */
 document.getElementById("teamsAccountLogin").addEventListener("click", function() { //On click, switch to Doge Theme if enough coins
     if (loggedIn){//Logout Operation
     }
@@ -433,6 +601,16 @@ document.getElementById("teamsAccountLogin").addEventListener("click", function(
     }
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} email
+ * @param {any} name
+ * @param {any} coins
+ * @param {any} shopitems
+ * @param {any} active
+ * @param {any} colorblind
+ * @returns {any}
+ */
 function createUserData(email,name,coins,shopitems,active,colorblind){
     firebase.database().ref('users/'+email).set({
         username: name,
@@ -444,6 +622,15 @@ function createUserData(email,name,coins,shopitems,active,colorblind){
     });
 }
 
+/**
+ * @date 2021-03-15
+ * @param {any} name
+ * @param {any} worktime
+ * @param {any} shorttime
+ * @param {any} longtime
+ * @param {any} user
+ * @returns {any}
+ */
 function createTeam(name,worktime,shorttime,longtime,user){
     firebase.database().ref('teams/'+name).set({
         worktime: worktime,
@@ -454,25 +641,38 @@ function createTeam(name,worktime,shorttime,longtime,user){
     });
 }
 
+/**
+ * @date 2021-03-15
+ * @param {any} email
+ * @param {any} name
+ * @param {any} coins
+ * @param {any} shopitems
+ * @param {any} active
+ * @param {any} colorblind
+ * @returns {any}
+ */
 function updateUser(email,name,coins,shopitems,active,colorblind){
     
 }
 
+/**
+ * @date 2021-03-15
+ * @param {any} user
+ * @param {any} amount
+ * @returns {any}
+ */
 function updateCoin(user,amount){
     let string = '/users/' + user +'/coin'
     firebase.database().ref().update({string : amount})
 }
 
-/* ============================================================================
- * Name         : incrementCoin(amount)
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Volume Slider controls. Change image and sound accordingly.
- * Parameter    : amount, the amount to increase coin inventory by.
- * Return       : N/A
- =========================================================================== */
+/**
+ * Volume Slider controls. Change image and sound accordingly.
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} amount the amount to increase coin inventory by.
+ * @returns {any}
+ */
 function incrementCoin(amount){
     let newNum = (parseInt(localStorage.getItem("coin"))+amount).toString();
     localStorage.setItem("coin",newNum);
@@ -481,16 +681,12 @@ function incrementCoin(amount){
     document.getElementById("cointext").innerHTML = newNum;
 }
 
-/* ============================================================================
- * Name         : loadActive()
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Load the last selected theme
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Load the last selected theme
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function loadActive(){
     let active = window.localStorage.getItem('active');
     if (active[0] == 1){
@@ -510,16 +706,12 @@ function loadActive(){
     }
 }
 
-/* ============================================================================
- * Name         : darkenChosen()
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Darken the last selected theme's button
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Darken the last selected theme's button
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function darkenChosen(){
     let active = window.localStorage.getItem('active');
     let shopitems = window.localStorage.getItem('shopitems');
@@ -606,16 +798,12 @@ function darkenChosen(){
     }
 }
 
-/* ============================================================================
- * Name         : setShopItems(index)
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Set the index to 1 in shopitems in localStorage
- * Parameter    : index, index to turn to 1
- * Return       : N/A
- =========================================================================== */
+/**
+ * Set the index to 1 in shopitems in localStorage
+ * @date 2021-03-15
+ * @param {any} index index to turn to 1
+ * @returns {any}
+ */
 function setShopItems(index){
     let shopitems = window.localStorage.getItem('shopitems');
     let temp = "";
@@ -628,16 +816,12 @@ function setShopItems(index){
     window.localStorage.setItem('shopitems',temp);
 }
 
-/* ============================================================================
- * Name         : Volume Slider
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Volume Slider controls. Change image and sound accordingly.
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Volume Slider controls. Change image and sound accordingly.
+ * @date 2021-03-15
+ * @param {any} "volume-slider"
+ * @returns {any}
+ */
 document.getElementById("volume-slider").addEventListener("click", function() { //Alter volume
     let source = document.getElementById("volume-pic");
     let volume = document.getElementById("volume-slider").value;
@@ -722,18 +906,12 @@ saveTimeSettings();
     }
 }
 
-
-
-/* ============================================================================
- * Name         : turnLight()
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Set header + main + footer to white and opaque settings.
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Set header + main + footer to white and opaque settings.
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function turnLight(){
     document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById("main").style.backgroundColor = "rgba(256,256,256,0.4)";
@@ -741,16 +919,12 @@ function turnLight(){
     color = "rgba(256,256,256,0.4)";
 }
 
-/* ============================================================================
- * Name         : turnDark()
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Set header + main + footer to grey and opaque settings.
- * Parameter    : N/A
- * Return       : N/A
- =========================================================================== */
+/**
+ * Set header + main + footer to grey and opaque settings.
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function turnDark(){
     document.getElementById("header").style.backgroundColor = "rgba(102,102,102,0.4)";
     document.getElementById("main").style.backgroundColor = "rgba(102,102,102,0.4)";
@@ -758,16 +932,13 @@ function turnDark(){
     color = "rgba(102,102,102,0.4)";
 }
 
-/* ============================================================================
- * Name         : setActive(index)
- * First Created: March 2 -- Suk Chan (Kevin) Lee
- * Last  Revised: March 2 -- Suk Chan (Kevin) Lee
- * Revised Times: 0
- * 
- * Description  : Set active index to 1 and all else to 0
- * Parameter    : index, indice to turn to 1
- * Return       : N/A
- =========================================================================== */
+/**
+ * Set active index to 1 and all else to 0
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} index indice to turn to 1
+ * @returns {any}
+ */
 function setActive(index){
     let string = ""
     for (let int = 0; int < 5; int++){
@@ -779,22 +950,17 @@ function setActive(index){
     localStorage.setItem('active', string);
 }
 
-/* ============================================================================
- * Name         : runCounter()
- * First Created: Feb 14 -- Yichen Han
- * Last  Revised: Feb 15 -- Yichen Han
- * Revised Times: 2
- * 
- * Description  : Listen to button, if clicked, call runCounter().
- *                runCounter() increase counts if now is working mode. 
- *                Then deligate countDown()
- * Type         : Manager Function.
- * Parameter    : N/A. But need to listen radios.
- * Return       : N/A.
- =========================================================================== */
 var startBtn = document.getElementById("start-btn"); // button
 startBtn.addEventListener("click", runCounter); // listen & call runCounter
 
+/**
+ * Listen to button, if clicked, call runCounter().
+ * runCounter() increase counts if now is working mode. 
+ * Then deligate countDown()
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function runCounter() {
     // If now's working mode, increase counts by 1.
     updateTable();
@@ -806,26 +972,19 @@ function runCounter() {
     countDown();
 }
 
-
-
-/* ============================================================================
- * Name         : changeMode()
- * First Created: Feb 15 -- Yichen Han
- * Last  Revised: Feb 15 -- Yichen Han
- * Revised Times: 1
- * 
- * Description  : Listen mode radios. If another radio is checked, call
- *                changeMode() to change time(HTML), seconds(int), mode(Str).
- *                changeMode() can also be called by autoSwitchMode().
- * Type         : Major Function.
- * Parameter    : N/A. But need to listen radios.
- * Return       : N/A.
- =========================================================================== */
 // Listen fieldset, if radio is reckected, call changeMode()
 var modeSelect = document.getElementById("mode-selection"); // fieldset
 modeSelect.addEventListener("input", changeMode); // listener
 var radioMode = document.getElementsByName("radio-mode"); // radios
 
+/**
+ * Listen mode radios. If another radio is checked, call
+ * changeMode() to change time(HTML), seconds(int), mode(Str).
+ * changeMode() can also be called by autoSwitchMode().
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function changeMode() {
     // Find which radio is checked. Then reset time, seconds, and mode.
     // Working mode.
@@ -850,22 +1009,15 @@ function changeMode() {
     fillColor();
 }
 
-
-
-/* ============================================================================
- * Name         : countDown()
- * First Created: Feb 14 -- Yichen Han
- * Last  Revised: Feb 15 -- Yichen Han
- * Revised Times: 2
- * 
- * Description  : Called when countdown timer starts. Decrease 1 sec per sec.
- *                Call secToTime(int) to change sec into time.
- *                Reset time HTML (-1 per sec).
- *                When finished, deligate autoSwitchMode() to switch mode.
- * Type         : Major Function.
- * Parameter    : N/A. But need var totalSec.
- * Return       : N/A. But change HTML.
- =========================================================================== */
+/**
+ * Called when countdown timer starts. Decrease 1 sec per sec.
+ * Call secToTime(int) to change sec into time.
+ * Reset time HTML (-1 per sec).
+ * When finished, deligate autoSwitchMode() to switch mode.
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function countDown() {
     startBtn.disabled = true; // disable start button
     let currSec = totalSec; // will count down from totalSec
@@ -884,25 +1036,18 @@ function countDown() {
     }, ms); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
 }
 
-
-
-/* ============================================================================
- * Name         : autoSwitchMode()
- * First Created: Feb 15 -- Yichen Han
- * Last  Revised: Mar 2  -- Yichen Han, add statistics
- * Revised Times: 2
- * 
- * Description  : If   current mode is working & counts < countsThres, 
- *                Then enter short break mode.
- *                If   current mode is working & count >= countsThres,
- *                Then enter long break mode   & clear count.
- *                If   current mode is short break / long break,
- *                Then enter working mode.
- *                Finally deligate changeMode() to change totalSec & HTML.
- * Type         : Major Function.
- * Parameter    : N/A. But need var currMode.
- * Return       : N/A.
- =========================================================================== */
+/**
+ * If   current mode is working & counts < countsThres, 
+ * Then enter short break mode.
+ * If   current mode is working & count >= countsThres,
+ * Then enter long break mode   & clear count.
+ * If   current mode is short break / long break,
+ * Then enter working mode.
+ * Finally deligate changeMode() to change totalSec & HTML.
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function autoSwitchMode() {
     // Now: working mode
     if (currMode == "w") {
@@ -936,17 +1081,13 @@ function autoSwitchMode() {
     changeMode(); // deligate changeMode() to change totalSec & HTML
 }
 
-/* ============================================================================
- * Name         : secToTime(int)
- * First Created: Feb 14 -- Yichen Han
- * Last  Revised: Feb 14 -- Yichen Han
- * Revised Times: 1
- * 
- * Description  : Take in seconds, change it to time. Eg: 120 -> "02:00"
- * Type         : Helper Function.
- * Parameter    : int   : how many seconds. Eg: 120
- * Return       : String: time.             Eg: "02:00"
- =========================================================================== */
+/**
+ * Take in seconds, change it to time. Eg: 120 -> "02:00"
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @param {int} currSec how many seconds.
+ * @returns {String}
+ */
 function secToTime(currSec) {
     let minInt = parseInt(currSec / 60); // minite in int
     let minStr = "" + minInt; // minite in str
@@ -963,17 +1104,13 @@ function secToTime(currSec) {
     return (minStr + ":" + secStr); // concate "min:sec"
 }
 
-/* ============================================================================
- * Name         : timeToSec(String)
- * First Created: Feb 14 -- Yichen Han
- * Last  Revised: Feb 14 -- Yichen Han
- * Revised Times: 1
- * 
- * Description  : Take in time, change it to seconds. Eg: "02:00" -> 120
- * Type         : Helper Function.
- * Parameter    : String: time.             Eg: "02:00"
- * Return       : int   : how many seconds. Eg: 120
- =========================================================================== */
+/**
+ * Take in time, change it to seconds. Eg: "02:00" -> 120
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @param {String} currTime time
+ * @returns {int}
+ */
 function timeToSec(currTime) {
     let minStr = currTime.substr(0, 2);
     let minInt = parseInt(minStr);
@@ -984,15 +1121,12 @@ function timeToSec(currTime) {
     return (minInt * 60 + secInt);
 }
 
-/* ============================================================================
- * Name         : drainColor()
- * First Created: Feb 15 -- Suk Chan Lee
- * Last  Revised: Feb 15 -- Suk Chan Lee
- * Revised Times: 0
- * 
- * Description  : Take the color out of the page
- * Type         : Helper Function.
- =========================================================================== */
+/**
+ * Take the color out of the page
+ * @author Suk Chan Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function drainColor() {
     document.getElementById("header").style.backgroundColor = "grey";
     document.getElementById("header").style.color = "black";
@@ -1001,17 +1135,12 @@ function drainColor() {
     document.getElementById("gear").src = "./source/Front-end/css/assets/gearblack.png";
 }
 
-
-
-/* ============================================================================
-* Name         : fillColor()
-* First Created: Feb 15 -- Suk Chan Lee
-* Last  Revised: Feb 15 -- Suk Chan Lee
-* Revised Times: 0
-* 
-* Description  : Put the color back in the page.
-* Type         : Helper Function.
-=========================================================================== */
+/**
+* Put the color back in the page.
+ * @author Suk Chan Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function fillColor() {
     document.getElementById("header").style.backgroundColor = color;
     document.getElementById("header").style.color = "white";
@@ -1020,15 +1149,12 @@ function fillColor() {
     document.getElementById("gear").src = "./source/Front-end/css/assets/Geartransparent.png";
 }
 
-/* ============================================================================
- * Name         : updateTable()
- * First Created: Feb 15 -- Suk Chan Lee
- * Last  Revised: Feb 26 -- Yichen Han, update counter logic again
- * Revised Times: 3
- * 
- * Description  : Set the table below the clock when timer tuns
- * Type         : Helper Function.
- =========================================================================== */
+/**
+ * Set the table below the clock when timer tuns
+ * @author Suk Chan Lee, Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function updateTable() {
     document.getElementById("counter").style.opacity = 0.4;
     if (currMode == "w") {
@@ -1048,15 +1174,6 @@ function updateTable() {
     = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
 }
 
-/* ============================================================================
- * Name         : saveTimeSettings()
- * First Created: Feb 23 -- Jiaming Li
- * Last  Revised: Mar 2  -- Yichen Han add local storage & updates input check: edge case = 0
- * Revised Times: 4
- * 
- * Description  : Update vars and HTMLs according to Settings
- * Type         : Major Function.
- =========================================================================== */
 /* --------------------------------------------------------------------------
  * Check the range of input values
  --------------------------------------------------------------------------- */
@@ -1065,7 +1182,12 @@ var regex=/^[0-9]+$/; // RegEx
 var alertTime = "Please enter an integer between 1 and 120.";
 var alertIntv = "Please enter an integer between 1 and 10."
 
-// Work phase (min)
+/**
+ * Work phase (min)
+ * @date 2021-03-15
+ * @param {any} "work-time-number"
+ * @returns {any}
+ */
 document.getElementById("work-time-number").addEventListener("input", function() {
     let worknumber = document.getElementById("work-time-number").value;
     if ((worknumber != "" && !worknumber.match(regex)) // RegEx: "" or int
@@ -1075,7 +1197,12 @@ document.getElementById("work-time-number").addEventListener("input", function()
     }
 });
 
-// Short break (min)
+/**
+ * Short break (min)
+ * @date 2021-03-15
+ * @param {any} "short-break-number"
+ * @returns {any}
+ */
 document.getElementById("short-break-number").addEventListener("input", function() {
     let shortBreaknumber = document.getElementById("short-break-number").value;
     if ((shortBreaknumber != "" && !shortBreaknumber.match(regex)) // RegEx: "" or int
@@ -1085,7 +1212,12 @@ document.getElementById("short-break-number").addEventListener("input", function
     }
 });
 
-// Long break (min)
+/**
+ * Long break (min)
+ * @date 2021-03-15
+ * @param {any} "long-break-number"
+ * @returns {any}
+ */
 document.getElementById("long-break-number").addEventListener("input", function() {
     let longBreaknumber = document.getElementById("long-break-number").value;
     if ((longBreaknumber != "" && !longBreaknumber.match(regex)) // RegEx: "" or int
@@ -1095,7 +1227,12 @@ document.getElementById("long-break-number").addEventListener("input", function(
     }
 });
 
-// Long break interval
+/**
+ * Long break interval
+ * @date 2021-03-15
+ * @param {any} "long-break-interval"
+ * @returns {any}
+ */
 document.getElementById("long-break-interval").addEventListener("input", function() {
     let longBreakinterval = document.getElementById("long-break-interval").value;
     if ((longBreakinterval != "" && !longBreakinterval.match(regex)) // RegEx: "" or int
@@ -1109,6 +1246,12 @@ document.getElementById("long-break-interval").addEventListener("input", functio
 /* --------------------------------------------------------------------------
  * Read & update Settings
  --------------------------------------------------------------------------- */
+/**
+ * Update vars and HTMLs according to Settings
+ * @author Jiaming Li, Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function saveTimeSettings() {
     //Work & Break time
     // get values
@@ -1172,17 +1315,12 @@ function saveTimeSettings() {
     storage["lBrkItv"] = countsThres;
 }
 
-
-
-/* ============================================================================
- * Name         : SwitchToLanguage
- * First Created: Feb 27 -- Jiaming Li
- * Last  Revised: Mar 5  -- Yichen Han -- Add new translations
- * Revised Times: 3
- * 
- * Description  : Switch the language of content based on the option selected
- * Type         : Helper Function.
- =========================================================================== */
+/**
+ * Switch the language of content based on the option selected
+ * @author Jiaming Li, Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function SwitchToChinese() {
     language = "CN";
     storage["language"] = "CN";
@@ -1263,6 +1401,10 @@ function SwitchToChinese() {
     document.getElementById("insufficientText").innerHTML = "金币不足";
 }
 
+/**
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function SwitchToEnglish() {
     language = "EN";
     storage["language"] = "EN";
@@ -1323,16 +1465,12 @@ function SwitchToEnglish() {
     document.getElementById("insufficientText").innerHTML = "Insufficient Funds";
 }
 
-
-/* ============================================================================
- * Name         : chooseSoundEffect
- * First Created: March 2  -- Bo Yang
- * Last  Revised: March 2  -- Bo Yang
- * Revised Times: 1
- * 
- * Description  : Choose which sound effect to use according to user's input
- * Type         : Helper Function.
- =========================================================================== */
+/**
+ * Choose which sound effect to use according to user's input
+ * @author Bo Yang
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function chooseSoundEffect(){
     if(document.getElementById("sound-selection").value == "Bell"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
@@ -1349,7 +1487,10 @@ function chooseSoundEffect(){
     
 }
 
-
+/**
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function showStats() {
     let english = document.getElementById("language-form").value == "English";
 
@@ -1370,6 +1511,11 @@ function showStats() {
     }
 }
 
+/**
+ * @date 2021-03-15
+ * @param {any} amount
+ * @returns {any}
+ */
 function cypressSetCoin(amount){
     localStorage.setItem("coin",amount);
     document.getElementById("cointext").innerHTML = amount;
