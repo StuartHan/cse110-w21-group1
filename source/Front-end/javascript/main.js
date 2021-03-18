@@ -191,7 +191,7 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
   * @returns {any}
   */
  function createUserData(email,name,coins,shopitems,active,colorblind){
-    firebase.database().ref('users/'+email.substring(0,email.indexOf(".")).set({
+    firebase.database().ref('users/'+email.substring(0,email.indexOf("."))).set({
         username: name,
         coin: coins,
         shopitems: shopitems,
