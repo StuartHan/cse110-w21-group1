@@ -93,7 +93,7 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
         window.localStorage.setItem('shopitems', "000"); //Bit based indexing
         window.localStorage.setItem('active', "10000");
         window.localStorage.setItem('colorblind', "0");
-        document.getElementById("cointext").innerHTML = "900";
+        document.getElementById("cointext").innerHTML = "0";
         window.localStorage.setItem('visited',"true");
     }
     else{
@@ -162,6 +162,7 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
         var user = userCredential.user;
         localStorage.setItem("username", document.getElementById("user").value);
         localStorage.setItem("password",document.getElementById("pass").value);
+        localStorage.setItem("name",user.displayName);
         document.getElementById("welcome").innerHTML = "Welcome "+user.displayName+"!";
         document.getElementById("loginMain").style.visibility = "hidden";
         document.getElementById("greywrapper").style.visibility = "hidden";
@@ -210,7 +211,7 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
  * @returns {any}
  */
 function getUserData(userEmail){ //Working with GitHub Pages
-    database.child("users").child(userEmail).get().then(function(snapshot) {
+    database.child("users").child(userEmail.substring(0,userEmail.indexOf("."))).get().then(function(snapshot) {
         if (snapshot.exists()) {
           console.log(snapshot.val());
         }
@@ -233,13 +234,13 @@ function getUserData(userEmail){ //Working with GitHub Pages
  * @param {any} colorblind
  * @returns {any}
  */
-function updateUser(email,name,coins,shopitems,active,colorblind){
-    firebase.database().ref('users/' + userId).set({
-        username: name,
-        coin: coins,
-        shopitems: shopitems,
-        active: active,
-        colorblind: colorblind,
+function updateUser(){
+    firebase.database().ref('users/' + localStorage.getItem("user").substring(0,localStorage.getItem("user").indexOf("."))).set({
+        username: localStorage.getItem("name"),
+        coin: localStorage.getItem("coin"),
+        shopitems: localStorage.getItem("shopitems"),
+        active: localStorage.getItem("active"),
+        colorblind: localStorage.getItem("colorblind"),
         teams: {}
     });
 }
@@ -424,6 +425,7 @@ function createTeam(name,worktime,shorttime,longtime,user){
         admins: {user1: user}, //Person who created team is admin
         users: {user1: user}
     });
+    
 }
 
 /**
@@ -929,7 +931,7 @@ function incrementCoin(amount){
     let newNum = (parseInt(localStorage.getItem("coin"))+amount).toString();
     localStorage.setItem("coin",newNum);
     if (loggedIn)
-        updateCoin(localStorage.getItem("username"),localStorage.getItem("coin"));
+        updateUser();
     document.getElementById("cointext").innerHTML = newNum;
 }
 
