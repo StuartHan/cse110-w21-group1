@@ -474,7 +474,7 @@ document.getElementById("finalizeCreate").addEventListener("click",function() {
 function loadTeams(){
     if(loggedIn && !teamsDisabled){
         while (document.getElementById("teamsEntry").childNodes.length != 0) //Clear table
-            document.getElementById("teamsEntry").childNodes.removeItem(0);
+            document.getElementById("teamsEntry").removeChild(document.getElementById("teamsEntry").childNodes[0]);
         firebase.database().ref().child("users").child(userEmail.substring(0,userEmail.indexOf("."))).get().then(function(snapshot) {
             if (snapshot.exists() && snapshot.val().teams != null) {
                 let list = snapshot.val().teams.split(",");
