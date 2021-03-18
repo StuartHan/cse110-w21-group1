@@ -129,14 +129,14 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
             document.getElementById("greywrapper").style.visibility = "hidden";
             document.getElementById("teamsAccountLogin").innerHTML = "Logout";
             getUserData(localStorage.getItem("username"));
-        }).catch((error) => {
+        })/*.catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
             localStorage.removeItem("username");
             localStorage.removeItem("password");
             document.getElementById("teamsAccountLogin").innerHTML = "Login";
             if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
-        });
+        })*/;
     }
     else{ //Not logged in
         document.getElementById("teamsAccountLogin").innerHTML = "Login";
