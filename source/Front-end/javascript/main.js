@@ -211,7 +211,7 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
  * @returns {any}
  */
 function getUserData(userEmail){ //Working with GitHub Pages
-    firebase.database().child("users").child(userEmail.substring(0,userEmail.indexOf("."))).get().then(function(snapshot) {
+    firebase.database().ref().child("users").child(userEmail.substring(0,userEmail.indexOf("."))).get().then(function(snapshot) {
         if (snapshot.exists()) {
           console.log(snapshot.val());
         }
