@@ -21,6 +21,20 @@ var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
 var ms = 1000; // 1000 = 1s
 
+var firebaseConfig = {
+    apiKey: "AIzaSyC3aqVaAxSSt5FlCOBkoL5JVmiFoib9aTE",
+    authDomain: "userdata-e83e7.firebaseapp.com",
+    projectId: "userdata-e83e7",
+    storageBucket: "userdata-e83e7.appspot.com",
+    messagingSenderId: "161185941557",
+    appId: "1:161185941557:web:89bd010354b630be6b897c",
+    databaseURL: "https://userdata-e83e7-default-rtdb.firebaseio.com",
+    measurementId: "G-QE552WPF9J",
+};
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+var db = firebase.firestore();
+
 /* Test function： ms smaller, timer runs faster */
 /**
  * @date 2021-03-15
@@ -273,10 +287,10 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
             createUserData(
                 document.getElementById("emailCreate").value,
                 document.getElementById("nameCreate").value,
-                localStorage.getElementById('coin'),
-                localStorage.getElementById('shopitems'),
-                localStorage.getElementById('active'),
-                localStorage.getElementById('colorblind'),
+                localStorage.getItem('coin'),
+                localStorage.getItem('shopitems'),
+                localStorage.getItem('active'),
+                localStorage.getItem('colorblind'),
             );
             localStorage.setItem("username", document.getElementById("emailCreate").value);
             localStorage.setItem("password",document.getElementById("passCreate").value);
