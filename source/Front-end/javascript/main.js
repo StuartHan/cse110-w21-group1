@@ -221,6 +221,7 @@ function getUserData(userEmail){ //Working with GitHub Pages
       }).catch(function(error) {
         console.error(error);
     });
+    console.log("executed");
 }
 
 /**
