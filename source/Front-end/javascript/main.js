@@ -168,7 +168,7 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
         document.getElementById("greywrapper").style.visibility = "hidden";
         document.getElementById("loadingNotif").style.visibility = "hidden";
         document.getElementById("teamsAccountLogin").innerHTML = "Logout";
-        getUserData(document.getElementById("user").value);
+        getUserData(localStorage.getItem("username"));
     })
     .catch((error) => {
         var errorCode = error.code;
@@ -236,7 +236,7 @@ function getUserData(userEmail){ //Working with GitHub Pages
  * @returns {any}
  */
 function updateUser(){
-    firebase.database().ref('users/' + localStorage.getItem("user").substring(0,localStorage.getItem("user").indexOf("."))).set({
+    firebase.database().ref('users/' + localStorage.getItem("username").substring(0,localStorage.getItem("username").indexOf("."))).set({
         username: localStorage.getItem("name"),
         coin: localStorage.getItem("coin"),
         shopitems: localStorage.getItem("shopitems"),
