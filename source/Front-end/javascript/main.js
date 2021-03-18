@@ -49,6 +49,9 @@ var countsThres = 4; // = Long break interval
 var color = "rgba(3,165,89,0.6)";
 var language = "EN";
 var loggedIn = false;
+var teams = []; //List of users
+var adminTracker = []; //List of admins
+var teamsDisabled = false;
 
 var totalSec = workSec; // default starting mode is working mode
 
@@ -73,6 +76,7 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
  var totalWorkCount = 0;
  var totalSBrkCount = 0;
  var totalLBrkCount = 0;
+ var currSec;
 
 /**
  * When the DOM Content is loaded, if it is a user's first time visiting
@@ -94,6 +98,7 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
         window.localStorage.setItem('shopitems', "000"); //Bit based indexing
         window.localStorage.setItem('active', "10000");
         window.localStorage.setItem('colorblind', "0");
+        window.localStorage.setItem('teams', "");
         document.getElementById("cointext").innerHTML = "0";
         window.localStorage.setItem('visited',"true");
     }
@@ -121,6 +126,7 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
  */
  function loadUserSettings(){
     if (localStorage.getItem("username") != null) {
+        loggedIn = true;
         firebase.auth().signInWithEmailAndPassword(localStorage.getItem("username"),localStorage.getItem("password"))
         .then((userCredential) => {
             let user = userCredential.user;
@@ -159,6 +165,7 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
     document.getElementById("loadingNotif").style.visibility = "visible";
     firebase.auth().signInWithEmailAndPassword(document.getElementById("user").value, document.getElementById("pass").value)
     .then((userCredential) => {
+        loggedIn = true;
         var user = userCredential.user;
         localStorage.setItem("username", document.getElementById("user").value);
         localStorage.setItem("password",document.getElementById("pass").value);
@@ -198,7 +205,7 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
         shopitems: shopitems,
         active: active,
         colorblind: colorblind,
-        teams: {}
+        teams: ""
     });
 }
 
@@ -218,6 +225,7 @@ function getUserData(userEmail){ //Working with GitHub Pages
           localStorage.setItem("shopitems",snapshot.val().shopitems);
           localStorage.setItem("active",snapshot.val().active);
           localStorage.setItem("colorblind",snapshot.val().colorblind);
+          localStorage.setItem("teams",localStorage.getItem("teams"));
         }
         else {
           console.log("No data available");
@@ -245,7 +253,7 @@ function updateUser(){
         shopitems: localStorage.getItem("shopitems"),
         active: localStorage.getItem("active"),
         colorblind: localStorage.getItem("colorblind"),
-        teams: {}
+        teams: localStorage.getItem("teams")
     });
 }
 
@@ -303,6 +311,7 @@ function updateUser(){
             //if (language == "CN") {document.getElementById("welcome").innerHTML = "欢迎使用， "+document.getElementById("nameCreate").value+"!";} // change language 
             document.getElementById("greywrapper").style.visibility = "hidden";
             document.getElementById("accountCreation").style.visibility = "hidden";
+            loggedIn = true;
         })
         /*.catch((error) => {
             var errorCode = error.code;
@@ -426,11 +435,62 @@ function createTeam(name,worktime,shorttime,longtime,user){
         worktime: worktime,
         shorttime: shorttime,
         longtime: longtime,
-        admins: {user1: user}, //Person who created team is admin
-        users: {user1: user}
+        admins: user, //Person who created team is admin
+        users: user,
+        on: "false"
     });
-    
 }
+
+/**
+ * Loads teams into teams table
+ * 将团队加载到团队表中
+ * @date 2021-03-15
+ * @returns {any}
+ */
+function loadTeams(){
+    if(loggedIn && !teamsDisabled){
+        while (document.getElementById("teamsEntry").childNodes.length != 0) //Clear table
+            document.getElementById("teamsEntry").childNodes.removeItem(0);
+        firebase.database().ref().child("users").child(userEmail.substring(0,userEmail.indexOf("."))).get().then(function(snapshot) {
+            if (snapshot.exists() && snapshot.val().teams != null) {
+                let list = snapshot.val().teams.split(",");
+                for (let i = 0; i < list.length;i++){
+                    firebase.database().ref().child("teams").child(list[i]).get().then(function(snapshot2) {
+                        if (snapshot2.exists()) {
+                          teams.push(snapshot2.val().users.split(",")); //All the users in a team
+                          adminTracker.push(snapshot2.val().admins.contains(localStorage.getItem("username")));
+                          document.getElementById("teamsEntry").insertAdjacentElement("beforeend","<p class='TeamRow'>"+list[i]+"</p>")
+                        }
+                        else {
+                          console.log("No data available");
+                        }
+                      }).catch(function(error) {
+                        console.error(error);
+                    });
+                }
+            }
+            else {
+                console.log("No data available");
+            }
+            }).catch(function(error) {
+            console.error(error);
+        });
+    }
+}
+
+document.getElementById("disableTeams").addEventListener("click",function() {
+    teamsDisabled = document.getElementById("disableTeams").checked;
+    if (teamsDisabled){
+        while (document.getElementById("teamsEntry").childNodes.length != 0) //Clear table
+            document.getElementById("teamsEntry").childNodes.removeItem(0);
+        document.getElementById("invite").disabled = true;
+        document.getElementById("createTeamButton").disabled = true;
+    }
+    else {
+        document.getElementById("invite").disabled = false;
+        document.getElementById("createTeamButton").disabled = false;
+    }
+});
 
 /**
  * On click, open teams account window
@@ -441,6 +501,7 @@ function createTeam(name,worktime,shorttime,longtime,user){
  */
 document.getElementById("profilepic").addEventListener("click", function() { 
         document.getElementById("teams").style.visibility = "visible";
+        loadTeams();
 });
 
 /**
@@ -626,6 +687,7 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
     }
     chooseSoundEffect();
     loadActive();
+    updateUser();
 });
 
 
@@ -658,6 +720,7 @@ document.getElementById("dogeSave").addEventListener("click", function() {
     document.getElementById("main").style.visibility = "visible";
     loadActive();
     darkenChosen();
+    updateUser();
 });
 
 /**
@@ -1298,7 +1361,7 @@ function changeMode() {
  */
 function countDown() {
     startBtn.disabled = true; // disable start button
-    let currSec = totalSec; // will count down from totalSec
+    currSec = totalSec; // will count down from totalSec
     let timer = setInterval(function() {
         if (currSec == 0) { // time ends
             startBtn.disabled = false; // enable start button
