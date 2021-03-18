@@ -114,6 +114,7 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
             document.getElementById("loginNotification").style.visibility = "hidden";
             document.getElementById("greywrapper").style.visibility = "hidden";
             document.getElementById("teamsAccountLogin").innerHTML = "Logout";
+            getUserData(localStorage.getItem("username"));
         }).catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -151,6 +152,8 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
         document.getElementById("loginMain").style.visibility = "hidden";
         document.getElementById("greywrapper").style.visibility = "hidden";
         document.getElementById("loadingNotif").style.visibility = "hidden";
+        document.getElementById("teamsAccountLogin").innerHTML = "Logout";
+        getUserData(document.getElementById("user").value);
     })
     .catch((error) => {
         var errorCode = error.code;
@@ -217,14 +220,14 @@ function getUserData(userEmail){ //Working with GitHub Pages
  * @returns {any}
  */
 function updateUser(email,name,coins,shopitems,active,colorblind){
-    var postData = {
-        author: username,
-        uid: uid,
-        body: body,
-        title: title,
-        starCount: 0,
-        authorPic: picture
-    };
+    firebase.database().ref('users/' + userId).set({
+        username: name,
+        coin: coins,
+        shopitems: shopitems,
+        active: active,
+        colorblind: colorblind,
+        teams: {}
+    });
 }
 
 /* ============================================================================
@@ -282,11 +285,11 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
             document.getElementById("greywrapper").style.visibility = "hidden";
             document.getElementById("accountCreation").style.visibility = "hidden";
         })
-        .catch((error) => {
+        /*.catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
             // ..
-        });
+        })*/;
     }
     else if (!(String)(document.getElementById("emailCreate").value).includes("@") || !(String)(document.getElementById("emailCreate").value).includes(".")){
         document.getElementById("createError").innerHTML = "Invalid Email";
@@ -309,7 +312,7 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
  * @returns {any}
  */
 function updateCoin(user,amount){
-    let string = '/users/' + user +'/coin'
+    let string = '/users/' + user +'/coin';
     firebase.database().ref().update({string : amount})
 }
 
@@ -429,6 +432,7 @@ document.getElementById("profilepic").addEventListener("click", function() {
  */
 document.getElementById("teamsExit").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("inviteSuccess").style.visibility = "hidden";
 });
 
 /**
@@ -453,6 +457,20 @@ document.getElementById("quitCreateTeam").addEventListener("click", function() {
 document.getElementById("createTeamButton").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("createTeam").style.visibility = "visible";
+    document.getElementById("inviteSuccess").style.visibility = "hidden";
+});
+
+/**
+ * On click, open invite team window
+ * 点击后，进入邀请团队窗口
+ * @date 2021-03-15
+ * @param {any} "createTeamButton"
+ * @returns {any}
+ */
+ document.getElementById("invite").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("inviteTeam").style.visibility = "visible";
+    document.getElementById("inviteSuccess").style.visibility = "hidden";
 });
 
 /**
@@ -465,6 +483,28 @@ document.getElementById("createTeamButton").addEventListener("click", function()
 document.getElementById("backToTeams").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "visible";
     document.getElementById("createTeam").style.visibility = "hidden";
+});
+
+/**
+ * Invite team member on click
+ * 单击邀请团队成员
+ * @date 2021-03-15
+ * @param {any} "finalizeInvite"
+ * @returns {any}
+ */
+ document.getElementById("finalizeInvite").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "visible";
+    document.getElementById("createTeam").style.visibility = "hidden";
+    database.child("users").child(userId).get().then(function(snapshot) {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+        }
+        else {
+          console.log("No data available");
+        }
+      }).catch(function(error) {
+        console.error(error);
+      });
 });
 
 // #4 Open/Close menus, settings, store, etc.

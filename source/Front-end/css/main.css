@@ -690,6 +690,15 @@ header>h1 {
     font-size: max(.7vw, 1vh); /* Revised -Stuart */
 }
 
+#inviteSuccess{
+    grid-row: 5;
+    grid-column:2;
+    justify-self: center;
+    align-self: center;
+    font-size: max(.8vw, 1.2vh);
+    color: green;
+    visibility: hidden;
+}
 
 
 /* ============================================================================
@@ -849,8 +858,120 @@ header>h1 {
     grid-column: 3;
 }
 
+/* ============================================================================
+ * Invite Team Member
+ =========================================================================== */
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
+#inviteTeam{
+    z-index: 999; /* New -Stuart (put at top) */
+    visibility: hidden;
+    grid-row: 2;
+    grid-column: 1;
+    background-color: rgba(256,256,256,1); /* Revised -Stuart */
+    /* margin-top:5%; */ /* Revised -Stuart */
+    margin-left: 5%;
+    margin-top: 3%;
+    border-radius: 10px;
+    height: 40%;
+    width: 60%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+    grid-template-columns: 20% 20% 40% 20%;
+    display: grid;
+    min-height: 100px;
+    min-width: 100px;
+}
+}
+/* High screen */
+@media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
+#inviteTeam{
+    z-index: 999; /* New -Stuart (put at top) */
+    visibility: hidden;
+    grid-row: 2;
+    grid-column: 1;
+    background-color: rgba(256,256,256,1); /* Revised -Stuart */
+    /* margin-top:5%; */ /* Revised -Stuart */
+    margin-left: 5%;
+    margin-top: 3%;
+    border-radius: 10px;
+    height: 40%;
+    width: 100%; /* Revised -Stuart */
+    grid-template-rows: 20% 20% 20% 20% 20%;
+    grid-template-columns: 20% 20% 40% 20%;
+    display: grid;
+    min-height: 100px;
+    min-width: 100px;
+}
+}
 
+#inviteTeamTag{
+    grid-row: 1;
+    grid-column: 1 / span 4;
+    align-self: center;
+    justify-self: center;
+    font-size: max(1vw, 1.3vh); /* Revised -Stuart */
+}
 
+#backToTeamsMain{ /* Back button */
+    font-family: 'Kanit', sans-serif;
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: center;
+    align-self: start;
+    /* margin-top: 5%; */
+    margin-left: 5%;
+    width: max(3vw, 3vh);
+    font-size: max(.7vw, 1vh);
+}
+
+#quitInviteTeam{ /* X */
+    grid-row: 1;
+    grid-column: 4;
+    justify-self: right;
+    align-self: start;
+    margin-top: 3%;
+    margin-right: 3%;
+    font-size: max(1.3vw, 1.6vh);
+}
+
+#quitInviteTeam:hover{
+    opacity: 0.3;
+}
+
+#finalizeInvite{ /* Create */
+    font-family: 'Kanit', sans-serif;
+    grid-row: 5;
+    grid-column: 1/ span 4;
+    justify-self: center;
+    align-self: start;
+    width: 30%;
+    font-size: max(.7vw, 1vh);
+}
+
+#finalizeInvite:hover{
+    opacity: 0.3;
+}
+
+#inviteTeam > input{
+    width: 80%;
+    font-size: 0.7vw;
+    height: 50%;
+    align-self: center;
+    justify-self: center;
+}
+
+#emailInvite{
+    grid-row: 2;
+    grid-column: 3;
+}
+
+#teamEmail{
+    grid-row: 2;
+    grid-column: 2;
+    align-self: center;
+    justify-self: left;
+    font-size: max(.7vw, 1vh);
+    margin-right: 5%;
+}
 /* ============================================================================
  * Timer
  =========================================================================== */
