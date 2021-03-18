@@ -442,6 +442,30 @@ function createTeam(name,worktime,shorttime,longtime,user){
 }
 
 /**
+ * Creates a team.
+ * 创建一个团队。
+ * @date 2021-03-15
+ * @param {any} "finalizeCreate"
+ * @returns {any}
+ */
+document.getElementById("finalizeCreate").addEventListener("click",function() {
+    createTeam(
+        document.getElementById("nameTeam").value,
+        document.getElementById("workTimeTeam").value,
+        document.getElementById("shortTimeTeam").value,
+        document.getElementById("longTimeTeam").value,
+        localStorage.getItem("username")
+    );
+    if (localStorage.getItem("teams") != null){
+        localStorage.setItem("teams",localStorage.getItem("teams")+","+document.getElementById("nameTeam").value);
+    }
+    else{
+        localStorage.setItem("teams",document.getElementById("nameTeam").value);
+    }
+    loadTeams();
+});
+
+/**
  * Loads teams into teams table
  * 将团队加载到团队表中
  * @date 2021-03-15
@@ -478,6 +502,13 @@ function loadTeams(){
     }
 }
 
+/**
+ * On click, either disable or enable the teams features.
+ * 单击时，禁用或启用团队功能。
+ * @date 2021-03-15
+ * @param {any} "disableTeams"
+ * @returns {any}
+ */
 document.getElementById("disableTeams").addEventListener("click",function() {
     teamsDisabled = document.getElementById("disableTeams").checked;
     if (teamsDisabled){
