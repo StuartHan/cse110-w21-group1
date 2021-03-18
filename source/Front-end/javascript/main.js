@@ -60,7 +60,7 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
  =========================================================================== */
  window.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
-        window.localStorage.setItem('coin', "900");
+        window.localStorage.setItem('coin', "0");
         window.localStorage.setItem('shopitems', "000"); //Bit based indexing
         window.localStorage.setItem('active', "10000");
         window.localStorage.setItem('colorblind', "0");
