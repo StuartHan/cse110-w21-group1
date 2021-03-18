@@ -16,7 +16,7 @@
 var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
 var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
-var ms = 10; // 1000 = 1s
+var ms = 1000; // 1000 = 1s
 /* Test function： ms smaller, timer runs faster */
 function setms(thisms) { ms = thisms; }
 

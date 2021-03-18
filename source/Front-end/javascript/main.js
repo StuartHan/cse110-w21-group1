@@ -5,21 +5,21 @@
  * Curr  Version: 3.0
  * 
  * INDEX:
- * #1 Global Variables
- * #2 User information load/store
- * #3 Teams feature create/invite/remove
- * #4 Open/Close menus, settings, store, etc.
- * #5 Doge Store
- * #6 Login Page/Create Account
- * #7 Timer functions/helper functions
- * #8 UI Helper functions
+ * #1 Global Variables 全局变量
+ * #2 User information load/store 用户信息加载/存储
+ * #3 Teams feature create/invite/remove 团队功能创建/邀请/删除
+ * #4 Open/Close menus, settings, store, etc. 打开/关闭菜单，设置，存储等
+ * #5 Doge Store 商店
+ * #6 Login Page/Create Account 登录页面/创建帐户
+ * #7 Timer functions/helper functions 计时器功能/辅助功能
+ * #8 UI Helper functions 交互设计辅助函数
  *****************************************************************************/
 
 //#1 Global Variables
 var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
 var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
 var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
-var ms = 10; // 1000 = 1s
+var ms = 1000; // 1000 = 1s
 
 /* Test function： ms smaller, timer runs faster */
 /**
@@ -64,6 +64,9 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
  * When the DOM Content is loaded, if it is a user's first time visiting
  * the website, load in the coin, shopitems, and active localStorage items.
  * Otherwise, load the most recently used background and coins.
+ * 加载DOM内容时，如果这是用户的首次访问
+ * 网站，加载硬币，购物物品和有效的localStorage物品。
+ * 否则，加载最近使用的背景和硬币。
  * @author Suk Chan (Kevin) Lee
  * @date 2021-03-15
  * @param {any} 'DOMContentLoaded'
@@ -97,6 +100,7 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
 /**
  * If logged in, load user settings into local storage and change
  * button innerHTML accordingly.
+ * 如果已登录，将用户设置加载到本地存储中并相应更改按钮的内部HTML
  * @author Suk Chan (Kevin) Lee
  * @date 2021-03-15
  * @returns {any}
@@ -128,6 +132,8 @@ document.getElementById("time").innerHTML = secToTime(workSec); //On load
 /**
  * If login is valid, log in user and load settings into local storage.
  * If invalid, throw error message onto interface.
+ * 如果登录有效，登录用户并将设置加载到本地存储中。
+ * 如果无效，将错误消息导出致接口。
  * @author Suk Chan (Kevin) Lee
  * @date 2021-03-15
  * @param {any} "proceedLogin"
@@ -156,6 +162,7 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
  
  /**
   * Helper function to create user data in Google Firebase Auth
+  * 在Google Firebase Auth中创建用户数据的辅助功能
   * @author Suk Chan (Kevin) Lee
   * @date 2021-03-15
   * @param {any} email email of user
@@ -179,6 +186,7 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
 
 /**
  * Helper function to get user data in Google Firebase Auth
+ * 可在Google Firebase Auth中获取用户数据的辅助功能
  * @author Suk Chan (Kevin) Lee
  * @date 2021-03-15
  * @param {any} userEmail email of user
@@ -229,7 +237,9 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
  *      store data in Google Realtime database.
  *      Restrictions currently are that passwords >= 8 characters, names are <= 15
  *      characters, and correct email format.
- * Description in CN: 
+ * Description in CN: 可在Google Firebase Auth中创建用户数据并将数据存储在Google Realtime
+ *                    数据库中的辅助功能
+ *                    当前的限制是密码大于等于8个字符，名称小于等于15字符，以及正确的电子邮件格式。
  * Parameter    : N/A
  * Return       : N/A
  =========================================================================== */
@@ -238,6 +248,9 @@ function updateUser(email,name,coins,shopitems,active,colorblind){
  * store data in Google Realtime database.
  * Restrictions currently are that passwords >= 8 characters, names are <= 15
  * characters, and correct email format.
+ * 可在Google Firebase Auth中创建用户数据并将数据存储在Google Realtime
+ * 数据库中的辅助功能当前的限制是密码大于等于8个字符，名称小于等于15字符，以及正确的电子邮件
+ * 格式。
  * @author Suk Chan (Kevin) Lee
  * @date 2021-03-15
  * @param {any} "createAcc"
@@ -302,6 +315,7 @@ function updateCoin(user,amount){
 
 /**
  * On click, close create account window
+ * 点击后，关闭创建帐户的窗口
  * @date 2021-03-15
  * @param {any} "quitCreate"
  * @returns {any}
@@ -314,6 +328,7 @@ document.getElementById("quitCreate").addEventListener("click", function() {
 
 /**
  * On click, open main account login window
+ * 单击时，打开主帐户登录窗口
  * @date 2021-03-15
  * @param {any} "notifCreate"
  * @returns {any}
@@ -325,6 +340,7 @@ document.getElementById("notifCreate").addEventListener("click", function() {
 
 /**
  * On click, open create account window
+ * 点击后，打开创建帐户窗口
  * @date 2021-03-15
  * @param {any} "createAccInstead"
  * @returns {any}
@@ -337,6 +353,7 @@ document.getElementById("createAccInstead").addEventListener("click", function()
 
 /**
  * On click, open login account window
+ * 单击时，打开登录帐户窗口
  * @date 2021-03-15
  * @param {any} "switchToLogin"
  * @returns {any}
@@ -350,6 +367,7 @@ document.getElementById("switchToLogin").addEventListener("click", function() {
 //#3 Teams Feature
 /**
  * Logout user if logged in, otherwise direct to login screen.
+ * 退出登录（如果已登录），否则直接进入登录屏幕。
  * @author Suk Chan (Kevin) Lee
  * @date 2021-03-15
  * @param {any} "teamsAccountLogin"
@@ -372,6 +390,7 @@ document.getElementById("teamsAccountLogin").addEventListener("click", function(
 
 /**
  * Helper function to create team data in Google Firebase Auth
+ * 可在Google Firebase Auth中创建团队数据的辅助功能
  * @date 2021-03-15
  * @param {any} name name of team
  * @param {any} worktime work time length of team
@@ -392,6 +411,7 @@ function createTeam(name,worktime,shorttime,longtime,user){
 
 /**
  * On click, open teams account window
+ * 点击后，打开团队帐户窗口
  * @date 2021-03-15
  * @param {any} "profilepic"
  * @returns {any}
@@ -402,6 +422,7 @@ document.getElementById("profilepic").addEventListener("click", function() {
 
 /**
  * On click, close teams account window
+ * 点击后，关闭团队帐户窗口
  * @date 2021-03-15
  * @param {any} "teamsExit"
  * @returns {any}
@@ -412,6 +433,7 @@ document.getElementById("teamsExit").addEventListener("click", function() {
 
 /**
  * On click, close create team window
+ * 单击时，关闭创建团队窗口
  * @date 2021-03-15
  * @param {any} "quitCreateTeam"
  * @returns {any}
@@ -423,6 +445,7 @@ document.getElementById("quitCreateTeam").addEventListener("click", function() {
 
 /**
  * On click, open create team window
+ * 单击后，打开创建团队窗口
  * @date 2021-03-15
  * @param {any} "createTeamButton"
  * @returns {any}
@@ -434,6 +457,7 @@ document.getElementById("createTeamButton").addEventListener("click", function()
 
 /**
  * On click, go back to teams window
+ * 点击后，返回团队窗口
  * @date 2021-03-15
  * @param {any} "backToTeams"
  * @returns {any}
@@ -445,7 +469,8 @@ document.getElementById("backToTeams").addEventListener("click", function() {
 
 // #4 Open/Close menus, settings, store, etc.
 /**
- * Open Settings / Gear
+ * Open Settings / Gear 
+ * 打开设置
  * @date 2021-03-15
  * @param {any} "gear"
  * @returns {any}
@@ -460,6 +485,7 @@ document.getElementById("gear").addEventListener("click", function() { //On clic
 
 /**
  * Open Statistics / Stats
+ * 打开统计
  * @date 2021-03-15
  * @param {any} "stats"
  * @returns {any}
@@ -473,7 +499,8 @@ document.getElementById("stats").addEventListener("click", function() { //On cli
 });
 
 /**
- * Close Statistics / Stats
+ * Close Statistics / Stats 
+ * 关闭统计
  * @date 2021-03-15
  * @param {any} "OKbtn-statistics"
  * @returns {any}
@@ -486,6 +513,7 @@ document.getElementById("OKbtn-statistics").addEventListener("click", function()
 
 /**
  * Choose sound
+ * 选择声音
  * @date 2021-03-15
  * @param {any} "sound-selection"
  * @returns {any}
@@ -507,6 +535,7 @@ document.getElementById("sound-selection").addEventListener("input", function(){
 
 /**
  * Select colorblind option
+ * 选择色盲模式
  * @date 2021-03-15
  * @param {any} "colorblindbox"
  * @returns {any}
@@ -520,6 +549,7 @@ document.getElementById("colorblindbox").addEventListener("click",function(){
 
 /**
  * Save and load Settings info
+ * 保存并加载设置信息
  * @date 2021-03-15
  * @param {any} "saveSettings"
  * @returns {any}
@@ -542,6 +572,7 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
 // #5 Doge Shop
 /**
  * Open Doge shop
+ * 开设商店
  * @date 2021-03-15
  * @param {any} "dogecoin"
  * @returns {any}
@@ -556,6 +587,7 @@ document.getElementById("dogecoin").addEventListener("click", function() { //On 
 
 /**
  * On click, hide Doge Store
+ * 单击时，隐藏商店
  * @date 2021-03-15
  * @param {any} "dogeSave"
  * @returns {any}
@@ -570,6 +602,7 @@ document.getElementById("dogeSave").addEventListener("click", function() {
 
 /**
  * On click, preview the Jungle Theme
+ * 单击时，预览丛林主题
  * @date 2021-03-15
  * @param {any} "wildjungle"
  * @returns {any}
@@ -585,6 +618,7 @@ document.getElementById("wildjungle").addEventListener("click", function() {
 
 /**
  * On click, switch to Jungle Theme
+ * 单击后，切换到丛林主题
  * @date 2021-03-15
  * @param {any} "wildjunglebuy"
  * @returns {any}
@@ -602,6 +636,7 @@ document.getElementById("wildjunglebuy").addEventListener("click", function() {
 
 /**
  * On click, preview night Theme
+ * 单击时，预览夜晚主题
  * @date 2021-03-15
  * @param {any} "night"
  * @returns {any}
@@ -617,6 +652,7 @@ document.getElementById("night").addEventListener("click", function() {
 
 /**
  * On click, switch to night Theme
+ * 单击后，切换到夜间主题
  * @date 2021-03-15
  * @param {any} "nightbuy"
  * @returns {any}
@@ -634,6 +670,7 @@ document.getElementById("nightbuy").addEventListener("click", function() {
 
 /**
  * On click, preview Aquatic Theme
+ * 单击时，预览海洋主题
  * @date 2021-03-15
  * @param {any} "aquatic"
  * @returns {any}
@@ -649,6 +686,7 @@ document.getElementById("aquatic").addEventListener("click", function() {
 
 /**
  * On click, switch to Aquatic Theme if enough coins
+ * 单击时，如果有足够的硬币，切换到海洋主题
  * @date 2021-03-15
  * @param {any} "aquaticbuy"
  * @returns {any}
@@ -681,6 +719,7 @@ document.getElementById("aquaticbuy").addEventListener("click", function() {
 
 /**
  * On click, preview San Francisco Theme
+ * 单击时，预览旧金山主题
  * @date 2021-03-15
  * @param {any} "sanfrancisco"
  * @returns {any}
@@ -696,6 +735,7 @@ document.getElementById("sanfrancisco").addEventListener("click", function() {
 
 /**
  * On click, switch to San Francisco Theme if enough coins
+ * 单击时，如果硬币足够，切换到旧金山主题
  * @date 2021-03-15
  * @param {any} "sanfranciscobuy"
  * @returns {any}
@@ -728,6 +768,7 @@ document.getElementById("sanfranciscobuy").addEventListener("click", function() 
 
 /**
  * On click, preview Doge Theme
+ * 点击后，预览Doge主题
  * @date 2021-03-15
  * @param {any} "dogeland"
  * @returns {any}
@@ -743,6 +784,7 @@ document.getElementById("dogeland").addEventListener("click", function() {
 
 /**
  * On click, switch to Doge Theme if enough coins
+ * 单击时，如果有足够的硬币，切换到Doge主题
  * @date 2021-03-15
  * @param {any} "dogebuy"
  * @returns {any}
@@ -773,6 +815,7 @@ document.getElementById("dogebuy").addEventListener("click", function() {
 
 /**
  * Cypress function to test coins
+ * 测试硬币的Cypress函数
  * @date 2021-03-15
  * @param {any} amount
  * @returns {any}
@@ -785,6 +828,7 @@ function cypressSetCoin(amount){
 //#6 Login Page/Create Account
 /**
  * Continue as guest
+ * 以访客身份继续
  * @date 2021-03-15
  * @param {any} "guestCont"
  * @returns {any}
@@ -796,6 +840,7 @@ document.getElementById("guestCont").addEventListener("click", function() {
 
 /**
  * Continue to login page
+ * 继续致登录页面
  * @date 2021-03-15
  * @param {any} "loginCont"
  * @returns {any}
@@ -807,6 +852,7 @@ document.getElementById("loginCont").addEventListener("click", function() {
 
 /**
  * Quit Login Page
+ * 退出登录页面
  * @date 2021-03-15
  * @param {any} "quitLogin"
  * @returns {any}
@@ -1117,6 +1163,9 @@ startBtn.addEventListener("click", runCounter); // listen & call runCounter
  * Listen to button, if clicked, call runCounter().
  * unCounter() increase counts if now is working mode. 
  * Then deligate countDown()
+ * 监听按钮，如果被单击，则调用runCounter（）。
+ * 如果现在处于工作模式，unCounter（）会增加计数。
+ * 然后调用countDown（）
  * @author Yichen Han
  * @date 2021-03-15
  * @returns {any}
@@ -1317,7 +1366,7 @@ function drainColor() {
 
 /**
  * Put the color back in the page.
- * Discrip in CN: 将颜色填入页面中。
+ * 将颜色填入页面中。
  * @author Suk Chan Lee
  * @date 2021-03-15
  * @returns {any}
@@ -1366,6 +1415,7 @@ var alertIntv = "Please enter an integer between 1 and 10."
 
 /**
  * Work phase (min)
+ * 工作阶段（分钟）
  * @date 2021-03-15
  * @param {any} "work-time-number"
  * @returns {any}
@@ -1381,6 +1431,7 @@ document.getElementById("work-time-number").addEventListener("input", function()
 
 /**
  * Short break (min)
+ * 短暂休息（分钟
  * @date 2021-03-15
  * @param {any} "short-break-number"
  * @returns {any}
@@ -1396,6 +1447,7 @@ document.getElementById("short-break-number").addEventListener("input", function
 
 /**
  * Long break (min)
+ * 长休息（分钟）
  * @date 2021-03-15
  * @param {any} "long-break-number"
  * @returns {any}
@@ -1411,6 +1463,7 @@ document.getElementById("long-break-number").addEventListener("input", function(
 
 /**
  * Long break interval
+ * 长时间休息区间
  * @date 2021-03-15
  * @param {any} "long-break-interval"
  * @returns {any}
@@ -1675,6 +1728,7 @@ function chooseSoundEffect(){
 
 /**
  * Show the statistics window
+ * 显示统计窗口
  * @author Bo Yang
  * @date 2021-03-15
  * @returns {any}
