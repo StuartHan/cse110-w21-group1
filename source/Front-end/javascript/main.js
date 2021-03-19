@@ -148,6 +148,7 @@ function getUserData(userEmail){
 }
 
 function updateUser(){
+    if (localStorage.getItem("username") != null){
     firebase.database().ref('users/' + localStorage.getItem("username").substring(0,localStorage.getItem("username").indexOf("."))).set({
         username: localStorage.getItem("name"),
         coin: localStorage.getItem("coin"),
@@ -156,6 +157,7 @@ function updateUser(){
         colorblind: localStorage.getItem("colorblind"),
         teams: localStorage.getItem("teams")
     });
+    }
 }
 
  document.getElementById("createAcc").addEventListener("click", function() { //Create User
