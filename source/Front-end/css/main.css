@@ -710,14 +710,6 @@ header>h1 {
     overflow-y: scroll;
 }
 
-#notExist{
-    grid-row: 4;
-    font-size: max(.7vw, 1vh);
-    justify-self: center;
-    align-self: center;
-    grid-column: 1/ span 4;
-}
-
 .TeamRow{
     font-size: max(1vw, 1.4vh);
     justify-self: center;
@@ -989,6 +981,24 @@ header>h1 {
     opacity: 0.3;
 }
 
+#notExist{
+    grid-row: 4;
+    font-size: max(.7vw, 1vh);
+    justify-self: center;
+    align-self: center;
+    grid-column: 1/ span 4;
+    visibility: hidden;
+}
+
+#notInTeam{
+    grid-row: 4;
+    font-size: max(.7vw, 1vh);
+    justify-self: center;
+    align-self: center;
+    grid-column: 1/ span 4;
+    visibility: hidden;
+}
+
 #inviteTeam > input{
     width: 80%;
     font-size: 0.7vw;
@@ -1002,6 +1012,11 @@ header>h1 {
     grid-column: 3;
 }
 
+#inviteTeamName{
+    grid-row: 3;
+    grid-column: 3;
+}
+
 #teamEmail{
     grid-row: 2;
     grid-column: 2;
@@ -1009,6 +1024,31 @@ header>h1 {
     justify-self: left;
     font-size: max(.7vw, 1vh);
     margin-right: 5%;
+}
+
+#teamNameInvite{
+    grid-row: 3;
+    grid-column: 2;
+    align-self: center;
+    justify-self: left;
+    font-size: max(.7vw, 1vh);
+    margin-right: 5%;
+}
+
+.TeamUser{
+    font-size: max(1vw, 1.4vh);
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    width: 80%;
+    height: 80%;
 }
 /* ============================================================================
  * Team Page
@@ -1026,7 +1066,7 @@ header>h1 {
         border-radius: 10px;
         height: 40%;
         width: 60%;
-        grid-template-rows: 20% 20% 20% 20% 20%;
+        grid-template-rows: 10% 10% 30% 30% 20%;
         grid-template-columns: 20% 20% 40% 20%;
         display: grid;
         min-height: 100px;
@@ -1098,6 +1138,7 @@ header>h1 {
         font-size: max(1vw, 1.3vh);
         align-self: center;
         justify-self: center;
+        font-family: 'Kanit', sans-serif;
     }
 
     #teamUsers{
