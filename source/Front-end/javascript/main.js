@@ -52,6 +52,7 @@ var loggedIn = false;
 var teams = []; //List of users
 var adminTracker = []; //List of admins
 var teamListeners = []; //Listens to teams changes
+var teamNames = []; //Team Names
 var teamsDisabled = false;
 
 var totalSec = workSec; // default starting mode is working mode
@@ -494,7 +495,7 @@ function loadTeams(){
                                 tempElement.value = i.toString();
                                 tempElement.innerHTML = list[i];
                                 tempElement.addEventListener("click", function() {
-                                    showTeam(i);
+                                    showTeam(i, list[i]);
                                 });
                                 document.getElementById("teamsEntry").insertAdjacentElement("beforeend",tempElement)
                                 let listenerTemp = firebase.database().ref("teams/"+list[i]);
@@ -504,6 +505,7 @@ function loadTeams(){
                                         document.getElementById("work-time-number").value = parseInt(snapshot3.val().worktime);
                                         document.getElementById("short-break-number").value = parseInt(snapshot3.val().shorttime);
                                         document.getElementById("long-break-number").value = parseInt(snapshot3.val().longtime);
+                                        document.getElementById("start-btn").click();
                                     }
                                 });
                             }
@@ -525,9 +527,10 @@ function loadTeams(){
     }
 }
 
-function showTeam(index){
+function showTeam(index, teamname){
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("teamPage").style.visibility = "visible";
+    document.getElementById("teamPageName").innerHTML = teamname;
     for (let i = 0; i < teams[index].length; i++){
         let tempElement = document.createElement('p');
         tempElement.className = "TeamUser";
@@ -647,6 +650,8 @@ document.getElementById("createTeamButton").addEventListener("click", function()
  document.getElementById("quitInviteTeam").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("inviteTeam").style.visibility = "hidden";
+    document.getElementById("notExist").style.visibility = "hidden";
+    document.getElementById("notInTeam").style.visibility = "hidden";
 });
 
 /**
@@ -658,7 +663,6 @@ document.getElementById("createTeamButton").addEventListener("click", function()
  */
  document.getElementById("backToTeamsMain").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "visible";
-    document.getElementById("inviteTeam").style.visibility = "hidden";
     document.getElementById("inviteTeam").style.visibility = "hidden";
     document.getElementById("notExist").style.visibility = "hidden";
     document.getElementById("notInTeam").style.visibility = "hidden";
@@ -674,8 +678,7 @@ document.getElementById("createTeamButton").addEventListener("click", function()
  document.getElementById("backToTeamsMain2").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "visible";
     document.getElementById("teamPage").style.visibility = "hidden";
-    document.getElementById("notExist").style.visibility = "hidden";
-    document.getElementById("notInTeam").style.visibility = "hidden";
+    document.getElementById("adminStart").style.visibility = "hidden";
 });
 
 /**
@@ -751,6 +754,47 @@ document.getElementById("backToTeams").addEventListener("click", function() {
       }).catch(function(error) {
         console.error(error);
     });
+});
+
+/**
+ * Starts timer for team on click.
+ * 单击邀请团队成员
+ * @date 2021-03-15
+ * @param {any} "adminStart"
+ * @returns {any}
+ */
+document.getElementById("adminStart").addEventListener("click", function(){
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    firebase.database().ref().child("teams").child(document.getElementById("teamPageName").innerHTML).get().then(function(snapshot) {
+        if (snapshot.exists()) {
+            firebase.database().ref('teams/' + document.getElementById("teamPageName").innerHTML).set({
+                worktime: snapshot.val().worktime,
+                shorttime: snapshot.val().shorttime,
+                longtime: snapshot.val().longtime,
+                admins: snapshot.val().admins, //Person who created team is admin
+                users: snapshot.val().users,
+                on: "true"
+            });
+            loadTeams();
+            await sleep(2000);
+            firebase.database().ref('teams/' + document.getElementById("teamPageName").innerHTML).set({
+                worktime: snapshot.val().worktime,
+                shorttime: snapshot.val().shorttime,
+                longtime: snapshot.val().longtime,
+                admins: snapshot.val().admins, //Person who created team is admin
+                users: snapshot.val().users,
+                on: "false"
+            });
+        }
+        else {
+            console.log("error");
+        }
+      }).catch(function(error) {
+        console.error(error);
+    });
+
 });
 
 // #4 Open/Close menus, settings, store, etc.
