@@ -531,6 +531,8 @@ function showTeam(index, teamname){
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("teamPage").style.visibility = "visible";
     document.getElementById("teamPageName").innerHTML = teamname;
+    while (document.getElementById("teamUsers").childNodes.length != 0) //Clear table
+            document.getElementById("teamUsers").removeChild(document.getElementById("teamUsers").childNodes[0]);
     for (let i = 0; i < teams[index].length; i++){
         let tempElement = document.createElement('p');
         tempElement.className = "TeamUser";
