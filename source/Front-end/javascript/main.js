@@ -463,6 +463,7 @@ document.getElementById("finalizeCreate").addEventListener("click",function() {
     else{
         localStorage.setItem("teams",document.getElementById("nameTeam").value);
     }
+    updateUser();
     loadTeams();
 });
 
@@ -484,18 +485,18 @@ function loadTeams(){
                     if (list[i] != "null"){
                         firebase.database().ref().child("teams").child(list[i]).get().then(function(snapshot2) {
                             if (snapshot2.exists()) {
-                            teams.push(snapshot2.val().users.split(",")); //All the users in a team
-                            adminTracker.push(snapshot2.val().admins.contains(localStorage.getItem("username")));
-                            document.getElementById("teamsEntry").insertAdjacentElement("beforeend","<p class='TeamRow'>"+list[i]+"</p>")
-                            let listenerTemp = firebase.database.ref("teams/"+list[i]);
-                            listenerTemp.on('value', (snapshot3) => {
-                                const data = snapshot3.val();
-                                if (currSec == 0 && snapshot3.val().on == "true"){
-                                    document.getElementById("work-time-number").value = parseInt(snapshot3.val().worktime);
-                                    document.getElementById("short-break-number").value = parseInt(snapshot3.val().shorttime);
-                                    document.getElementById("long-break-number").value = parseInt(snapshot3.val().longtime);
-                                }
-                            });
+                                teams.push(snapshot2.val().users.split(",")); //All the users in a team
+                                adminTracker.push(snapshot2.val().admins.contains(localStorage.getItem("username")));
+                                document.getElementById("teamsEntry").insertAdjacentElement("beforeend","<p class='TeamRow'>"+list[i]+"</p>")
+                                let listenerTemp = firebase.database.ref("teams/"+list[i]);
+                                listenerTemp.on('value', (snapshot3) => {
+                                    const data = snapshot3.val();
+                                    if (currSec == 0 && snapshot3.val().on == "true"){
+                                        document.getElementById("work-time-number").value = parseInt(snapshot3.val().worktime);
+                                        document.getElementById("short-break-number").value = parseInt(snapshot3.val().shorttime);
+                                        document.getElementById("long-break-number").value = parseInt(snapshot3.val().longtime);
+                                    }
+                                });
                             }
                             else {
                                 console.log("No data available");
