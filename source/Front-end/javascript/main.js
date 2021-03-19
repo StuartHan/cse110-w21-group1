@@ -286,6 +286,7 @@ function loadTeams(){
         firebase.database().ref().child("users").child(userEmail.substring(0,userEmail.indexOf("."))).get().then(function(snapshot) {
             if (snapshot.exists() && snapshot.val().teams != null) {
                 let list = snapshot.val().teams.split(",");
+                let counter = 0;
                 for (let i = 0; i < list.length;i++){
                     if (list[i] != "null" && list[i] != ""){
                         firebase.database().ref().child("teams").child(list[i]).get().then(function(snapshot2) {
@@ -297,8 +298,9 @@ function loadTeams(){
                                 tempElement.value = i.toString();
                                 tempElement.innerHTML = list[i];
                                 tempElement.addEventListener("click", function() {
-                                    showTeam(i, list[i]);
+                                    showTeam(counter, list[i]);
                                 });
+                                counter++;
                                 document.getElementById("teamsEntry").insertAdjacentElement("beforeend",tempElement)
                                 let listenerTemp = firebase.database().ref("teams/"+list[i]);
                                 listenerTemp.on('value', (snapshot3) => {
