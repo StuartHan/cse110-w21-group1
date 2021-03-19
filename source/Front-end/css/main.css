@@ -727,6 +727,8 @@ header>h1 {
     margin-bottom: 5%;
     border-radius: 5px;
     border-width: 2px;
+    border-style: solid;
+    border-color: black;
 }
 
 .TeamRow:hover{
@@ -1005,6 +1007,51 @@ header>h1 {
     font-size: max(.7vw, 1vh);
     margin-right: 5%;
 }
+/* ============================================================================
+ * Team Page
+ =========================================================================== */
+
+@media screen and (min-device-aspect-ratio:1/1) { /* New -Stuart */
+    #teamPage{
+        z-index: 999; /* New -Stuart (put at top) */
+        visibility: hidden;
+        grid-row: 2;
+        grid-column: 1;
+        background-color: rgba(256,256,256,1); /* Revised -Stuart */
+        /* margin-top:5%; */ /* Revised -Stuart */
+        margin-left: 5%;
+        margin-top: 3%;
+        border-radius: 10px;
+        height: 40%;
+        width: 60%;
+        grid-template-rows: 20% 20% 20% 20% 20%;
+        grid-template-columns: 20% 20% 40% 20%;
+        display: grid;
+        min-height: 100px;
+        min-width: 100px;
+    }
+    }
+    /* High screen */
+    @media screen and (max-device-aspect-ratio:1/1) { /* New -Stuart */
+    #teamPage{
+        z-index: 999; /* New -Stuart (put at top) */
+        visibility: hidden;
+        grid-row: 2;
+        grid-column: 1;
+        background-color: rgba(256,256,256,1); /* Revised -Stuart */
+        /* margin-top:5%; */ /* Revised -Stuart */
+        margin-left: 5%;
+        margin-top: 3%;
+        border-radius: 10px;
+        height: 40%;
+        width: 100%; /* Revised -Stuart */
+        grid-template-rows: 20% 20% 20% 20% 20%;
+        grid-template-columns: 20% 20% 40% 20%;
+        display: grid;
+        min-height: 100px;
+        min-width: 100px;
+    }
+    }
 /* ============================================================================
  * Timer
  =========================================================================== */

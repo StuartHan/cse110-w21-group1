@@ -493,6 +493,9 @@ function loadTeams(){
                                 tempElement.className = "TeamRow";
                                 tempElement.value = i.toString();
                                 tempElement.innerHTML = list[i];
+                                tempElement.addEventListener("click", function() {
+                                    showTeam(i);
+                                });
                                 document.getElementById("teamsEntry").insertAdjacentElement("beforeend",tempElement)
                                 let listenerTemp = firebase.database().ref("teams/"+list[i]);
                                 listenerTemp.on('value', (snapshot3) => {
@@ -520,6 +523,11 @@ function loadTeams(){
             console.error(error);
         });
     }
+}
+
+function showTeam(index){
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("teamPage").style.visibility = "visible";
 }
 
 /**
