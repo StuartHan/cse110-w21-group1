@@ -492,7 +492,7 @@ function loadTeams(){
                                 tempElement.value = i.toString();
                                 tempElement.innerHTML = list[i];
                                 document.getElementById("teamsEntry").insertAdjacentElement("beforeend",tempElement)
-                                let listenerTemp = firebase.database.ref("teams/"+list[i]);
+                                let listenerTemp = firebase.database().ref("teams/"+list[i]);
                                 listenerTemp.on('value', (snapshot3) => {
                                     const data = snapshot3.val();
                                     if (currSec == 0 && snapshot3.val().on == "true"){

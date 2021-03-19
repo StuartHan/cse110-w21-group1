@@ -718,6 +718,21 @@ header>h1 {
     grid-column: 1/ span 4;
 }
 
+.TeamRow{
+    font-size: max(1vw, 1.4vh);
+    justify-self: center;
+    align-self: center;
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 5px;
+    border-width: 2px;
+}
+
+.TeamRow:hover{
+    opacity:0.3;
+}
+
 
 /* ============================================================================
  * Create Team
