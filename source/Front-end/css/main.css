@@ -729,6 +729,8 @@ header>h1 {
     border-width: 2px;
     border-style: solid;
     border-color: black;
+    width: 80%;
+    height: 80%;
 }
 
 .TeamRow:hover{
@@ -1051,6 +1053,16 @@ header>h1 {
         min-height: 100px;
         min-width: 100px;
     }
+    }
+
+    #quitTeamMain{ /* X */
+        grid-row: 1;
+        grid-column: 4;
+        justify-self: right;
+        align-self: start;
+        margin-top: 3%;
+        margin-right: 3%;
+        font-size: max(1.3vw, 2vh); /* Revised -Stuart */
     }
 /* ============================================================================
  * Timer

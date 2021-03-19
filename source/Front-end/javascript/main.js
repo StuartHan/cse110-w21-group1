@@ -576,6 +576,30 @@ document.getElementById("teamsExit").addEventListener("click", function() {
 });
 
 /**
+ * On click, close invite window
+ * 点击后，关闭邀请窗口
+ * @date 2021-03-15
+ * @param {any} "quitInviteTeam"
+ * @returns {any}
+ */
+ document.getElementById("quitInviteTeam").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("inviteTeam").style.visibility = "hidden";
+});
+
+/**
+ * On click, close invite window and go back to main teams page
+ * 点击后，关闭邀请窗口并返回主团队页面
+ * @date 2021-03-15
+ * @param {any} "backToTeamsMain"
+ * @returns {any}
+ */
+ document.getElementById("backToTeamsMain").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "visible";
+    document.getElementById("inviteTeam").style.visibility = "hidden";
+});
+
+/**
  * On click, close create team window
  * 单击时，关闭创建团队窗口
  * @date 2021-03-15
