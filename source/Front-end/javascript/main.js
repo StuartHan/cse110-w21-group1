@@ -649,6 +649,30 @@ document.getElementById("createTeamButton").addEventListener("click", function()
 });
 
 /**
+ * On click, back from teams main window
+ * 单击后，从团队主窗口返回
+ * @date 2021-03-15
+ * @param {any} "backToTeamsMain2"
+ * @returns {any}
+ */
+ document.getElementById("backToTeamsMain2").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "visible";
+    document.getElementById("teamPage").style.visibility = "hidden";
+});
+
+/**
+ * On click, close team main window
+ * 单击时，关闭创建团队窗口
+ * @date 2021-03-15
+ * @param {any} "quitTeamMain"
+ * @returns {any}
+ */
+ document.getElementById("quitTeamMain").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("teamPage").style.visibility = "hidden";
+});
+
+/**
  * On click, open invite team window
  * 点击后，进入邀请团队窗口
  * @date 2021-03-15
