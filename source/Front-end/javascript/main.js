@@ -287,7 +287,7 @@ function loadTeams(){
             if (snapshot.exists() && snapshot.val().teams != null) {
                 let list = snapshot.val().teams.split(",");
                 for (let i = 0; i < list.length;i++){
-                    if (list[i] != "null"){
+                    if (list[i] != "null" && list[i] != ""){
                         firebase.database().ref().child("teams").child(list[i]).get().then(function(snapshot2) {
                             if (snapshot2.exists()) {
                                 teams.push(snapshot2.val().users.split(",")); //All the users in a team
