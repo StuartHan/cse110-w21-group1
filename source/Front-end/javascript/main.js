@@ -679,6 +679,7 @@ document.getElementById("createTeamButton").addEventListener("click", function()
     document.getElementById("teams").style.visibility = "visible";
     document.getElementById("teamPage").style.visibility = "hidden";
     document.getElementById("adminStart").style.visibility = "hidden";
+    stopTeamTimer();
 });
 
 /**
@@ -692,6 +693,7 @@ document.getElementById("createTeamButton").addEventListener("click", function()
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("teamPage").style.visibility = "hidden";
     document.getElementById("adminStart").style.visibility = "hidden";
+    stopTeamTimer();
 });
 
 /**
@@ -764,9 +766,6 @@ document.getElementById("backToTeams").addEventListener("click", function() {
  * @returns {any}
  */
 document.getElementById("adminStart").addEventListener("click", function(){
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
     firebase.database().ref().child("teams").child(document.getElementById("teamPageName").innerHTML).get().then(function(snapshot) {
         if (snapshot.exists()) {
             firebase.database().ref('teams/' + document.getElementById("teamPageName").innerHTML).set({
@@ -778,15 +777,6 @@ document.getElementById("adminStart").addEventListener("click", function(){
                 on: "true"
             });
             loadTeams();
-            await sleep(2000);
-            firebase.database().ref('teams/' + document.getElementById("teamPageName").innerHTML).set({
-                worktime: snapshot.val().worktime,
-                shorttime: snapshot.val().shorttime,
-                longtime: snapshot.val().longtime,
-                admins: snapshot.val().admins, //Person who created team is admin
-                users: snapshot.val().users,
-                on: "false"
-            });
         }
         else {
             console.log("error");
@@ -796,6 +786,27 @@ document.getElementById("adminStart").addEventListener("click", function(){
     });
 
 });
+
+function stopTeamTimer(){
+    firebase.database().ref().child("teams").child(document.getElementById("teamPageName").innerHTML).get().then(function(snapshot) {
+        if (snapshot.exists()) {
+            firebase.database().ref('teams/' + document.getElementById("teamPageName").innerHTML).set({
+                worktime: snapshot.val().worktime,
+                shorttime: snapshot.val().shorttime,
+                longtime: snapshot.val().longtime,
+                admins: snapshot.val().admins, //Person who created team is admin
+                users: snapshot.val().users,
+                on: "false"
+            });
+            loadTeams();
+        }
+        else {
+            console.log("error");
+        }
+      }).catch(function(error) {
+        console.error(error);
+    });
+}
 
 // #4 Open/Close menus, settings, store, etc.
 /**
