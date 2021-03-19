@@ -487,7 +487,11 @@ function loadTeams(){
                             if (snapshot2.exists()) {
                                 teams.push(snapshot2.val().users.split(",")); //All the users in a team
                                 adminTracker.push(snapshot2.val().admins.includes(localStorage.getItem("username")));
-                                document.getElementById("teamsEntry").insertAdjacentElement("beforeend","<p class='TeamRow'>"+list[i]+"</p>")
+                                let tempElement = document.createElement('p');
+                                tempElement.className = "TeamRow";
+                                tempElement.value = i.toString();
+                                tempElement.innerHTML = list[i];
+                                document.getElementById("teamsEntry").insertAdjacentElement("beforeend",tempElement)
                                 let listenerTemp = firebase.database.ref("teams/"+list[i]);
                                 listenerTemp.on('value', (snapshot3) => {
                                     const data = snapshot3.val();
