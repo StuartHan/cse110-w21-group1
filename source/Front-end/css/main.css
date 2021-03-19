@@ -710,6 +710,14 @@ header>h1 {
     overflow-y: scroll;
 }
 
+#notExist{
+    grid-row: 4;
+    font-size: max(.7vw, 1vh);
+    justify-self: center;
+    align-self: center;
+    grid-column: 1/ span 4;
+}
+
 
 /* ============================================================================
  * Create Team

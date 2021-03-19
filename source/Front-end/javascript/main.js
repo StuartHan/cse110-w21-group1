@@ -51,6 +51,7 @@ var language = "EN";
 var loggedIn = false;
 var teams = []; //List of users
 var adminTracker = []; //List of admins
+var teamListeners = []; //Listens to teams changes
 var teamsDisabled = false;
 
 var totalSec = workSec; // default starting mode is working mode
@@ -473,24 +474,36 @@ document.getElementById("finalizeCreate").addEventListener("click",function() {
  */
 function loadTeams(){
     if(loggedIn && !teamsDisabled){
+        let userEmail = localStorage.getItem("username");
         while (document.getElementById("teamsEntry").childNodes.length != 0) //Clear table
             document.getElementById("teamsEntry").removeChild(document.getElementById("teamsEntry").childNodes[0]);
         firebase.database().ref().child("users").child(userEmail.substring(0,userEmail.indexOf("."))).get().then(function(snapshot) {
             if (snapshot.exists() && snapshot.val().teams != null) {
                 let list = snapshot.val().teams.split(",");
                 for (let i = 0; i < list.length;i++){
-                    firebase.database().ref().child("teams").child(list[i]).get().then(function(snapshot2) {
-                        if (snapshot2.exists()) {
-                          teams.push(snapshot2.val().users.split(",")); //All the users in a team
-                          adminTracker.push(snapshot2.val().admins.contains(localStorage.getItem("username")));
-                          document.getElementById("teamsEntry").insertAdjacentElement("beforeend","<p class='TeamRow'>"+list[i]+"</p>")
-                        }
-                        else {
-                          console.log("No data available");
-                        }
-                      }).catch(function(error) {
-                        console.error(error);
-                    });
+                    if (list[i] != "null"){
+                        firebase.database().ref().child("teams").child(list[i]).get().then(function(snapshot2) {
+                            if (snapshot2.exists()) {
+                            teams.push(snapshot2.val().users.split(",")); //All the users in a team
+                            adminTracker.push(snapshot2.val().admins.contains(localStorage.getItem("username")));
+                            document.getElementById("teamsEntry").insertAdjacentElement("beforeend","<p class='TeamRow'>"+list[i]+"</p>")
+                            let listenerTemp = firebase.database.ref("teams/"+list[i]);
+                            listenerTemp.on('value', (snapshot3) => {
+                                const data = snapshot3.val();
+                                if (currSec == 0 && snapshot3.val().on == "true"){
+                                    document.getElementById("work-time-number").value = parseInt(snapshot3.val().worktime);
+                                    document.getElementById("short-break-number").value = parseInt(snapshot3.val().shorttime);
+                                    document.getElementById("long-break-number").value = parseInt(snapshot3.val().longtime);
+                                }
+                            });
+                            }
+                            else {
+                            console.log("No data available");
+                            }
+                        }).catch(function(error) {
+                            console.error(error);
+                        });
+                    }
                 }
             }
             else {
@@ -570,6 +583,30 @@ document.getElementById("createTeamButton").addEventListener("click", function()
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("createTeam").style.visibility = "visible";
     document.getElementById("inviteSuccess").style.visibility = "hidden";
+});
+
+/**
+ * On click, close invite window
+ * 单击时，关闭创建团队窗口
+ * @date 2021-03-15
+ * @param {any} "quitInviteTeam"
+ * @returns {any}
+ */
+ document.getElementById("quitInviteTeam").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("inviteTeam").style.visibility = "hidden";
+});
+
+/**
+ * On click, back from invite window
+ * 单击时，关闭创建团队窗口
+ * @date 2021-03-15
+ * @param {any} "quitInviteTeam"
+ * @returns {any}
+ */
+ document.getElementById("quitInviteTeam").addEventListener("click", function() { 
+    document.getElementById("teams").style.visibility = "visible";
+    document.getElementById("inviteTeam").style.visibility = "hidden";
 });
 
 /**
