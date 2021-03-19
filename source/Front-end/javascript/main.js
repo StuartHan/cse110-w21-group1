@@ -465,6 +465,8 @@ document.getElementById("finalizeCreate").addEventListener("click",function() {
     }
     updateUser();
     loadTeams();
+    document.getElementById("teams").style.visibility = "hidden";
+    document.getElementById("createTeam").style.visibility = "hidden";
 });
 
 /**
