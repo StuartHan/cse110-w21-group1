@@ -1143,8 +1143,9 @@ header>h1 {
 
     #teamUsers{
         grid-row: 3 / span 2;
-        grid-column: 1 / span 3;
+        grid-column: 1 / span 4;
         margin-left: 5%;
+        margin-right: 5%;
         justify-self: stretch;
         align-self: stretch;
         overflow-y: scroll;

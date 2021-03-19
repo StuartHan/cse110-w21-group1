@@ -777,6 +777,7 @@ document.getElementById("adminStart").addEventListener("click", function(){
                 on: "true"
             });
             loadTeams();
+            document.getElementById("start-btn").click();
         }
         else {
             console.log("error");
