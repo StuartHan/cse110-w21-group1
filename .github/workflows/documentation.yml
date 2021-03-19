@@ -22,7 +22,7 @@ jobs:
       - name: Install JSDocs
         run: npm install -g jsdoc
       - name: run JSDoc
-        run: jsdoc ./source/Front-end/javascript/main.js -d ./generatedDocs
+        run: jsdoc ./source/Front-end/javascript/mainDev.js -d ./generatedDocs
       - name: Add all files
         run: git add .
       - name: Commit all files

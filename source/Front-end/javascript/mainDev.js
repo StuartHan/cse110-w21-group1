@@ -1,7 +1,25 @@
-var workSec = 1500; 
-var sBrkSec = 300; 
-var lBrkSec = 900; 
-var ms = 1000; 
+/******************************************************************************
+ * File Name    : main.js
+ * First Created: Feb 14
+ * Last  Revised: Mar 14 
+ * Curr  Version: 3.0
+ * 
+ * INDEX:
+ * #1 Global Variables 全局变量
+ * #2 User information load/store 用户信息加载/存储
+ * #3 Teams feature create/invite/remove 团队功能创建/邀请/删除
+ * #4 Open/Close menus, settings, store, etc. 打开/关闭菜单，设置，存储等
+ * #5 Doge Store 商店
+ * #6 Login Page/Create Account 登录页面/创建帐户
+ * #7 Timer functions/helper functions 计时器功能/辅助功能
+ * #8 UI Helper functions 交互设计辅助函数
+ *****************************************************************************/
+
+//#1 Global Variables
+var workSec = 1500; // total seconds in work mode, 1500 for Pomodoro 
+var sBrkSec = 300; // total seconds in short break mode, 300 for Pomodoro 
+var lBrkSec = 900; // total seconds in long break mode, 900 for Pomodoro 
+var ms = 1000; // 1000 = 1s
 
 var firebaseConfig = {
     apiKey: "AIzaSyC3aqVaAxSSt5FlCOBkoL5JVmiFoib9aTE",
@@ -17,25 +35,44 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 var db = firebase.firestore();
 
-
+/* Test function： ms smaller, timer runs faster */
+/**
+ * @date 2021-03-15
+ * @param {any} thisms
+ * @returns {any}
+ */
 function setms(thisms) { ms = thisms; }
 
-var currMode = "w"; 
-var counts = 0;
-var countsThres = 4; 
+var currMode = "w"; // current mode. Default is working mode
+var counts = 0; // # of working periods. counts >= countsThres -> long break
+var countsThres = 4; // = Long break interval
 var color = "rgba(3,165,89,0.6)";
 var language = "EN";
 var loggedIn = false;
-var teams = []; 
-var adminTracker = []; 
-var teamListeners = []; 
-var teamNames = []; 
+var teams = []; //List of users
+var adminTracker = []; //List of admins
+var teamListeners = []; //Listens to teams changes
+var teamNames = []; //Team Names
 var teamsDisabled = false;
 
-var totalSec = workSec; 
+var totalSec = workSec; // default starting mode is working mode
 
-document.getElementById("time").innerHTML = secToTime(workSec);
+/**
+ * @date 2021-03-15
+ * @param {any} "time"
+ * @returns {any}
+ */
+document.getElementById("time").innerHTML = secToTime(workSec); //On load
 
+/* ============================================================================
+ * First Created: Mar 2  -- Yichen Han
+ * Last  Revised: Mar 2  -- Yichen Han
+ * Revised Times: 1
+ * 
+ * Description  : Variables shown in Statistics.
+ * Discrip in CN: 统计窗口中展示的变量。
+ * Type         : Global Variables.
+ =========================================================================== */
  var totalWorkMins  = 0;
  var totalBreakMins = 0;
  var totalWorkCount = 0;
@@ -43,6 +80,19 @@ document.getElementById("time").innerHTML = secToTime(workSec);
  var totalLBrkCount = 0;
  var currSec;
 
+/**
+ * When the DOM Content is loaded, if it is a user's first time visiting
+ * the website, load in the coin, shopitems, and active localStorage items.
+ * Otherwise, load the most recently used background and coins.
+ * 加载DOM内容时，如果这是用户的首次访问
+ * 网站，加载硬币，购物物品和有效的localStorage物品。
+ * 否则，加载最近使用的背景和硬币。
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} 'DOMContentLoaded'
+ * @param {any} (
+ * @returns {any}
+ */
  window.addEventListener('DOMContentLoaded', () => {
     loadUserSettings();
     if (localStorage.getItem('coin') == null || localStorage.getItem('shopitems') == null || localStorage.getItem('visited') == null){ //Initialize Doge Coins
@@ -67,6 +117,15 @@ document.getElementById("time").innerHTML = secToTime(workSec);
     darkenChosen();
 });
 
+// #2 User information load/store
+/**
+ * If logged in, load user settings into local storage and change
+ * button innerHTML accordingly.
+ * 如果已登录，将用户设置加载到本地存储中并相应更改按钮的内部HTML
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
  function loadUserSettings(){
     if (localStorage.getItem("username") != null) {
         loggedIn = true;
@@ -87,12 +146,22 @@ document.getElementById("time").innerHTML = secToTime(workSec);
             if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
         });
     }
-    else{
+    else{ //Not logged in
         document.getElementById("teamsAccountLogin").innerHTML = "Login";
         if(language=="CN") {document.getElementById("teamsAccountLogin").innerHTML = "登陆";}
     }
 }
 
+/**
+ * If login is valid, log in user and load settings into local storage.
+ * If invalid, throw error message onto interface.
+ * 如果登录有效，登录用户并将设置加载到本地存储中。
+ * 如果无效，将错误消息导出致接口。
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} "proceedLogin"
+ * @returns {any}
+ */
 document.getElementById("proceedLogin").addEventListener("click", function() { //Login Press
     document.getElementById("invalidLogin").style.visibility = "hidden";
     document.getElementById("loadingNotif").style.visibility = "visible";
@@ -117,7 +186,20 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
         document.getElementById("loadingNotif").style.visibility = "hidden";
     });
 });
-
+ 
+ /**
+  * Helper function to create user data in Google Firebase Auth
+  * 在Google Firebase Auth中创建用户数据的辅助功能
+  * @author Suk Chan (Kevin) Lee
+  * @date 2021-03-15
+  * @param {any} email email of user
+  * @param {any} name name of user
+  * @param {any} coins amount of coins user has
+  * @param {any} shopitems items user has already bought
+  * @param {any} active active background
+  * @param {any} colorblind if user has enabled colorblind mode
+  * @returns {any}
+  */
  function createUserData(email,name,coins,shopitems,active,colorblind){
     firebase.database().ref('users/'+email.substring(0,email.indexOf("."))).set({
         username: name,
@@ -129,7 +211,15 @@ document.getElementById("proceedLogin").addEventListener("click", function() { /
     });
 }
 
-function getUserData(userEmail){
+/**
+ * Helper function to get user data in Google Firebase Auth
+ * 可在Google Firebase Auth中获取用户数据的辅助功能
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} userEmail email of user
+ * @returns {any}
+ */
+function getUserData(userEmail){ //Working with GitHub Pages
     firebase.database().ref().child("users").child(userEmail.substring(0,userEmail.indexOf("."))).get().then(function(snapshot) {
         if (snapshot.exists()) {
           localStorage.setItem("coin",snapshot.val().coin);
@@ -147,6 +237,17 @@ function getUserData(userEmail){
     });
 }
 
+/**
+ * 描述
+ * @date 2021-03-15
+ * @param {any} email
+ * @param {any} name
+ * @param {any} coins
+ * @param {any} shopitems
+ * @param {any} active
+ * @param {any} colorblind
+ * @returns {any}
+ */
 function updateUser(){
     firebase.database().ref('users/' + localStorage.getItem("username").substring(0,localStorage.getItem("username").indexOf("."))).set({
         username: localStorage.getItem("name"),
@@ -158,6 +259,35 @@ function updateUser(){
     });
 }
 
+/* ============================================================================
+ * Name         : createAcc Event Listener
+ * First Created: March 10 -- Suk Chan (Kevin) Lee
+ * Last  Revised: March 10 -- Suk Chan (Kevin) Lee
+ * Revised Times: 1
+ * 
+ * Description  : Helper function to create user data in Google Firebase Auth and
+ *      store data in Google Realtime database.
+ *      Restrictions currently are that passwords >= 8 characters, names are <= 15
+ *      characters, and correct email format.
+ * Description in CN: 可在Google Firebase Auth中创建用户数据并将数据存储在Google Realtime
+ *                    数据库中的辅助功能
+ *                    当前的限制是密码大于等于8个字符，名称小于等于15字符，以及正确的电子邮件格式。
+ * Parameter    : N/A
+ * Return       : N/A
+ =========================================================================== */
+/**
+ * Helper function to create user data in Google Firebase Auth and
+ * store data in Google Realtime database.
+ * Restrictions currently are that passwords >= 8 characters, names are <= 15
+ * characters, and correct email format.
+ * 可在Google Firebase Auth中创建用户数据并将数据存储在Google Realtime
+ * 数据库中的辅助功能当前的限制是密码大于等于8个字符，名称小于等于15字符，以及正确的电子邮件
+ * 格式。
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} "createAcc"
+ * @returns {any}
+ */
  document.getElementById("createAcc").addEventListener("click", function() { //Create User
     if ((String)(document.getElementById("emailCreate").value).includes("@") && (String)(document.getElementById("emailCreate").value).includes(".")
     && (String)(document.getElementById("nameCreate").value).length <= 15 && (String)(document.getElementById("passCreate").value).length >= 8){
@@ -180,14 +310,16 @@ function updateUser(){
             localStorage.setItem("username", document.getElementById("emailCreate").value);
             localStorage.setItem("password",document.getElementById("passCreate").value);
             document.getElementById("welcome").innerHTML = "Welcome "+document.getElementById("nameCreate").value+"!";
+            //if (language == "CN") {document.getElementById("welcome").innerHTML = "欢迎使用， "+document.getElementById("nameCreate").value+"!";} // change language 
             document.getElementById("greywrapper").style.visibility = "hidden";
             document.getElementById("accountCreation").style.visibility = "hidden";
             loggedIn = true;
         })
-        .catch((error) => {
+        /*.catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
-        });
+            // ..
+        })*/;
     }
     else if (!(String)(document.getElementById("emailCreate").value).includes("@") || !(String)(document.getElementById("emailCreate").value).includes(".")){
         document.getElementById("createError").innerHTML = "Invalid Email";
@@ -203,41 +335,85 @@ function updateUser(){
     }
 });
 
+/**
+ * @date 2021-03-15
+ * @param {any} user
+ * @param {any} amount
+ * @returns {any}
+ */
 function updateCoin(user,amount){
     let string = '/users/' + user +'/coin';
     firebase.database().ref().update({string : amount})
 }
 
+/**
+ * On click, close create account window
+ * 点击后，关闭创建帐户的窗口
+ * @date 2021-03-15
+ * @param {any} "quitCreate"
+ * @returns {any}
+ */
 document.getElementById("quitCreate").addEventListener("click", function() {
     document.getElementById("greywrapper").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "hidden";
     document.getElementById("createError").style.visibility = "hidden";
 });
 
+/**
+ * On click, open main account login window
+ * 单击时，打开主帐户登录窗口
+ * @date 2021-03-15
+ * @param {any} "notifCreate"
+ * @returns {any}
+ */
 document.getElementById("notifCreate").addEventListener("click", function() { 
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "visible";
 });
 
+/**
+ * On click, open create account window
+ * 点击后，打开创建帐户窗口
+ * @date 2021-03-15
+ * @param {any} "createAccInstead"
+ * @returns {any}
+ */
 document.getElementById("createAccInstead").addEventListener("click", function() { 
     document.getElementById("loginMain").style.visibility = "hidden";
     document.getElementById("accountCreation").style.visibility = "visible";
     document.getElementById("invalidLogin").style.visibility = "hidden";
 });
 
+/**
+ * On click, open login account window
+ * 单击时，打开登录帐户窗口
+ * @date 2021-03-15
+ * @param {any} "switchToLogin"
+ * @returns {any}
+ */
 document.getElementById("switchToLogin").addEventListener("click", function() { 
     document.getElementById("loginMain").style.visibility = "visible";
     document.getElementById("accountCreation").style.visibility = "hidden";
     document.getElementById("createError").style.visibility = "hidden";
 });
 
-document.getElementById("teamsAccountLogin").addEventListener("click", function() { 
-    if (loggedIn){
+//#3 Teams Feature
+/**
+ * Logout user if logged in, otherwise direct to login screen.
+ * 退出登录（如果已登录），否则直接进入登录屏幕。
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} "teamsAccountLogin"
+ * @returns {any}
+ */
+document.getElementById("teamsAccountLogin").addEventListener("click", function() { //Login/Logout Button
+    if (loggedIn){//Logout Operation, DON'T remove accessibility settings
         document.getElementById("welcome").innerHTML = "Welcome Guest!";
         document.getElementById("teamsAccountLogin").innerHTML = "Login";
-        localStorage.setItem("coin","0")
+        localStorage.setItem("coin","0")//Remove coins
         localStorage.removeItem("username");
         localStorage.removeItem("password");
+        //Stop GET requests
     }
     else{
         document.getElementById("loginMain").style.visibility = "visible";
@@ -245,17 +421,35 @@ document.getElementById("teamsAccountLogin").addEventListener("click", function(
     }
 });
 
+/**
+ * Helper function to create team data in Google Firebase Auth
+ * 可在Google Firebase Auth中创建团队数据的辅助功能
+ * @date 2021-03-15
+ * @param {any} name name of team
+ * @param {any} worktime work time length of team
+ * @param {any} shorttime short break time length of team
+ * @param {any} longtime long break time length of team
+ * @param {any} user users in team
+ * @returns {any}
+ */
 function createTeam(name,worktime,shorttime,longtime,user){
     firebase.database().ref('teams/'+name).set({
         worktime: worktime,
         shorttime: shorttime,
         longtime: longtime,
-        admins: user, 
+        admins: user, //Person who created team is admin
         users: user,
         on: "false"
     });
 }
 
+/**
+ * Creates a team.
+ * 创建一个团队。
+ * @date 2021-03-15
+ * @param {any} "finalizeCreate"
+ * @returns {any}
+ */
 document.getElementById("finalizeCreate").addEventListener("click",function() {
     createTeam(
         document.getElementById("nameTeam").value,
@@ -276,6 +470,12 @@ document.getElementById("finalizeCreate").addEventListener("click",function() {
     document.getElementById("createTeam").style.visibility = "hidden";
 });
 
+/**
+ * Loads teams into teams table
+ * 将团队加载到团队表中
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function loadTeams(){
     if(loggedIn && !teamsDisabled){
         let userEmail = localStorage.getItem("username");
@@ -312,9 +512,9 @@ function loadTeams(){
                             else {
                                 console.log("No data available");
                             }
-                        }).catch(function(error) {
+                        })/*.catch(function(error) {
                             console.error(error);
-                        });
+                        })*/;
                     }
                 }
             }
@@ -348,6 +548,13 @@ function showTeam(index, teamname){
     }
 }
 
+/**
+ * On click, either disable or enable the teams features.
+ * 单击时，禁用或启用团队功能。
+ * @date 2021-03-15
+ * @param {any} "disableTeams"
+ * @returns {any}
+ */
 document.getElementById("disableTeams").addEventListener("click",function() {
     teamsDisabled = document.getElementById("disableTeams").checked;
     if (teamsDisabled){
@@ -362,38 +569,86 @@ document.getElementById("disableTeams").addEventListener("click",function() {
     }
 });
 
+/**
+ * On click, open teams account window
+ * 点击后，打开团队帐户窗口
+ * @date 2021-03-15
+ * @param {any} "profilepic"
+ * @returns {any}
+ */
 document.getElementById("profilepic").addEventListener("click", function() { 
         document.getElementById("teams").style.visibility = "visible";
         loadTeams();
 });
 
-
+/**
+ * On click, close teams account window
+ * 点击后，关闭团队帐户窗口
+ * @date 2021-03-15
+ * @param {any} "teamsExit"
+ * @returns {any}
+ */
 document.getElementById("teamsExit").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("inviteSuccess").style.visibility = "hidden";
 });
 
+/**
+ * On click, close invite window
+ * 点击后，关闭邀请窗口
+ * @date 2021-03-15
+ * @param {any} "quitInviteTeam"
+ * @returns {any}
+ */
  document.getElementById("quitInviteTeam").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("inviteTeam").style.visibility = "hidden";
 });
 
+/**
+ * On click, close invite window and go back to main teams page
+ * 点击后，关闭邀请窗口并返回主团队页面
+ * @date 2021-03-15
+ * @param {any} "backToTeamsMain"
+ * @returns {any}
+ */
  document.getElementById("backToTeamsMain").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "visible";
     document.getElementById("inviteTeam").style.visibility = "hidden";
 });
 
+/**
+ * On click, close create team window
+ * 单击时，关闭创建团队窗口
+ * @date 2021-03-15
+ * @param {any} "quitCreateTeam"
+ * @returns {any}
+ */
 document.getElementById("quitCreateTeam").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("createTeam").style.visibility = "hidden";
 });
 
+/**
+ * On click, open create team window
+ * 单击后，打开创建团队窗口
+ * @date 2021-03-15
+ * @param {any} "createTeamButton"
+ * @returns {any}
+ */
 document.getElementById("createTeamButton").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("createTeam").style.visibility = "visible";
     document.getElementById("inviteSuccess").style.visibility = "hidden";
 });
 
+/**
+ * On click, close invite window
+ * 单击时，关闭创建团队窗口
+ * @date 2021-03-15
+ * @param {any} "quitInviteTeam"
+ * @returns {any}
+ */
  document.getElementById("quitInviteTeam").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("inviteTeam").style.visibility = "hidden";
@@ -401,6 +656,13 @@ document.getElementById("createTeamButton").addEventListener("click", function()
     document.getElementById("notInTeam").style.visibility = "hidden";
 });
 
+/**
+ * On click, back from invite window
+ * 单击时，关闭创建团队窗口
+ * @date 2021-03-15
+ * @param {any} "backToTeamsMain"
+ * @returns {any}
+ */
  document.getElementById("backToTeamsMain").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "visible";
     document.getElementById("inviteTeam").style.visibility = "hidden";
@@ -408,6 +670,13 @@ document.getElementById("createTeamButton").addEventListener("click", function()
     document.getElementById("notInTeam").style.visibility = "hidden";
 });
 
+/**
+ * On click, back from teams main window
+ * 单击后，从团队主窗口返回
+ * @date 2021-03-15
+ * @param {any} "backToTeamsMain2"
+ * @returns {any}
+ */
  document.getElementById("backToTeamsMain2").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "visible";
     document.getElementById("teamPage").style.visibility = "hidden";
@@ -415,6 +684,13 @@ document.getElementById("createTeamButton").addEventListener("click", function()
     stopTeamTimer();
 });
 
+/**
+ * On click, close team main window
+ * 单击时，关闭创建团队窗口
+ * @date 2021-03-15
+ * @param {any} "quitTeamMain"
+ * @returns {any}
+ */
  document.getElementById("quitTeamMain").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("teamPage").style.visibility = "hidden";
@@ -422,17 +698,38 @@ document.getElementById("createTeamButton").addEventListener("click", function()
     stopTeamTimer();
 });
 
+/**
+ * On click, open invite team window
+ * 点击后，进入邀请团队窗口
+ * @date 2021-03-15
+ * @param {any} "createTeamButton"
+ * @returns {any}
+ */
  document.getElementById("invite").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "hidden";
     document.getElementById("inviteTeam").style.visibility = "visible";
     document.getElementById("inviteSuccess").style.visibility = "hidden";
 });
 
+/**
+ * On click, go back to teams window
+ * 点击后，返回团队窗口
+ * @date 2021-03-15
+ * @param {any} "backToTeams"
+ * @returns {any}
+ */
 document.getElementById("backToTeams").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "visible";
     document.getElementById("createTeam").style.visibility = "hidden";
 });
 
+/**
+ * Invite team member on click
+ * 单击邀请团队成员
+ * @date 2021-03-15
+ * @param {any} "finalizeInvite"
+ * @returns {any}
+ */
  document.getElementById("finalizeInvite").addEventListener("click", function() { 
     document.getElementById("teams").style.visibility = "visible";
     document.getElementById("createTeam").style.visibility = "hidden";
@@ -463,6 +760,13 @@ document.getElementById("backToTeams").addEventListener("click", function() {
     });
 });
 
+/**
+ * Starts timer for team on click.
+ * 单击邀请团队成员
+ * @date 2021-03-15
+ * @param {any} "adminStart"
+ * @returns {any}
+ */
 document.getElementById("adminStart").addEventListener("click", function(){
     firebase.database().ref().child("teams").child(document.getElementById("teamPageName").innerHTML).get().then(function(snapshot) {
         if (snapshot.exists()) {
@@ -507,6 +811,14 @@ function stopTeamTimer(){
     });
 }
 
+// #4 Open/Close menus, settings, store, etc.
+/**
+ * Open Settings / Gear 
+ * 打开设置
+ * @date 2021-03-15
+ * @param {any} "gear"
+ * @returns {any}
+ */
 document.getElementById("gear").addEventListener("click", function() { //On click, show settings
     document.getElementById("settingsMenu").style.visibility = "visible";
     document.getElementById("main").style.visibility = "hidden";
@@ -515,6 +827,13 @@ document.getElementById("gear").addEventListener("click", function() { //On clic
     chooseSoundEffect();
 });
 
+/**
+ * Open Statistics / Stats
+ * 打开统计
+ * @date 2021-03-15
+ * @param {any} "stats"
+ * @returns {any}
+ */
 document.getElementById("stats").addEventListener("click", function() { //On click, show statistics
     document.getElementById("statisticsMenu").style.visibility = "visible";
     document.getElementById("main").style.visibility = "hidden";
@@ -523,12 +842,26 @@ document.getElementById("stats").addEventListener("click", function() { //On cli
     showStats();
 });
 
+/**
+ * Close Statistics / Stats 
+ * 关闭统计
+ * @date 2021-03-15
+ * @param {any} "OKbtn-statistics"
+ * @returns {any}
+ */
 document.getElementById("OKbtn-statistics").addEventListener("click", function() { //On click, hide statistics page
     document.getElementById("statisticsMenu").style.visibility = "hidden";
     // document.getElementById("gear").click();
     document.getElementById("main").style.visibility = "visible";
 });
 
+/**
+ * Choose sound
+ * 选择声音
+ * @date 2021-03-15
+ * @param {any} "sound-selection"
+ * @returns {any}
+ */
 document.getElementById("sound-selection").addEventListener("input", function(){//On click, preview corresponding sound
     if (document.getElementById("sound-selection").value == "Bell"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
@@ -544,6 +877,13 @@ document.getElementById("sound-selection").addEventListener("input", function(){
     }
 });
 
+/**
+ * Select colorblind option
+ * 选择色盲模式
+ * @date 2021-03-15
+ * @param {any} "colorblindbox"
+ * @returns {any}
+ */
 document.getElementById("colorblindbox").addEventListener("click",function(){
     if (document.getElementById("colorblindbox").checked)
         localStorage.setItem("colorblind","1");
@@ -551,6 +891,13 @@ document.getElementById("colorblindbox").addEventListener("click",function(){
     localStorage.setItem("colorblind","0");
 });
 
+/**
+ * Save and load Settings info
+ * 保存并加载设置信息
+ * @date 2021-03-15
+ * @param {any} "saveSettings"
+ * @returns {any}
+ */
 document.getElementById("saveSettings").addEventListener("click", function() { //On click, hide settings
     document.getElementById("settingsMenu").style.visibility = "hidden";
     document.getElementById("main").style.visibility = "visible";
@@ -566,6 +913,15 @@ document.getElementById("saveSettings").addEventListener("click", function() { /
     updateUser();
 });
 
+
+// #5 Doge Shop
+/**
+ * Open Doge shop
+ * 开设商店
+ * @date 2021-03-15
+ * @param {any} "dogecoin"
+ * @returns {any}
+ */
 document.getElementById("dogecoin").addEventListener("click", function() { //On click, show Doge Store
     document.getElementById("dogeCoinMenu").style.visibility = "visible";
     document.getElementById("statisticsMenu").style.visibility = "hidden";
@@ -574,6 +930,13 @@ document.getElementById("dogecoin").addEventListener("click", function() { //On 
     saveTimeSettings();
 });
 
+/**
+ * On click, hide Doge Store
+ * 单击时，隐藏商店
+ * @date 2021-03-15
+ * @param {any} "dogeSave"
+ * @returns {any}
+ */
 document.getElementById("dogeSave").addEventListener("click", function() {
     document.getElementById("insufficientText").style.visibility = "hidden";
     document.getElementById("dogeCoinMenu").style.visibility = "hidden";
@@ -583,6 +946,13 @@ document.getElementById("dogeSave").addEventListener("click", function() {
     updateUser();
 });
 
+/**
+ * On click, preview the Jungle Theme
+ * 单击时，预览丛林主题
+ * @date 2021-03-15
+ * @param {any} "wildjungle"
+ * @returns {any}
+ */
 document.getElementById("wildjungle").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -592,6 +962,13 @@ document.getElementById("wildjungle").addEventListener("click", function() {
     turnLight();
 });
 
+/**
+ * On click, switch to Jungle Theme
+ * 单击后，切换到丛林主题
+ * @date 2021-03-15
+ * @param {any} "wildjunglebuy"
+ * @returns {any}
+ */
 document.getElementById("wildjunglebuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     setActive(0);
@@ -603,6 +980,13 @@ document.getElementById("wildjunglebuy").addEventListener("click", function() {
     darkenChosen();
 });
 
+/**
+ * On click, preview night Theme
+ * 单击时，预览夜晚主题
+ * @date 2021-03-15
+ * @param {any} "night"
+ * @returns {any}
+ */
 document.getElementById("night").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -612,6 +996,13 @@ document.getElementById("night").addEventListener("click", function() {
     turnLight();
 });
 
+/**
+ * On click, switch to night Theme
+ * 单击后，切换到夜间主题
+ * @date 2021-03-15
+ * @param {any} "nightbuy"
+ * @returns {any}
+ */
 document.getElementById("nightbuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     setActive(1);
@@ -623,6 +1014,13 @@ document.getElementById("nightbuy").addEventListener("click", function() {
     darkenChosen();
 });
 
+/**
+ * On click, preview Aquatic Theme
+ * 单击时，预览海洋主题
+ * @date 2021-03-15
+ * @param {any} "aquatic"
+ * @returns {any}
+ */
 document.getElementById("aquatic").addEventListener("click", function() {
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -632,6 +1030,13 @@ document.getElementById("aquatic").addEventListener("click", function() {
     turnLight();
 });
 
+/**
+ * On click, switch to Aquatic Theme if enough coins
+ * 单击时，如果有足够的硬币，切换到海洋主题
+ * @date 2021-03-15
+ * @param {any} "aquaticbuy"
+ * @returns {any}
+ */
 document.getElementById("aquaticbuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[0] == '1'){
@@ -658,6 +1063,13 @@ document.getElementById("aquaticbuy").addEventListener("click", function() {
     darkenChosen();
 });
 
+/**
+ * On click, preview San Francisco Theme
+ * 单击时，预览旧金山主题
+ * @date 2021-03-15
+ * @param {any} "sanfrancisco"
+ * @returns {any}
+ */
 document.getElementById("sanfrancisco").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -667,6 +1079,13 @@ document.getElementById("sanfrancisco").addEventListener("click", function() {
     turnLight();
 });
 
+/**
+ * On click, switch to San Francisco Theme if enough coins
+ * 单击时，如果硬币足够，切换到旧金山主题
+ * @date 2021-03-15
+ * @param {any} "sanfranciscobuy"
+ * @returns {any}
+ */
 document.getElementById("sanfranciscobuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[1] == '1'){
@@ -693,6 +1112,13 @@ document.getElementById("sanfranciscobuy").addEventListener("click", function() 
     darkenChosen();
 });
 
+/**
+ * On click, preview Doge Theme
+ * 点击后，预览Doge主题
+ * @date 2021-03-15
+ * @param {any} "dogeland"
+ * @returns {any}
+ */
 document.getElementById("dogeland").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (document.getElementById("colorblindbox").checked)
@@ -702,6 +1128,13 @@ document.getElementById("dogeland").addEventListener("click", function() {
     turnLight();
 });
 
+/**
+ * On click, switch to Doge Theme if enough coins
+ * 单击时，如果有足够的硬币，切换到Doge主题
+ * @date 2021-03-15
+ * @param {any} "dogebuy"
+ * @returns {any}
+ */
 document.getElementById("dogebuy").addEventListener("click", function() { 
     document.getElementById("insufficientText").style.visibility = "hidden";
     if (window.localStorage.getItem('shopitems')[2] == '1'){
@@ -726,27 +1159,64 @@ document.getElementById("dogebuy").addEventListener("click", function() {
     darkenChosen();
 });
 
+/**
+ * Cypress function to test coins
+ * 测试硬币的Cypress函数
+ * @date 2021-03-15
+ * @param {any} amount
+ * @returns {any}
+ */
 function cypressSetCoin(amount){
     localStorage.setItem("coin",amount);
     document.getElementById("cointext").innerHTML = amount;
 }
 
+//#6 Login Page/Create Account
+/**
+ * Continue as guest
+ * 以访客身份继续
+ * @date 2021-03-15
+ * @param {any} "guestCont"
+ * @returns {any}
+ */
 document.getElementById("guestCont").addEventListener("click", function() {
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("greywrapper").style.visibility = "hidden";
 });
 
+/**
+ * Continue to login page
+ * 继续致登录页面
+ * @date 2021-03-15
+ * @param {any} "loginCont"
+ * @returns {any}
+ */
 document.getElementById("loginCont").addEventListener("click", function() { 
     document.getElementById("loginNotification").style.visibility = "hidden";
     document.getElementById("loginMain").style.visibility = "visible";
 });
 
+/**
+ * Quit Login Page
+ * 退出登录页面
+ * @date 2021-03-15
+ * @param {any} "quitLogin"
+ * @returns {any}
+ */
 document.getElementById("quitLogin").addEventListener("click", function() { 
     document.getElementById("loginMain").style.visibility = "hidden";
     document.getElementById("greywrapper").style.visibility = "hidden";
     document.getElementById("invalidLogin").style.visibility = "hidden";
 });
 
+/**
+ * Volume Slider controls. Change image and sound accordingly.
+ * 音量滑块控件。相应地更改图像和声音
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} amount the amount to increase coin inventory by.
+ * @returns {any}
+ */
 function incrementCoin(amount){
     let newNum = (parseInt(localStorage.getItem("coin"))+amount).toString();
     localStorage.setItem("coin",newNum);
@@ -755,6 +1225,12 @@ function incrementCoin(amount){
     document.getElementById("cointext").innerHTML = newNum;
 }
 
+/**
+ * Load the last selected theme
+ * 加载最近选择的主题
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function loadActive(){
     let active = window.localStorage.getItem('active');
     if (active[0] == 1){
@@ -774,6 +1250,13 @@ function loadActive(){
     }
 }
 
+/**
+ * Darken the last selected theme's button
+ * 使上一个选定主题的按钮变暗
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function darkenChosen(){
     let active = window.localStorage.getItem('active');
     let shopitems = window.localStorage.getItem('shopitems');
@@ -860,6 +1343,14 @@ function darkenChosen(){
     }
 }
 
+/**
+ * Set the index to 1 in shopitems in localStorage
+ * 在本地存储的可购物品中将指标设置为1
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} index
+ * @returns {any}
+ */
 function setShopItems(index){
     let shopitems = window.localStorage.getItem('shopitems');
     let temp = "";
@@ -872,6 +1363,14 @@ function setShopItems(index){
     window.localStorage.setItem('shopitems',temp);
 }
 
+/**
+ * Volume Slider controls. Change image and sound accordingly.
+ * 音量滑块控件。相应地更改图像和声音。
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} "volume-slider"
+ * @returns {any}
+ */
 document.getElementById("volume-slider").addEventListener("click", function() { //Alter volume
     let source = document.getElementById("volume-pic");
     let volume = document.getElementById("volume-slider").value;
@@ -886,6 +1385,18 @@ document.getElementById("volume-slider").addEventListener("click", function() { 
         source.src = "source/Front-end/css/assets/volume-level-3.svg";
 });
 
+/* ============================================================================
+ * First Created: Mar 2  -- Yichen Han
+ * Last  Revised: Mar 2  -- Yichen Han
+ * Revised Times: 1
+ * 
+ * Description  : Fetch workSec, sBrkSec, lBrkSec, and countsTres (which are
+ *                time of working, short/long break, and long break interval)
+ *                if local storage have them.
+ * Discrip in CN: 如果本地储存包含 workSec, sBrkSec, lBrkSec, 和 countsTres（即
+ *                工作时长，长短休息时常，和长休息间隔），获取它们。
+ * Type         : Global Variables.
+ =========================================================================== */
 var storage = window.localStorage;
 if (storage["workSec"]) {
     workSec = storage["workSec"];
@@ -921,6 +1432,15 @@ else{
 }
 saveTimeSettings();
 
+/* ============================================================================
+ * First Created: Mar 8  -- Yichen Han
+ * Last  Revised: Mar 8  -- Yichen Han
+ * Revised Times: 1
+ * 
+ * Description  : Fetch language from local storage
+ * Discrip in CN: 从本地储存读取语言（用户就不用每次打开都要切换语言了）。
+ * Type         : Global Variables.
+ =========================================================================== */
  if (storage["language"]) {
     language = window.localStorage.getItem("language");
     if (language == "CN") {
@@ -933,6 +1453,13 @@ saveTimeSettings();
     }
 }
 
+/**
+ * Set header + main + footer to white and opaque settings.
+ * 将页眉+主+页脚设置为白色及模糊。
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function turnLight(){
     document.getElementById("header").style.backgroundColor = "rgba(256,256,256,0.4)";
     document.getElementById("main").style.backgroundColor = "rgba(256,256,256,0.4)";
@@ -940,6 +1467,13 @@ function turnLight(){
     color = "rgba(256,256,256,0.4)";
 }
 
+/**
+ * Set header + main + footer to grey and opaque settings.
+ * 将页眉+主+页脚设置为灰色及模糊。
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function turnDark(){
     document.getElementById("header").style.backgroundColor = "rgba(102,102,102,0.4)";
     document.getElementById("main").style.backgroundColor = "rgba(102,102,102,0.4)";
@@ -947,6 +1481,14 @@ function turnDark(){
     color = "rgba(102,102,102,0.4)";
 }
 
+/**
+ * Set active index to 1 and all else to 0
+ * 将有效指标设置为1，其他所有设置为0
+ * @author Suk Chan (Kevin) Lee
+ * @date 2021-03-15
+ * @param {any} index indice to turn to 1
+ * @returns {any}
+ */
 function setActive(index){
     let string = ""
     for (let int = 0; int < 5; int++){
@@ -958,37 +1500,68 @@ function setActive(index){
     localStorage.setItem('active', string);
 }
 
-var startBtn = document.getElementById("start-btn"); 
-startBtn.addEventListener("click", runCounter); 
 
+//#7 Timer functions/helper functions
+var startBtn = document.getElementById("start-btn"); // button
+startBtn.addEventListener("click", runCounter); // listen & call runCounter
+
+/**
+ * Listen to button, if clicked, call runCounter().
+ * unCounter() increase counts if now is working mode. 
+ * Then deligate countDown()
+ * 监听按钮，如果被单击，则调用runCounter（）。
+ * 如果现在处于工作模式，unCounter（）会增加计数。
+ * 然后调用countDown（）
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function runCounter() {
+    // If now's working mode, increase counts by 1.
     updateTable();
     if (currMode == "w") {
         counts++;
         drainColor();
+        //document.getElementById("sound-effect").play();
     }
     countDown();
 }
 
-var modeSelect = document.getElementById("mode-selection");
-modeSelect.addEventListener("input", changeMode);
-var radioMode = document.getElementsByName("radio-mode");
+// Listen fieldset, if radio is reckected, call changeMode()
+var modeSelect = document.getElementById("mode-selection"); // fieldset
+modeSelect.addEventListener("input", changeMode); // listener
+var radioMode = document.getElementsByName("radio-mode"); // radios
 
+/**
+ * Listen mode radios. If another radio is checked, call
+ * changeMode() to change time(HTML), seconds(int), mode(Str).
+ * changeMode() can also be called by autoSwitchMode().
+ * 监听模式的单选框。如果另一个单选框被选择，请调用
+ * changeMode（）来改变time（HTML），seconds（int），mode（Str）。
+ * changeMode（）也可以由autoSwitchMode（）调用。
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function changeMode() {
+    // Find which radio is checked. Then reset time, seconds, and mode.
+    // Working mode.
     if (radioMode[0].checked) {
-        document.getElementById("time").innerHTML = secToTime(workSec);
-        totalSec = workSec; 
-        currMode = "w"; 
+        document.getElementById("time").innerHTML = secToTime(workSec); // time
+        totalSec = workSec; // seconds
+        currMode = "w"; // mode
     }
+    // Short break mode.
     else if (radioMode[1].checked) {
-        document.getElementById("time").innerHTML = secToTime(sBrkSec); 
-        totalSec = sBrkSec; 
-        currMode = "s"; 
+        document.getElementById("time").innerHTML = secToTime(sBrkSec); // time
+        totalSec = sBrkSec; // seconds
+        currMode = "s"; // mode'
     }
+    // Long break mode.
     else {
-        document.getElementById("time").innerHTML = secToTime(lBrkSec); 
-        totalSec = lBrkSec; 
-        currMode = "l"; 
+        document.getElementById("time").innerHTML = secToTime(lBrkSec); // time
+        totalSec = lBrkSec; // seconds
+        currMode = "l"; // mode
     }
     updateTable();
     fillColor();
@@ -996,26 +1569,62 @@ function changeMode() {
 
 
 
+/**
+ * Called when countdown timer starts. Decrease 1 sec per sec.
+ * Call secToTime(int) to change sec into time.
+ * Reset time HTML (-1 per sec).
+ * When finished, deligate autoSwitchMode() to switch mode.
+ * 倒数计时器启动时调用。每秒降低1秒。
+ * 调用secToTime（int）将sec更改为时间。
+ * 重置时间HTML（每秒-1）。
+ * 完成后，将autoSwitchMode（）设置为切换模式。
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function countDown() {
-    startBtn.disabled = true;
-    currSec = totalSec; 
+    startBtn.disabled = true; // disable start button
+    currSec = totalSec; // will count down from totalSec
     let timer = setInterval(function() {
         if (currSec == 0) { // time ends
             startBtn.disabled = false; // enable start button
-            document.getElementById("sound-effect").play(); 
+            document.getElementById("sound-effect").play(); //Play alarm
             clearInterval(timer);
-            autoSwitchMode(); 
-            currSec--; 
+            autoSwitchMode(); // curr sections ends, enter next mode
+        } else {
+            currSec--; // decrease remaining sec by 1
             let currTime = secToTime(currSec);
-            document.getElementById("time").innerHTML = currTime; 
-    }, ms); 
+            //console.log(currTime); // TEST CODE
+            document.getElementById("time").innerHTML = currTime; // reset HTML
+        }
+    }, ms); // decrease 1 per sec. DECREASE IT FOR FASTER TESTING!!!
 }
 
+/**
+ * If   current mode is working & counts < countsThres, 
+ * Then enter short break mode.
+ * If   current mode is working & count >= countsThres,
+ * Then enter long break mode   & clear count.
+ * If   current mode is short break / long break,
+ * Then enter working mode.
+ * Finally deligate changeMode() to change totalSec & HTML.
+ * 如果当前模式有效且计数小于countsThres，
+ * 进入短暂休息模式。
+ * 如果当前模式正在运行且计数大于等于countsThres，
+ * 进入长时间休息模式并清除计数。
+ * 如果当前模式是短暂或者长时间休息，
+ * 进入工作模式。
+ * 最后使用changeMode（）更改totalSec和HTML。
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function autoSwitchMode() {
     // Now: working mode
     if (currMode == "w") {
-        totalWorkMins += (workSec / 60);
-        totalWorkCount ++;
+        totalWorkMins += (workSec / 60); // Statistics
+        totalWorkCount ++;               // Statistics
+        // count < countsThres. Next: short break mode
         if (counts < countsThres) {
             document.getElementById("radio-shortBreak-mode").checked = true;
             incrementCoin(5); //5 coin reward
@@ -1043,21 +1652,38 @@ function autoSwitchMode() {
     changeMode(); // deligate changeMode() to change totalSec & HTML
 }
 
-
+/**
+ * Take in seconds, change it to time. Eg: 120 -> "02:00"
+ * 秒为单位，将其更改为时间。例如：120更改为“ 02:00”
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @param {int} currSec
+ * @returns {String}
+ */
 function secToTime(currSec) {
-    let minInt = parseInt(currSec / 60);
-    let minStr = "" + minInt;
+    let minInt = parseInt(currSec / 60); // minite in int
+    let minStr = "" + minInt; // minite in str
+    // If minInt < 10, add 0 before minStr. Eg: 1 -> 01
     if (minInt < 10) {
         minStr = "0" + minStr;
     }
-    let secInt = currSec % 60;
-    let secStr = "" + secInt; 
+    let secInt = currSec % 60; // second in int
+    let secStr = "" + secInt; // second in str
+    // If secInt < 10, add 0 before secStr. Eg: 1 -> 01
     if (secInt < 10) {
         secStr = "0" + secStr;
     }
-    return (minStr + ":" + secStr); 
+    return (minStr + ":" + secStr); // concate "min:sec"
 }
 
+/**
+ * Take in time, change it to seconds. Eg: "02:00" -> 120
+ * 输入时间，将其更改为秒。例如：“ 02:00”变为 120
+ * @author Yichen Han
+ * @date 2021-03-15
+ * @param {String} currTime time
+ * @returns {int}
+ */
 function timeToSec(currTime) {
     let minStr = currTime.substr(0, 2);
     let minInt = parseInt(minStr);
@@ -1068,6 +1694,14 @@ function timeToSec(currTime) {
     return (minInt * 60 + secInt);
 }
 
+// #8 UI Helper functions
+/**
+ * Take the color out of the page
+ * 将页面颜色抹除
+ * @author Suk Chan Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function drainColor() {
     document.getElementById("header").style.backgroundColor = "grey";
     document.getElementById("header").style.color = "black";
@@ -1076,6 +1710,13 @@ function drainColor() {
     document.getElementById("gear").src = "./source/Front-end/css/assets/gearblack.png";
 }
 
+/**
+ * Put the color back in the page.
+ * 将颜色填入页面中。
+ * @author Suk Chan Lee
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function fillColor() {
     document.getElementById("header").style.backgroundColor = color;
     document.getElementById("header").style.color = "white";
@@ -1084,6 +1725,13 @@ function fillColor() {
     document.getElementById("gear").src = "./source/Front-end/css/assets/Geartransparent.png";
 }
 
+/**
+ * Set the table below the clock when timer tuns
+ * 计时器开始时，将表格设置在时钟下方
+ * @author Suk Chan Lee, Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function updateTable() {
     document.getElementById("counter").style.opacity = 0.4;
     if (currMode == "w") {
@@ -1103,11 +1751,21 @@ function updateTable() {
     = ((countsThres - counts) > 1 ? (countsThres - counts) : 1) + "x";
 }
 
+/* --------------------------------------------------------------------------
+ * Check the range of input values
+ --------------------------------------------------------------------------- */
 var regex=/^[0-9]+$/; // RegEx
 // Alerts
 var alertTime = "Please enter an integer between 1 and 120.";
 var alertIntv = "Please enter an integer between 1 and 10."
 
+/**
+ * Work phase (min)
+ * 工作阶段（分钟）
+ * @date 2021-03-15
+ * @param {any} "work-time-number"
+ * @returns {any}
+ */
 document.getElementById("work-time-number").addEventListener("input", function() {
     let worknumber = document.getElementById("work-time-number").value;
     if ((worknumber != "" && !worknumber.match(regex)) // RegEx: "" or int
@@ -1117,6 +1775,13 @@ document.getElementById("work-time-number").addEventListener("input", function()
     }
 });
 
+/**
+ * Short break (min)
+ * 短暂休息（分钟
+ * @date 2021-03-15
+ * @param {any} "short-break-number"
+ * @returns {any}
+ */
 document.getElementById("short-break-number").addEventListener("input", function() {
     let shortBreaknumber = document.getElementById("short-break-number").value;
     if ((shortBreaknumber != "" && !shortBreaknumber.match(regex)) // RegEx: "" or int
@@ -1126,6 +1791,13 @@ document.getElementById("short-break-number").addEventListener("input", function
     }
 });
 
+/**
+ * Long break (min)
+ * 长休息（分钟）
+ * @date 2021-03-15
+ * @param {any} "long-break-number"
+ * @returns {any}
+ */
 document.getElementById("long-break-number").addEventListener("input", function() {
     let longBreaknumber = document.getElementById("long-break-number").value;
     if ((longBreaknumber != "" && !longBreaknumber.match(regex)) // RegEx: "" or int
@@ -1135,6 +1807,13 @@ document.getElementById("long-break-number").addEventListener("input", function(
     }
 });
 
+/**
+ * Long break interval
+ * 长时间休息区间
+ * @date 2021-03-15
+ * @param {any} "long-break-interval"
+ * @returns {any}
+ */
 document.getElementById("long-break-interval").addEventListener("input", function() {
     let longBreakinterval = document.getElementById("long-break-interval").value;
     if ((longBreakinterval != "" && !longBreakinterval.match(regex)) // RegEx: "" or int
@@ -1144,6 +1823,13 @@ document.getElementById("long-break-interval").addEventListener("input", functio
     }
 });
 
+/**
+ * Save time settings and update them to local Storage.
+ * 根据设置更新var和HTML
+ * @author Yichen Han, Jiaming Li
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function saveTimeSettings() {
     //Work & Break time
     // get values
@@ -1207,6 +1893,15 @@ function saveTimeSettings() {
     storage["lBrkItv"] = countsThres;
 }
 
+
+
+/**
+ * Switch the language of content based on the option selected
+ * 根据选择的选项切换内容的语言
+ * @author Jiaming Li, Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function SwitchToChinese() {
     language = "CN";
     storage["language"] = "CN";
@@ -1287,6 +1982,13 @@ function SwitchToChinese() {
     document.getElementById("insufficientText").innerHTML = "金币不足";
 }
 
+/**
+ * Switch the language of content based on the option selected
+ * 根据选择的选项切换内容的语言
+ * @author Jiaming Li, Yichen Han
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function SwitchToEnglish() {
     language = "EN";
     storage["language"] = "EN";
@@ -1347,6 +2049,13 @@ function SwitchToEnglish() {
     document.getElementById("insufficientText").innerHTML = "Insufficient Funds";
 }
 
+/**
+ * Choose which sound effect to use according to user's input
+ * 根据用户输入选择要使用的音效
+ * @author Bo Yang
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function chooseSoundEffect(){
     if(document.getElementById("sound-selection").value == "Bell"){
         document.getElementById("sound-effect").src = "source/Front-end/css/assets/bellChime.mp3";
@@ -1363,6 +2072,13 @@ function chooseSoundEffect(){
     
 }
 
+/**
+ * Show the statistics window
+ * 显示统计窗口
+ * @author Bo Yang
+ * @date 2021-03-15
+ * @returns {any}
+ */
 function showStats() {
     let english = document.getElementById("language-form").value == "English";
 
