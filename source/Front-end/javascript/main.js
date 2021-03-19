@@ -1000,15 +1000,17 @@ function countDown() {
     startBtn.disabled = true;
     currSec = totalSec; 
     let timer = setInterval(function() {
-        if (currSec == 0) { // time ends
-            startBtn.disabled = false; // enable start button
-            document.getElementById("sound-effect").play(); 
+        if (currSec == 0) {
+            startBtn.disabled = false;
+            document.getElementById("sound-effect").play();
             clearInterval(timer);
-            autoSwitchMode(); 
-            currSec--; 
+            autoSwitchMode();
+        } else {
+            currSec--;
             let currTime = secToTime(currSec);
             document.getElementById("time").innerHTML = currTime; 
-    }, ms); 
+        }
+    }, ms);
 }
 
 function autoSwitchMode() {
