@@ -498,11 +498,11 @@ function loadTeams(){
                             });
                             }
                             else {
-                            console.log("No data available");
+                                console.log("No data available");
                             }
-                        }).catch(function(error) {
+                        })/*.catch(function(error) {
                             console.error(error);
-                        });
+                        })*/;
                     }
                 }
             }
