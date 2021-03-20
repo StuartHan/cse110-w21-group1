@@ -6,3 +6,7 @@ Welcome to Group1's Pomodoro Timer!
 https://drive.google.com/file/d/1MjmnZ0BPzXyi0X5kqq_3e2y3A9Zsd3bE/view?usp=sharing
 ### Private Video
 https://drive.google.com/file/d/1ULopPSaeiGJyFZauNKB6Uzkb1I3S_frK/view?usp=sharing
+### End User Docs
+https://github.com/StuartHan/cse110-w21-group1/wiki/End-User-Docs
+### Technical Docs
+https://github.com/StuartHan/cse110-w21-group1/wiki/Technical-Docs
