@@ -478,6 +478,12 @@ document.getElementById("adminStart").addEventListener("click", function(){
                 users: snapshot.val().users,
                 on: "true"
             });
+            document.getElementById("work-time-number").value = snapshot.val().worktime;
+            workSec = parseInt(snapshot.val().worktime)*60;
+            document.getElementById("short-break-number").value = snapshot.val().shorttime;
+            sBrkSec = parseInt(snapshot.val().shorttime)*60;
+            document.getElementById("long-break-number").value = snapshot.val().longtime;
+            lBrkSec = parseInt(snapshot.val().longtime)*60;
             loadTeams();
             document.getElementById("start-btn").click();
         }
